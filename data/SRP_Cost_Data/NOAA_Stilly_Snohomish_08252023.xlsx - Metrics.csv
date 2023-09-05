@@ -1,0 +1,1113 @@
+ProjectNumber,ProjectWorksiteID,ProposedAnswer,FinalAnswer,MetricIdentifier,MetricName,CategoryIdentifier,CategoryName
+00-1206,315,NULL,5,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+00-1206,315,NULL,1,C.9.e.2,Number of Tidegates Altered/Removed To Allow Fish Passage (C.9.e.2),C.9,Estuarine / Nearshore Project
+00-1206,315,NULL,42,C.9.e.3,Acres opened To Fish Passage through tidegate alteration/removal (C.9.e.3),C.9,Estuarine / Nearshore Project
+00-1206,315,0,7,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+00-1206,315,0,0.01,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+00-1206,315,NULL,"Rubus discolor, Phalaris arundinacea",C.4.g.2,Species Of Plants Removed/Controlled (C.4.g.2),C.4,Instream Habitat Project
+00-1206,315,NULL,7,C.4.g.3,Miles of Stream Treated for plant removal/control (C.4.g.3),C.4,Instream Habitat Project
+00-1206,315,NULL,34,C.4.g.4,Acres of Streambed Treated for plant removal/control (C.4.g.4),C.4,Instream Habitat Project
+00-1206,315,NULL,7,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+00-1206,315,NULL,42,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+00-1206,315,NULL,15,C.5.e.2,Acres of Riparian Area That Had Livestock Removed (C.5.e.2),C.5,Riparian Habitat Project
+00-1206,315,NULL,7,C.5.e.3,Miles of Streambank Protected from livestock (other than fencing) (C.5.e.3),C.5,Riparian Habitat Project
+00-1206,315,NULL,"Thuja plicata, Acer macrophyllum, Salix spp.  and other native trees and shrubs. ",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+00-1206,315,NULL,33,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+00-1206,315,NULL,2,C.5.d.2,Miles of Fence Along Stream (C.5.d.2),C.5,Riparian Habitat Project
+00-1206,315,NULL,33,C.5.d.3,Acres of Riparian Area Protected by fencing (C.5.d.3),C.5,Riparian Habitat Project
+00-1768,772,4.4,4.4,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+00-1768,772,NULL,0,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+00-1768,772,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+00-1768,772,NULL,0,C.2.d.2,Number Of Fishway Chutes/Pools Installed (C.2.d.2),C.2,Fish Passage Improvement
+00-1768,772,NULL,4.4,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+00-1768,772,NULL,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+00-1768,772,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+00-1775,779,9,9,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+00-1775,779,13,13,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+00-1775,779,NULL,13,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+00-1775,779,NULL,6,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+00-1775,779,NULL,9,C.6.d.2,Miles of Road Abandoned (C.6.d.2),C.6,Upland Habitat And Sediment Project
+00-1775,779,NULL,6,C.6.d.3,Average width of road abandoned (in whole yards) (C.6.d.3),C.6,Upland Habitat And Sediment Project
+00-1775,779,NULL,1,C.6.g.2,Acres Treated for Slope Stabilization (C.6.g.2),C.6,Upland Habitat And Sediment Project
+00-1779,780,0,0,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+00-1779,780,5.4,5.4,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+00-1779,780,NULL,5.4,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+00-1779,780,NULL,10,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+00-1779,780,NULL,0,C.6.d.2,Miles of Road Abandoned (C.6.d.2),C.6,Upland Habitat And Sediment Project
+00-1779,780,NULL,0,C.6.d.3,Average width of road abandoned (in whole yards) (C.6.d.3),C.6,Upland Habitat And Sediment Project
+00-1838,823,5,5,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+00-1838,823,39,23.29,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+00-1838,823,NULL,13.86,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+00-1838,823,NULL,7,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+00-1838,823,NULL,9.43,C.6.d.2,Miles of Road Abandoned (C.6.d.2),C.6,Upland Habitat And Sediment Project
+00-1838,823,NULL,7,C.6.d.3,Average width of road abandoned (in whole yards) (C.6.d.3),C.6,Upland Habitat And Sediment Project
+01-1307,1233,NULL,0.6,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+01-1307,1233,NULL,0.6,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+01-1307,1233,NULL,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+01-1307,1233,NULL,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+01-1307,1233,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+01-1307,1233,NULL,0.6,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+01-1307,1233,NULL,0.01,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+01-1307,1233,NULL,2,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+01-1307,1233,0.6,0.6,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+01-1307,1233,NULL,0.6,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+01-1307,1233,NULL,0.6,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+01-1307,1233,NULL,5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+01-1307,1233,NULL,6,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+01-1307,1233,NULL,0.6,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+01-1307,1233,NULL,5,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+01-1307,1233,NULL,6,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+01-1307,1233,NULL,3,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+01-1307,1233,NULL,300,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+01-1307,1233,0,0,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+01-1307,1233,4.6,4.6,C.8.b,Total Acres Of Wetland Area Treated (C.8.b),C.8,Wetland Project
+01-1307,1233,NULL,Phalaris arundinacea,C.8.d.2,Species (Scientific) Name(s) Of Wetland Plants Removed (C.8.d.2),C.8,Wetland Project
+01-1307,1233,4.6,4.6,C.8.d.3,Acres of wetland treated for plant removal/control (C.8.d.3),C.8,Wetland Project
+01-1307,1233,NULL,4.6,C.8.e.2,Acres of wetland Improved/Restored (C.8.e.2),C.8,Wetland Project
+01-1308,1236,NULL,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+01-1308,1236,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+01-1308,1235,NULL,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+01-1308,1235,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+01-1308,1236,0,5,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+01-1308,1236,NULL,5,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+01-1308,1236,NULL,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+01-1308,1236,NULL,5,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+01-1308,1234,10.15,10.15,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+01-1308,1234,NULL,10,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+01-1308,1234,2,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+01-1308,1234,NULL,0,C.2.d.2,Number Of Fishway Chutes/Pools Installed (C.2.d.2),C.2,Fish Passage Improvement
+01-1308,1234,10.15,10.15,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+01-1308,1234,NULL,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+01-1308,1234,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+01-1308,1235,0,3,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+01-1308,1235,NULL,3,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+01-1308,1235,NULL,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+01-1308,1235,NULL,3,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+01-1429,1361,NULL,299 Native Trees and Shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1361,NULL,1.3,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1362,NULL,0.2,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1362,NULL,1.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1362,NULL,"Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1362,NULL,1.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1360,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1360,NULL,3.3,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1361,NULL,0.2,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1361,NULL,1.3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1361,NULL,"Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1361,NULL,1.3,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1359,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1359,NULL,0.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1360,NULL,0.55,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1360,NULL,3.3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1360,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1360,NULL,3.3,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1358,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1358,NULL,0.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1359,NULL,0.09,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1359,NULL,0.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1359,NULL,Native trees and shrubs.,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1359,NULL,0.5,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1357,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1357,NULL,1.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1358,NULL,0.76,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1358,NULL,0.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1358,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1358,NULL,0.5,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1356,NULL, Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1356,NULL,0.8,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1357,NULL,0.28,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1357,NULL,1.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1357,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1357,NULL,1.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1355,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1355,NULL,7.6,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1356,NULL,0.13,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1356,NULL,0.8,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1356,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1356,NULL,0.8,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1354,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1354,NULL,2.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1355,NULL,0.63,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1355,NULL,7.6,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1355,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1355,NULL,7.6,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1353,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1353,NULL,5.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1354,NULL,0.35,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1354,NULL,2.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1354,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1354,NULL,2.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1352,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1352,NULL,5.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1353,NULL,0.94,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1353,NULL,5.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1353,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1353,NULL,5.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1351,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1351,NULL,1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1352,NULL,0.79,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1352,NULL,5.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1352,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1352,NULL,5.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1362,NULL,120 Native Trees & Shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1362,NULL,1.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1334,NULL,native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1334,NULL,3.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1335,NULL,0.27,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1335,NULL,0.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1335,NULL,"Phalaris arundinacea, Rubus armeniaca, Polygonum cuspidatum",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1335,NULL,0.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1333,NULL,native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1333,NULL,2.4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1334,NULL,0.51,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1334,NULL,3.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1334,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1334,NULL,3.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1332,16,24,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1332,25,81,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1332,NULL,native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1332,NULL,81,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1332,NULL,0.75,C.5.d.2,Miles of Fence Along Stream (C.5.d.2),C.5,Riparian Habitat Project
+01-1429,1332,NULL,1,C.5.d.3,Acres of Riparian Area Protected by fencing (C.5.d.3),C.5,Riparian Habitat Project
+01-1429,1332,NULL,"knotweed, blackberry, reed canary grass",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1332,25,3,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1333,NULL,0.99,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1333,NULL,2.4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1333,NULL,"Polygonum cuspidatum, Rubus armeniaca, Phalaris arundinacea",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1333,NULL,2.4,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1350,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1350,NULL,3.2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1351,NULL,0.17,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1351,NULL,1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1351,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1351,NULL,1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1349,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1349,NULL,1.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1350,NULL,0.53,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1350,NULL,3.2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1350,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1350,NULL,3.2,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1348,NULL,native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1348,NULL,2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1349,NULL,0.18,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1349,NULL,1.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1349,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1349,NULL,1.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1347,NULL,native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1347,NULL,2.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1348,NULL,0.32,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1348,NULL,2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1348,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1348,NULL,2,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1346,NULL,native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1346,NULL,0.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1347,NULL,0.35,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1347,NULL,2.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1347,NULL,"knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1347,NULL,2.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1345,NULL,native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1345,NULL,4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1346,NULL,0.08,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1346,NULL,0.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1346,NULL,"knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1346,NULL,0.5,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1344,NULL,native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1344,NULL,2.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1345,NULL,1.09,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1345,NULL,4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1345,NULL,"knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1345,NULL,4,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1343,NULL,native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1343,NULL,1.4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1344,NULL,0.44,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1344,NULL,2.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1344,NULL,"knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1344,NULL,2.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1342,NULL,native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1342,NULL,2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1343,NULL,0.44,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1343,NULL,1.4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1343,NULL,"knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1343,NULL,1.4,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1341,NULL, native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1341,NULL,1.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1342,NULL,0.56,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1342,NULL,2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1342,NULL," knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1342,NULL,2,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1340,NULL,native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1340,NULL,4.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1341,NULL,0.44,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1341,NULL,1.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1341,NULL," knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1341,NULL,1.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1339,NULL,native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1339,NULL,1.9,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1340,NULL,0.74,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1340,NULL,4.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1340,NULL,"knotweed, blackberry, reed canary grass. ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1340,NULL,4.5,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1338,NULL,native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1338,NULL,3,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1339,NULL,0.26,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1339,NULL,1.9,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1339,NULL,"knotweed, blackberry, reed canary grass",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1339,NULL,1.9,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1337,NULL,Native trees and shrubs. ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1337,NULL,1.3,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1338,NULL,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1338,NULL,3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1338,NULL,"knotweed, reed canarygrass, blackberry",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1338,NULL,3,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1336,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1336,NULL,3.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1337,NULL,0.26,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1337,NULL,1.3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1337,NULL,"knotweed, blackberry, reed canarygrass",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1337,NULL,1.3,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1429,1335,NULL,Native trees and shrubs,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+01-1429,1335,NULL,0.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+01-1429,1336,NULL,1.54,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+01-1429,1336,NULL,3.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+01-1429,1336,NULL,"Phalaris arundinacea, Polygonum cuspidatum, Rubus armeniaca",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+01-1429,1336,NULL,3.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+01-1430,1363,0.5,1.5,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+01-1430,1363,NULL,1.5,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+01-1430,1363,NULL,2,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+01-1430,1363,NULL,20,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+01-1430,1363,NULL,10,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+01-1430,1363,NULL,28,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+01-1430,1363,0,0.01,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+02-1589,1785,0.75,0.75,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+02-1589,1785,25,15,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+02-1589,1785,NULL,"Thuja plicata, Acer macrophyllum, Abies grandis, Picea sitchensis, Alnus rubus",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+02-1589,1785,NULL,15,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+02-1589,1785,NULL,Blackberries (Rubus discolor),C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+02-1589,1785,0,2,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+02-1596,1788,NULL,2,C.11.c.2,Acres of restored land maintained (C.11.c.2),C.11,Site Stewardship Project
+02-1596,1788,2,2,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+02-1596,1788,13.85,13.85,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+02-1596,1788,NULL,13.85,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+02-1596,1788,NULL,10,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+02-1596,1788,NULL,0,C.6.d.2,Miles of Road Abandoned (C.6.d.2),C.6,Upland Habitat And Sediment Project
+02-1596,1788,NULL,0,C.6.d.3,Average width of road abandoned (in whole yards) (C.6.d.3),C.6,Upland Habitat And Sediment Project
+02-1606,1792,0.6,0.6,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+02-1606,1792,NULL,0.6,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+02-1606,1792,NULL,0.2,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+02-1606,1792,NULL,5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+02-1606,1792,NULL,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+02-1606,1792,NULL,0.6,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+02-1606,1792,NULL,0.6,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+02-1606,1792,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+02-1606,1792,NULL,3,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+02-1606,1792,NULL,300,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+02-1606,1792,0,0.6,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+02-1606,1792,NULL,"Rubus armeniacus, Polygonum cuspidatum (Himalayan Blackberry, Knotweed)",C.4.g.2,Species Of Plants Removed/Controlled (C.4.g.2),C.4,Instream Habitat Project
+02-1606,1792,NULL,0.6,C.4.g.3,Miles of Stream Treated for plant removal/control (C.4.g.3),C.4,Instream Habitat Project
+02-1606,1792,NULL,5,C.4.g.4,Acres of Streambed Treated for plant removal/control (C.4.g.4),C.4,Instream Habitat Project
+02-1606,1792,NULL,0.6,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+02-1606,1792,NULL,0.6,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+02-1606,1792,NULL,Native trees and shrubs.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+02-1606,1792,NULL,27,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+02-1623,11866,NULL,0.2,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+02-1623,11866,NULL,0,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+02-1623,11866,NULL,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+02-1623,11866,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+02-1623,11866,NULL,0,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+02-1623,1820,NULL,0.05,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+02-1623,1820,NULL,0.05,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+02-1623,1820,NULL,2.5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+02-1623,1820,NULL,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+02-1623,1819,NULL,0.05,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+02-1623,1819,NULL,0.23,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+02-1623,1819,NULL,0.5,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+02-1623,1819,NULL,1,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+02-1623,1819,NULL,7,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+02-1623,1819,NULL,2,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+02-1623,1819,NULL,0.05,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+02-1623,1819,NULL,0.05,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+02-1623,1819,NULL,2.5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+02-1623,1819,NULL,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+02-1623,1820,NULL,0.05,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+02-1623,1820,NULL,0.03,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+02-1623,1820,NULL,0.5,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+02-1623,1820,NULL,1,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+02-1623,1820,NULL,7,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+02-1623,1820,NULL,2,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+02-1623,1820,NULL,1.5,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+02-1623,1820,NULL,35,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+02-1623,1820,NULL,big-leaf maple Acer macrophyllum ACMA  paper birch Betula papyrifera BEPA  cascara Frangula purshiana FRPU  black cottonwood Populus balsamifera POBA  grand fir Abies grandis ABGR  red alder Alnus rubra ALRU  Douglas fir Psuedotsuga menziesii PSME  S,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+02-1623,1820,NULL,35,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+02-1623,1820,NULL,"Cytisus scoparius  Rubus armeniacus  Polygonum cuspidatum, P. sachalinense, P.  xbohemicum",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+02-1623,1820,NULL,17,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+02-1623,1819,0,1.65,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+02-1623,1819,0,35,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+02-1623,1819,NULL,big-leaf maple Acer macrophyllum ACMA  paper birch Betula papyrifera BEPA  cascara Frangula purshiana FRPU  black cottonwood Populus balsamifera POBA  grand fir Abies grandis ABGR  red alder Alnus rubra ALRU  Douglas fir Psuedotsuga menziesii PSME  S,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+02-1623,1819,NULL,41.9,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+02-1623,1819,NULL,"Cytisus scoparius  Rubus armeniacus  Polygonum cuspidatum, P. sachalinense, P.  x bohemicum",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+02-1623,1819,80,35,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+02-1623,11866,NULL,0.15,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+02-1623,11866,NULL,0,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+02-1623,11866,NULL,Populus balsamifera,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+02-1623,11866,NULL,0.4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+02-1623,11866,NULL,N/A,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+02-1623,11866,NULL,0,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+02-1623,1820,NULL,0,C.8.b,Total Acres Of Wetland Area Treated (C.8.b),C.8,Wetland Project
+02-1623,1820,NULL,2.5,C.8.e.2,Acres of wetland Improved/Restored (C.8.e.2),C.8,Wetland Project
+04-1585,2602,400,400,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+04-1585,2602,NULL,880,C.9.c.2,Yards (linear measure) of Channel Modified/Created (C.9.c.2),C.9,Estuarine / Nearshore Project
+04-1585,2602,NULL,400,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+04-1585,2602,NULL,1,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+04-1585,2602,NULL,400,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+04-1585,2602,NULL,"Phalaris arundinacea, Rubus armeniacus",C.9.j.2,Species (Scientific) Name(s) Of Estuarine Plants Removed (C.9.j.2),C.9,Estuarine / Nearshore Project
+04-1585,2602,400,400,C.9.j.3,Acres of Estuary Treated for plant removal/control (C.9.j.3),C.9,Estuarine / Nearshore Project
+04-1585,2602,400,400,C.9.q.2,Acres of Estuary Created (C.9.q.2),C.9,Estuarine / Nearshore Project
+04-1608,2624,0.68,0.68,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+04-1608,2624,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+04-1608,2624,0.68,0.68,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+04-1608,2624,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+04-1608,2624,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+04-1634,2653,35.47,0.379,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+04-1634,2653,NULL,0.38,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+04-1634,2653,NULL,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+04-1634,2653,NULL,2,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+04-1634,2653,NULL,30,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+04-1634,2653,NULL,1,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+04-1634,2653,0.47,0.379,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+04-1909,2891,2.29,2.29,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+04-1909,2891,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+04-1909,2891,2.29,2.29,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+04-1909,2891,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+04-1909,2891,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+04-1909,2891,1,1,C.2.i.2,Number of road-crossings (C.2.i.2),C.2,Fish Passage Improvement
+04-1909,2891,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+05-1078,2937,0.98,0.98,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+05-1078,2937,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+05-1078,2937,0,0,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+05-1078,2937,0.98,0.98,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+05-1078,2937,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+05-1380,3154,2.21,2.21,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+05-1380,3154,3,3,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+05-1380,3154,2.21,2.21,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+05-1380,3154,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+05-1380,3154,3,3,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+05-1380,3154,NULL,3,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+05-1511,3237,NULL,0,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+05-1511,3237,NULL,0,C.9.j.2,Species (Scientific) Name(s) Of Estuarine Plants Removed (C.9.j.2),C.9,Estuarine / Nearshore Project
+05-1511,3237,NULL,0,C.9.j.3,Acres of Estuary Treated for plant removal/control (C.9.j.3),C.9,Estuarine / Nearshore Project
+05-1511,3237,NULL,0,C.9.c.2,Yards (linear measure) of Channel Modified/Created (C.9.c.2),C.9,Estuarine / Nearshore Project
+05-1511,3237,NULL,0,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+05-1511,3236,0,2.3,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+05-1511,3236,NULL,"Rubus armeniacus  Polygonum cuspidatum, P. sachalinense, P.  xbohemicum",C.9.j.2,Species (Scientific) Name(s) Of Estuarine Plants Removed (C.9.j.2),C.9,Estuarine / Nearshore Project
+05-1511,3236,0,8,C.9.j.3,Acres of Estuary Treated for plant removal/control (C.9.j.3),C.9,Estuarine / Nearshore Project
+05-1511,3237,NULL,0,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+05-1511,3237,NULL,0,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+05-1511,3237,NULL,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+05-1511,3237,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+05-1511,3237,NULL,0,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+05-1511,3236,NULL,0.75,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+05-1511,3236,NULL,0.75,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+05-1511,3236,NULL,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+05-1511,3236,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+05-1511,3236,NULL,18,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+05-1511,3236,NULL,0.75,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+05-1511,3236,NULL,4.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+05-1511,3236,NULL,Pseudotsuga menziesii  Abies grandis  Picea sitchensis  Thuja plicata  Tsuga heterophylla  Pinus contorta var. contorta  Acer macrophyllum  Alnus rubra  Populus balsamifera  Salix lasiandra  ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+05-1511,3236,NULL,4.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+05-1511,3237,NULL,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+05-1511,3237,NULL,0,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+05-1511,3237,NULL,0,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+05-1511,3237,NULL,0,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+05-1511,3237,NULL,0,C.11.c.2,Acres of restored land maintained (C.11.c.2),C.11,Site Stewardship Project
+05-1511,3236,NULL,8,C.11.c.2,Acres of restored land maintained (C.11.c.2),C.11,Site Stewardship Project
+05-1521,3247,NULL,0,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+05-1521,3247,NULL,0.25,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+05-1521,3247,NULL,0,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+05-1521,3247,NULL,4,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+05-1521,3247,0.5,0.41,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+05-1521,3247,NULL,0.41,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+05-1521,3247,NULL,0.18,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+05-1521,3247,NULL,5.4,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+05-1521,3247,NULL,12,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+05-1521,3247,0.3,0.11,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+05-1521,3247,NULL,0.41,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+05-1521,3247,NULL,5.4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+05-1521,3247,NULL,"Doug fir, western red cedar,western hemlock, big leaf maple, red alder, cascara, Pacific willow, Sitka willow, Black cottonwood, vine maple, oceanspray, Oregon grape, black twinberry, nootka rose, Indian plum, Red-osier dogwood, snowberry, thimbleber",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+05-1521,3247,NULL,1.8,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+05-1521,3247,NULL,"Knotweed (Polygonum spp.), blackberry (Rubus discolor), holly (Ilex spp.)",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+05-1521,3247,5.4,5.4,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+05-1560,3293,18,10.4,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+05-1560,3293,255.5,165.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+05-1560,3293,NULL,"Thuja plicata, Tsuga heterophylla, Pseudotsuga menziesii, Picea sitchensis, Alnus rubra, Betula papyrifera, Corylus cornuta, Cornus sericea, Acer macrophyllum, Acer circinatum, Symphoricarpos albus, Populus balsamifera ssp. trichocarpa, Salix spp.",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+05-1560,3293,NULL,111.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+05-1560,3293,NULL,0.48,C.5.d.2,Miles of Fence Along Stream (C.5.d.2),C.5,Riparian Habitat Project
+05-1560,3293,NULL,3.1,C.5.d.3,Acres of Riparian Area Protected by fencing (C.5.d.3),C.5,Riparian Habitat Project
+05-1560,3293,NULL,"Rubus discolor, Rubus laciniatus, Cirsium arvense, Cirsium vulgare, Phalaris arundinacea, Polygonum spp.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+05-1560,3293,255.5,165.5,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+05-1588,3334,NULL,25,C.11.c.2,Acres of restored land maintained (C.11.c.2),C.11,Site Stewardship Project
+05-1588,3334,0,0,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+05-1588,3334,12.3,12.3,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+05-1588,3334,NULL,12.3,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+05-1588,3334,NULL,10,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+05-1605,3353,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+05-1605,3353,NULL,0.54,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+05-1605,3353,NULL,0,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+05-1605,3353,NULL,2,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+05-1605,3353,0.63,0.54,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+05-1605,3353,NULL,0.54,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+05-1605,3353,NULL,0.54,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+05-1605,3353,NULL,4.3,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+05-1605,3353,NULL,11,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+05-1605,3353,NULL,0.54,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+05-1605,3353,NULL,3.2,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+05-1605,3353,NULL,3,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+05-1605,3353,NULL,20,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+05-1605,3353,NULL,23,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+05-1605,3353,0,0.01,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+05-1605,3353,NULL,0.54,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+05-1605,3353,NULL,3.9,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+05-1605,3353,NULL,"Abies grandis, Acer circinatum, Malus fusca, Prunus emarginata, Pseudotsuga menziesii, Quercus garryana, Rhamnus purshiana, Salix lucida spp lasiandra, Thuja plicata, Tsuga heterophylla, Amelanchier alnifolia, Cornus sericea, Corylus cornuta",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+05-1605,3353,NULL,3.9,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+05-1605,3353,4.6,4.3,C.8.b,Total Acres Of Wetland Area Treated (C.8.b),C.8,Wetland Project
+05-1605,3353,NULL,"Canada thistle (Cirsium arvense), Bull thistle (Cirsium vulgare), Reed canary grass (Phalaris arundinacea), Himalayan Blackberry (Rubus armeniacus), Tansey ragwort (Senecio jacobaea), Evergreen blackberry ( Rubus laciniatus).",C.8.d.2,Species (Scientific) Name(s) Of Wetland Plants Removed (C.8.d.2),C.8,Wetland Project
+05-1605,3353,4.6,3.9,C.8.d.3,Acres of wetland treated for plant removal/control (C.8.d.3),C.8,Wetland Project
+05-1605,3353,1.6,4.3,C.8.f.2,Artificial Wetland Acres Created  (C.8.f.2),C.8,Wetland Project
+06-2139,4095,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+06-2139,4095,0.64,0.64,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+06-2139,4095,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+06-2139,4095,0.64,0.64,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+06-2139,4095,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+06-2202,4143,0,2.2,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+06-2202,4143,NULL,2.2,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+06-2202,4143,NULL,0.1,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+06-2202,4143,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+06-2202,4143,NULL,32,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+06-2202,4143,NULL,32,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+06-2250,4196,0,0.37,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+06-2250,4196,1,1,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+06-2250,4196,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+06-2250,4196,59,59,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+06-2250,4196,0,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+06-2250,4196,NULL,0.75,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+06-2250,4196,NULL,0.9,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+06-2250,4196,NULL,Alnus Rubra  Pseudotsuga menziesii  Poplulus balsamifera  Tsuga heterophylla  Acer macrophyllum  Rubus spectabilis  Symphicarpos albus  Cornus sericea  Acer circinatum  Rubus parviflorus  Gaultheria shallon  ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+06-2250,4196,NULL,1.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+06-2266,4210,0,0,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+06-2266,4210,5.7,8.4,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+06-2266,4210,NULL,8.4,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+06-2266,4210,NULL,10,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+07-1364,9561,0.56,0.56,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+07-1364,9561,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+07-1364,9561,0.56,0.56,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+07-1364,9561,0.56,0.56,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+07-1364,9561,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+07-1364,9561,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+07-1364,9561,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+07-1643,9727,0,0.07,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1643,9727,NULL,0.07,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+07-1643,9727,0,0.23,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+07-1643,9727,NULL,4,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+07-1643,9727,0,2,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+07-1643,9727,NULL,0.47,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1643,9727,NULL,11.8,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1643,9727,NULL,Pseudotsuga menziesii  Tsuga heterophylla  Thuja plicata  Picea sitchensis  Alnus rubra  Fraxinus latifolia  Acer macrophyllum  Rhamnus purshiana  Salix lasiandra  Populus trichocarpa  Salix sitchensis  Cornus sericea  Lonicera involucrata  Rosa nutk,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1643,9727,NULL,11.8,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1643,9727,NULL,11.8,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+07-1643,9727,NULL,"English Ivy (Hedera helix), Himalayan Blackberry (Rubus armeniacus (syn. Rubus discolor)), Reed Canary Grass (Phalaris arundinacea), Japanese Knotweed (Polygonum cuspidatum (Fallopia japonica)).",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+07-1646,9730,2.78,3,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1646,9730,16.68,17,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1646,9730,NULL,"Thuja plicata, Psuedotsuga menziesii, Picea sitchensis, Abies grandis, Tsuga heterophylla, Acer macrophyllum, Acer circinatum, Alnus rubra, Populas balsamifera, Prunus emarginata, Fraxinus latifolia, Malus fusca, Cornus stolonifera, Salix spp., Ribes",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1646,9730,NULL,12,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1646,9730,NULL,0,C.5.d.2,Miles of Fence Along Stream (C.5.d.2),C.5,Riparian Habitat Project
+07-1646,9730,NULL,0,C.5.d.3,Acres of Riparian Area Protected by fencing (C.5.d.3),C.5,Riparian Habitat Project
+07-1646,9730,NULL,Himalayan Blackberry (Rubus armeniacus)  Reed Canary Grass(Phalaris arundinacea )  Clamatis (Clematis vitalba),C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+07-1646,9730,12,17,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+07-1701,9800,0.3,0,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+07-1701,9800,0.1,0.1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+07-1701,9800,0.3,2,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+07-1701,9800,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+07-1701,9800,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+07-1701,9800,0.78,0.78,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1701,9800,0.78,0.78,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+07-1701,9800,0.78,0.78,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+07-1701,9800,0.3,0.3,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+07-1701,9800,6,6,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+07-1701,9800,0.78,0.78,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1701,9800,0.3,0.3,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1701,9800,6,6,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1701,9800,1,2,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1701,9800,6,6,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1701,9800,0.78,0.78,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1701,9800,3,3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1701,9800,NULL,"Pacific Willow, Red-Osier Dogwood, Spruce, cedar, Oregon Ash, Red Osier Dogwood, Sitka Alder, Red Alder, Pacific Crabapple, Black Cottonwood  ",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1701,9800,3,3,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1709,9810,0,3.5,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1709,9810,3.5,3.5,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1709,9810,5,5,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1709,9810,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1709,9810,NULL,125,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1709,9810,18,18,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1714,9815,1.2,1.2,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1714,9815,0,0,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+07-1714,9815,NULL,1,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1714,9815,NULL,5.8,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1714,9815,NULL,"Acer macrophyllum, Populus balsamifera, Alnus rubra, Pseudotsuga menziesii, Pinus contorta, Picea sitchensis, Tsuga heterophylla, Thuja plicata, Phamnus purshiana, Salix spp, Oemleria cerasiformis, Rosa utkana, Physocarpus capitatus, and others",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1714,9815,NULL,5.8,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1714,9815,NULL,"Rubus discolor,   Polygonum spp.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+07-1714,9815,NULL,6.8,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+07-1735,9841,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+07-1735,9841,2,2,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+07-1735,9841,0.5,0.5,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+07-1735,9841,0.5,0.5,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+07-1735,9841,1,1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+07-1735,9841,0,0.5,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1735,9841,NULL,1,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+07-1735,9841,NULL,1,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+07-1735,9841,NULL,5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+07-1735,9841,NULL,3,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+07-1735,9841,NULL,0.5,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1735,9841,NULL,5,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1735,9841,NULL,6,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1735,9841,NULL,15,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1735,9841,NULL,30,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1735,9841,0,1,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+07-1735,9841,0.3,0.3,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1735,9841,1,1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1735,9841,NULL,"Plants installed included:  Thuja plicata, Tsuga heteropjylla, Rosa nutkana, Rubus spectabilis, Physocarpus capitatus",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1735,9841,1,1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1735,9841,0,5,C.8.b,Total Acres Of Wetland Area Treated (C.8.b),C.8,Wetland Project
+07-1735,9841,0,0.2,C.8.f.2,Artificial Wetland Acres Created  (C.8.f.2),C.8,Wetland Project
+07-1736,9842,0.6,0.38,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1736,9842,NULL,0.06,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+07-1736,9842,NULL,0.04,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+07-1736,9842,NULL,1.9,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+07-1736,9842,NULL,3,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+07-1736,9842,NULL,0.38,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1736,9842,NULL,0.1,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1736,9842,NULL,3,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1736,9842,NULL,12,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1736,9842,NULL,4,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1736,9842,NULL,0.38,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1736,9842,NULL,6.4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1736,9842,NULL,"Acer macrophyllum, Thuja plicata, Pseudotsuga menziesii, Holodiscus discolor, Sambucus racemosa, Ribes sanguineum,  Symphoricarpos albus, Polystichum munitum, Rubus parviflorus, Acer circinatum, Picea sitchensis",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1736,9842,NULL,6.4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1736,9842,NULL,25.9,C.8.b,Total Acres Of Wetland Area Treated (C.8.b),C.8,Wetland Project
+07-1736,9842,NULL,25.9,C.8.e.2,Acres of wetland Improved/Restored (C.8.e.2),C.8,Wetland Project
+07-1737,9843,4,4,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1737,9843,1,1,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+07-1737,9843,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+07-1737,9843,0.5,0.5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+07-1737,9843,5,7,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+07-1737,9843,4,4,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1737,9843,0.7,0.7,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1737,9843,5,7,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1737,9843,10,10,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1737,9843,5,7,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1737,9843,0,0.25,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+07-1743,9853,18,18.8,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1743,9853,25,15.9,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1743,9853,NULL,See attachment #65 for a complete list of riparian plants installed,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1743,9853,NULL,14,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1743,9853,NULL,Japanese Knotweed (Polygnum cuspidatum or Fallopia japonica) Himalayan Blackberry (Rubus armeniacus) and Evergreen Blackberry (Rubus laciniatus),C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+07-1743,9853,21,5.04,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+07-1764,10100,0,0.1,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1764,10100,NULL,0.1,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1764,10100,NULL,0.3,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1764,10100,NULL,1,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1764,10100,NULL,30,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1764,10100,NULL,1,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1764,10100,NULL,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1764,10100,NULL,0,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1764,10100,NULL,N/A,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1764,10100,NULL,0,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+07-1767,10103,0.25,0.25,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+07-1767,10103,NULL,0.25,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+07-1767,10103,NULL,1,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+07-1767,10103,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+07-1767,10103,NULL,200,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+07-1767,10103,NULL,2,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+07-1767,10103,0,0,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+07-1767,10103,NULL,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+07-1767,10103,NULL,0,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+07-1767,10103,NULL,N/A,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+07-1767,10103,NULL,0,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+08-1571,11062,30,60.58,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+08-1571,11062,5,4.4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+08-1571,11062,NULL,Pseudotsuga menziesii  Abies grandes  Pinus contorta  Picea sitchensis  Tsuga heterophylla  Thuja plicata   Pinus monticola  Acer macrophyllum  Prunus emarginata  Corylus cornuta  Populus balsamifera   See attachment #43 for entire plant list.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+08-1571,11062,NULL,4.4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+08-1571,11062,NULL,"Japanese knotweed (Polygonum cuspidatum, or Fallopia japonica)",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+08-1571,11062,120,127,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+08-2043,11754,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+08-2043,11754,0.58,0.58,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+08-2043,11754,0,0,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+08-2043,11754,0.58,0.58,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+08-2043,11754,NULL,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+08-2056,11770,NULL,0.8,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+08-2056,11770,NULL,0,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+08-2056,11770,NULL,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+08-2056,11770,NULL,0,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+08-2056,11770,1.5,1.3,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+08-2056,11770,NULL,0.5,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+08-2056,11770,NULL,0.8,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+08-2056,11770,NULL,7.5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+08-2056,11770,NULL,3,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+08-2056,11770,NULL,0.18,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+08-2056,11770,NULL,0.6,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+08-2056,11770,NULL,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+08-2056,11770,NULL,32,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+08-2056,11770,1,0.15,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+08-2056,11770,NULL,2.1,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+08-2056,11770,NULL,7.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+08-2056,11770,NULL,"Salix lucida, Salix scouleriana, Rosa gymnocarpa, Mahonia aquifolium  Mahonia nervosa, Symphocarpuos albus, Rebes sanguineum, Pinus contorta, Alnus Rubra, Populus trichocarpa, Cornus stolonifera, Rubus spectabilis, Salix lasiandra, Salix Sitchensis",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+08-2056,11770,NULL,7.2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+08-2056,11770,1.8,1.8,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+08-2056,11770,NULL,"Polygonum Bohemium (""Japanese"" Knotweed)",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+09-1263,12275,0.1,0.1,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+09-1263,12275,0,8,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+09-1263,12275,NULL,"Western red cedar, western hemlock, Douglas fir, Sitka spruce, big leag maple, black cottonwood, hooker's willow, Pacific ninebark, red elderberry, red-osier dogwood, scouler's willow, Sitka willow, snowberry",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+09-1263,12275,NULL,3.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+09-1263,12275,NULL,"Blackberry, ivy",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+09-1263,12275,3,8,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+09-1277,12290,400,391,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+09-1277,12290,750,927,C.9.c.2,Yards (linear measure) of Channel Modified/Created (C.9.c.2),C.9,Estuarine / Nearshore Project
+09-1277,12290,400,391,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+09-1277,12290,0.33,0.3,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+09-1277,12290,354,354,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+09-1277,12290,8,8,C.9.h.2,Acres of Estuary Treated with fill placement (C.9.h.2),C.9,Estuarine / Nearshore Project
+09-1279,12292,307,307,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+09-1279,12292,6470,6470,C.9.c.2,Yards (linear measure) of Channel Modified/Created (C.9.c.2),C.9,Estuarine / Nearshore Project
+09-1279,12292,307,307,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+09-1279,12292,0.81,0.81,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+09-1279,12292,307,307,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+09-1279,12292,2,2,C.9.e.2,Number of Tidegates Altered/Removed To Allow Fish Passage (C.9.e.2),C.9,Estuarine / Nearshore Project
+09-1279,12292,307,307,C.9.e.3,Acres opened To Fish Passage through tidegate alteration/removal (C.9.e.3),C.9,Estuarine / Nearshore Project
+09-1279,12292,to be determined,"Purple loosestrife (Lythrum salicaria), yellow-flag iris (Iris pseudacorus), non-native knotweeds (Polygonum cuspidatum, P. polystachyum, P. sachalinense, and P. bohemicum), and similar related species and hybrids.",C.9.j.2,Species (Scientific) Name(s) Of Estuarine Plants Removed (C.9.j.2),C.9,Estuarine / Nearshore Project
+09-1279,12292,40,40,C.9.j.3,Acres of Estuary Treated for plant removal/control (C.9.j.3),C.9,Estuarine / Nearshore Project
+09-1379,12431,0.57,0.57,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+09-1379,12431,39,39.5,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+09-1379,12431,0,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+09-1379,12431,0.57,0.57,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+09-1379,12431,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+09-1379,12431,0,0.57,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+09-1379,12431,20,39.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+09-1379,12431,NULL,Please see final planting plan as builts,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+09-1379,12431,NULL,39.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+09-1379,12431,NULL,Mostly blackberries and pasture grass,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+09-1379,12431,8,20,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+09-1392,12447,0,0,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+09-1392,12447,20.6,23.8,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+09-1392,12447,20.6,13.9,C.6.c.2,Miles of Road Treated for drainage improvements and reconstruction (C.6.c.2),C.6,Upland Habitat And Sediment Project
+09-1392,12447,4,4,C.6.c.3,Average width of road treated for drainage improvements and reconstruction (C.6.c.3),C.6,Upland Habitat And Sediment Project
+09-1392,12447,9.9,9.9,C.6.d.2,Miles of Road Abandoned (C.6.d.2),C.6,Upland Habitat And Sediment Project
+09-1392,12447,4,4,C.6.d.3,Average width of road abandoned (in whole yards) (C.6.d.3),C.6,Upland Habitat And Sediment Project
+09-1410,12474,150,150,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+09-1410,12474,1.4,1.4,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+09-1410,12474,150,150,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+10-1186,13241,0.4,0.2,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+10-1186,13241,4.2,4.1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+10-1186,13241,"western red cedar (Thuja plicata), Sitka spruce (Picea sitchensis), Douglas fir (Pseudotsuga menziesii), big leaf maple (Acer macrophylum), vine maple (Acer circunatum), willows (Salix spp.), black cottonwood (Populus balsamifera ssp. trichocarpa)","western red cedar (Thuja plicata), Sitka spruce (Picea sitchensis), Douglas fir (Pseudotsuga menziesii), big leaf maple (Acer macrophylum), vine maple (Acer circunatum), willows (Salix spp.), black cottonwood (Populus balsamifera ssp. trichocarpa)",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+10-1186,13241,4.2,2.6,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+10-1186,13241,"Himalayan blackberry (Rubus discolor), knotweed (Polygonum spp.)","Himalayan blackberry (Rubus discolor), knotweed (Polygonum spp.)",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+10-1186,13241,4.2,4.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+10-1338,14005,0.07,0.07,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+10-1338,14005,1.57,1.38,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+10-1338,14005,1.38,1.38,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+10-1338,14005,1.5,1.5,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+10-1338,14005,10,10,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+10-1338,14005,59,59,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+10-1338,14005,88,16,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+10-1338,14005,NULL,Japanese Knotweed (Fallopia Japonica),C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+10-1338,14005,10,25,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+10-1338,14005,1.42,1.42,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+10-1338,14005,20.1,25,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+10-1338,14005,"Black Cottonwood (Populus trichocarpa), Western Red Cedar (Thuja plicata), Douglas Fir (Pseudotsuga menziesii), Sitka Spruce (Picea sitchensis)","Black Cottonwood (Populus trichocarpa), Western Red Cedar (Thuja plicata), Douglas Fir (Pseudotsuga menziesii), Sitka Spruce (Picea sitchensis), Sitka Willow (Salix Sitchensis), Red-osier Dogwood (Cornus Serkea), Bigleaf Maple (Acer macrophyllum)",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+10-1338,14005,20.1,9.8,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+10-1365,13439,0.21,0.4,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+10-1365,13439,0.21,0.4,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+10-1365,13439,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+10-1365,13439,0,0.2,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+10-1365,13439,0,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+10-1365,13439,0.25,0.4,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+10-1365,13439,0.2,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+10-1365,13439,0,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+10-1365,13439,30,30,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+10-1365,13439,10,35,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+10-1365,13439,0.1,0.4,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+10-1365,13439,3,2.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+10-1365,13439,NULL,Picea sichensis  Thuja plicata  Tsuga heterophylla  Acer macrophyllum  Populus trichocarpa  Alnus Rubra  Salix lucida ssp. lasiandra  Cornus sericea  Salix scouleriana  Symphoricarpus albus  Acer circinatum    ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+10-1365,13439,2,2.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+11-1263,14643,1,1,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+11-1263,14643,6.1,5.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+11-1263,14643,"Thuja plicata,Picea sitchensis,Pseudotsuga menziesii, Acer macrophyllum,Fraxinos latifolia,Populus balsamifera,Alnus rubra, Corylus cornuta,Crataegus douglasii,Phamnus purshiana,Salix spp, Physocarpus capitatus,Rubus spectabilis, Symphoricarpos albus","Thuja plicata, Picea sitchensis, Pseudotsuga menziesii, Tsuga heterophylla, Pinus contorta, Rhamnus purshiana, Crataegus douglasii, Lonicera involucrata,Spiraea douglasii, Salix spp., Cornus sericea, Physocarpus capitatus, Rubus spectabilis",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+11-1263,14643,6.1,5.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+11-1263,14643,Rubus discolor; Polygonum spp,Rubus discolor; Polygonum spp,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+11-1263,14643,5,6.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+11-1377,14794,0.1,0.81,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+11-1377,14794,1,111.9,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+11-1377,14794,To be determined as part of A&E scope.,"Douglas Fir, Western Redcedar, Western Hemlock",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+11-1377,14794,1,9,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+11-1377,14794,NULL,Blackberries,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+11-1377,14794,1,1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+11-1377,14794,0.17,0,C.5.d.2,Miles of Fence Along Stream (C.5.d.2),C.5,Riparian Habitat Project
+11-1377,14794,136,111.9,C.5.d.3,Acres of Riparian Area Protected by fencing (C.5.d.3),C.5,Riparian Habitat Project
+11-1381,14800,0.5,0.37,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+11-1381,14800,0.75,0.37,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+11-1381,14800,0.5,0.4,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+11-1381,14800,6,3,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+11-1381,14800,20,20,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+11-1381,14800,6,3,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+11-1410,14842,0.25,0.07,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+11-1410,14842,0.25,0.07,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+11-1410,14842,0,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+11-1410,14842,3,3,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+11-1410,14842,7,7,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+11-1410,14842,3,4,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+11-1410,14842,0.5,0.5,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+11-1410,14842,4,4,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+11-1410,14842,Pseudotsuga menziesii; Picea sitchensis; Thuja plicata; Acer macrophyllum; Populus balsamifera ssp. trichocarpa; Malus fusca; Alnus Rubra; Crataegus douglasii; Physocarpus capitatus; Salix spp; Rubus spectabilis; others as appropraite.,Pseudotsuga menziesii; Picea sitchensis; Thuja plicata; Rhamnus purshiana; Malus fusca; Rosa gymnocarpa; Corylus cornuta; Spirea douglasii; Oemlaria cerasiformis; Rosa nutkana; Holodiscus discolor; Physocarpus capitatus; and others. See Attachment.,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+11-1410,14842,4,4,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+11-1410,14842,0.42,0.42,C.5.d.2,Miles of Fence Along Stream (C.5.d.2),C.5,Riparian Habitat Project
+11-1410,14842,4,1.9,C.5.d.3,Acres of Riparian Area Protected by fencing (C.5.d.3),C.5,Riparian Habitat Project
+11-1410,14842,Rubus discolor; polygonum spp; Buddleia davidii,Rubus discolor; polygonum spp; Buddleia davidii,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+11-1410,14842,3.2,3.2,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+11-1590,15111,NULL,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+11-1590,15111,1.08,1.08,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+11-1590,15111,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+11-1590,15111,1.08,1.08,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+11-1590,15111,0,0,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+11-1590,15111,0.01,0.01,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+11-1590,15111,0.01,0.01,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+11-1590,15111,0.1,0.1,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+11-1590,15111,0,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+11-1590,15111,8,8,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+11-1590,15111,3,7,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+11-1650,15267,150,150,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+11-1650,15267,1.4,1.4,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+11-1650,15267,150,150,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+12-1406,15814,100,161,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+12-1406,15814,50,12,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+12-1406,15814,100,161,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+12-1406,15814,Picea sitchensis  Thuja plicata  Tsuga heterophylla  Abies grandis  Acer macrophyllum  Salix sitchensis  Acer circinatum  Physocarpus capitatus  Cornus sericea  Symphoricarpus albus  Rubus parviflorus,Picea sitchensis  Thuja plicata  Tsuga heterophylla  Abies grandis  ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+12-1406,15814,5,14.1,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+12-1406,15814,Polygonum cuspidatum  Polygonum sachalinense  Polygonum polystachyum  Polyganum x bohemicum  ,Polygonum cuspidatum  Polygonum sachalinense  Polygonum polystachyum  Polyganum x bohemicum  ,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+12-1406,15814,NULL,0.8,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+12-1406,15814,NULL,12,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+12-1406,20605,0.01,0.01,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+12-1406,20605,1,1,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+12-1406,20605,Knotweed,Knotweed,C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+12-1406,20605,1,1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+12-1406,20605,0.01,0.01,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+12-1816,16393,1,1,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+12-1816,16393,0,0.1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+12-1816,16393,1,1,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+12-1816,16393,1,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+12-1816,16393,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+12-1927,16563,10.8,10.8,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+12-1927,16563,0.1,0.1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+12-1927,16563,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+12-1927,16563,10.8,10.8,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+12-1927,16563,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+13-1044,16684,0.75,0.64,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+13-1044,16684,0.75,0.64,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+13-1044,16684,1.5,1.3,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+13-1044,16684,7,6,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+13-1044,16684,100,75,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+13-1044,16684,7,6,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+13-1086,16726,2.5,2.8,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+13-1086,16726,115,119.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+13-1086,16726,Thuja plicata  Tsuga heterophylla  Pseudotsuga menziezi  Picea sitchensis  Alnus rubra  Betula papyrifera  Corylus cornuta  Cornus sericea  Acer macrophyllum  Acer circinatum  Symphoricarpos albus  Populus balsamifera   Salix spp.  ,"Abies grandis, Picea sitchensis, Pinus contorta, Pseudotsuga menziesii, Thuja plicata, Tsuga heterophylla, Acer macrophyllum, Betula papyrifera, Fraxinus latifolia, Populus balsamifera, Quercus garryana, Rhamnus purshiana Acer circinatum, Amelanchier alnifolia, Cornus stolonifera, Corylus cornuta, Holodiscus discolor, Mahonia aquifolium Malus fusca, Oemleria cerasiformis, Philadelphus lewisii, Physocarpus capitatus, Ribes sanguineum, Rosa nutkana Rosa pisocarpa, Rubus parviflorus, Rubus spectabi",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+13-1086,16726,45,52.5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+13-1086,16726,"Rubus discolor, Rubus laciniatus, Cirsium arvense, Cirsium vulgare, Phalaris arundinacea, Polygonum spp., Buddleia spp.","Rubus discolor, Rubus laciniatus, Cirsium arvense, Cirsium vulgare, Phalaris arundinacea, Polygonum spp., Buddleia spp.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+13-1086,16726,115,119.7,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+13-1086,16726,1.65,1.96,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+13-1086,16726,2.5,2.8,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+13-1106,16749,1,1,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+13-1106,16749,15000,16879,C.9.l.2,Cubic Yards Of Beach Substrate Placed (C.9.l.2),C.9,Estuarine / Nearshore Project
+13-1106,16749,0.73,0.73,C.9.l.3,Miles of Shoreline Treated for beach nourishment (C.9.l.3),C.9,Estuarine / Nearshore Project
+13-1106,16749,1,1,C.9.l.4,Acres Treated for beach nourishment (C.9.l.4),C.9,Estuarine / Nearshore Project
+13-1106,17204,1.4,1.4,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+13-1106,17204,0.08,0.08,C.9.k.2,Miles of Shoreline Treated for armor modification/removal (C.9.k.2),C.9,Estuarine / Nearshore Project
+13-1106,17204,0.4,0.4,C.9.k.3,Acres of Shoreline Treated for armor modification/removal (C.9.k.3),C.9,Estuarine / Nearshore Project
+13-1106,17204,3000,9888,C.9.l.2,Cubic Yards Of Beach Substrate Placed (C.9.l.2),C.9,Estuarine / Nearshore Project
+13-1106,17204,0.12,0.12,C.9.l.3,Miles of Shoreline Treated for beach nourishment (C.9.l.3),C.9,Estuarine / Nearshore Project
+13-1106,17204,1.4,1.4,C.9.l.4,Acres Treated for beach nourishment (C.9.l.4),C.9,Estuarine / Nearshore Project
+13-1106,17204,NULL,Mahonia aquifolium Lonicera involucrata Artemesia suksdorfia Holodiscus discolor Heracleum lanatum Leymus mollis Ambrosia chamissionis Grindelia integrifolia Lathyrus japonicus Carex macrocephela Symphoricarpos alba Salix hookeriana Holodiscus discol,C.9.r.2,Species (scientific) name(s) of plants. (C.9.r.2),C.9,Estuarine / Nearshore Project
+13-1106,17204,0.5,0.5,C.9.r.3,Acres of Estuarine planting or  native plant establishment (C.9.r.3),C.9,Estuarine / Nearshore Project
+13-1135,16775,0.25,0.3,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+13-1135,16775,0.25,0.3,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+13-1135,16775,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+13-1135,16775,1.1,1.1,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+13-1135,16775,0,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+13-1135,16775,0.35,0.35,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+13-1135,16775,0.2,0.2,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+13-1135,16775,0,0,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+13-1135,16775,70,80,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+13-1135,16775,12,48,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+13-1135,16775,Polygonum cuspidatum (Japanese knotweed).,Polygonum cuspidatum (Japanese knotweed). Purple Loosestrife Blackberry ,C.4.g.2,Species Of Plants Removed/Controlled (C.4.g.2),C.4,Instream Habitat Project
+13-1135,16775,0.4,0.5,C.4.g.3,Miles of Stream Treated for plant removal/control (C.4.g.3),C.4,Instream Habitat Project
+13-1135,16775,0,0,C.4.g.4,Acres of Streambed Treated for plant removal/control (C.4.g.4),C.4,Instream Habitat Project
+13-1135,16775,0.4,0.5,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+13-1135,16775,9.4,10.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+13-1135,16775,Thuja plicata  Pseudotsuga menziesii  Picea sitchensis  Populus trichocarpa  Salix spp  Alnus rubra  Lonicera involucrata  Physocarpus capitatus  Cornus sericea  Symphoricarpos albus  Rubus spectabilis  Rubus parviflorus  Fraxinus latifolia  ,Thuja plicata  Pseudotsuga menziesii  Picea sitchensis  Populus trichocarpa  Salix spp  Alnus rubra  Lonicera involucrata  Physocarpus capitatus  Cornus sericea  Symphoricarpos albus  Rubus spectabilis  Rubus parviflorus  Fraxinus latifolia  ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+13-1135,16775,9.4,10.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+13-1135,16775,0.4,0.5,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+13-1251,17133,1.5,1.5,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+13-1251,17133,0.1,0.1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+13-1251,17133,1.5,1.5,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+13-1251,17133,1,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+13-1251,17133,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+13-1471,17177,2.82,2.82,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+13-1471,17177,0.1,0.1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+13-1471,17177,1.42,1.42,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+13-1471,17177,1,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+13-1471,17177,2,2,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+13-1471,17177,1.4,1.4,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+13-1471,17177,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+14-1226,17506,0.19,0.19,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+14-1226,17506,0.19,0.19,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+14-1226,17506,0,0.04,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+14-1226,17506,0,0.2,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+14-1226,17506,0,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+14-1226,17506,0.19,0.19,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+14-1226,17506,0.3,0.3,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+14-1226,17506,10,13,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+14-1226,17506,4,4,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+14-1226,17506,114,13,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+14-1226,17506,0.16,0.19,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+14-1226,17506,1,0.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+14-1226,17506,NULL,"Cornus sericea, Symphoricarpos albus, Picea sitchensis, Thuja plicata, Alnus rubra, Acer macrophyllum, Populus balsamifera, Salix lucida",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+14-1226,17506,1,0.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+14-1226,17506,0.16,0.19,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+14-1356,17714,0.33,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+14-1356,17714,8,0,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+14-1356,17714,"Mixture of native conifers, hardwoods, and shrubs",N/A see notes,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+14-1356,17714,8,0,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+14-1356,17714,0.33,0,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+14-1356,17715,0.2,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+14-1356,17715,4,0,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+14-1356,17715,Will be determined after acquisition., N/A see note,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+14-1356,17715,4,0,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+14-1356,17715,0.2,0,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+15-1110,20018,0.5,1.8,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+15-1110,20018,20,13,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+15-1110,20018,280,170,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+15-1110,20018,280,170,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+15-1110,20160,0.5,0.5,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+15-1110,20160,0.5,0.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+15-1110,20160,31.5,27,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+15-1110,20018,20,13,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+15-1110,20018,"Thuja plicata, Picea sitchensis, Tsuga heterophylla, Abies grandis","Thuja plicata (2500), Picea sitchensis (2000), Tsuga heterophylla (1000), Abies grandis (2000), and Pseudotsuga douglassii (1000) = 8500 trees planted.",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+15-1110,20018,5,22.6,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+15-1110,20018,Primarily knotweed.  Other listed noxious weeds will be surveyed and controlled as practical.,"Bohemian, Japanese and giant knotweed.",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+15-1110,20160,Primarily knotweed.  Other listed noxious weeds will be surveyed and controlled as practicle.,"Japanese, Himalayan, Bohemian and giant knotweed",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+15-1110,20160,31.5,27,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+15-1124,20019,0.25,0.15,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+15-1124,20019,0.25,0.15,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+15-1124,20019,0,0,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+15-1124,20019,3,1,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+15-1124,20019,7,7,C.4.d.6,Yards Of Average Stream-Width At Mid-Point Of Worksite (C.4.d.6),C.4,Instream Habitat Project
+15-1124,20019,2,1,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+15-1131,20091,0.04,0.02,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+15-1131,20091,0.04,0.02,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+15-1131,20091,0.1,0.1,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+15-1131,20091,2,2,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+15-1131,20091,2,2,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+15-1131,20028,0.36,0.21,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+15-1131,20028,0.36,0.21,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+15-1131,20028,0.2,0.1,C.4.d.4,Acres Of Streambed Treated for channel structure placement (C.4.d.4),C.4,Instream Habitat Project
+15-1131,20028,10,10,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+15-1131,20028,10,10,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+15-1131,20028,0.3,0.22,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+15-1131,20028,1.9,2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+15-1131,20028,"Including but not limited to: Willow [salix ssp.], Sitka spruce [Picea sitchensis], red alder [Alnus rubra], bitter cherry [Prunus emarginata], W. red cedar [Thuja plicata], black twinberry [Lonicera involucrata], red elderberry [Sambucus racemosa]",red alder shore pine black cottonwood Scouler willow black hawthorn Sitka spruce cascara Western redcedar Pacific ninebark nootka rose salmonberry thimbleberry vine maple bigleaf maple snowberry Pacific willow Sitka willow red-osier dogwood Douglas-fir low Oregon grape Indian plum; osoberry red-flowering currant Pacific dogwood ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+15-1131,20028,1.9,2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+15-1131,20028,0.3,0.2,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+15-1131,20091,0.36,0.02,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+15-1131,20091,1.9,0.2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+15-1131,20091,"Including but not limited to: Willow [salix ssp.], Sitka spruce [Picea sitchensis], red alder [Alnus rubra], bitter cherry [Prunus emarginata], W. red cedar [Thuja plicata], black twinberry [Lonicera involucrata], red elderberry [Sambucus racemosa]",red alder shore pine black cottonwood Scouler willow black hawthorn Sitka spruce cascara Western redcedar Pacific ninebark nootka rose salmonberry thimbleberry vine maple bigleaf maple snowberry Pacific willow Sitka willow red-osier dogwood Douglas-fir low Oregon grape Indian plum; osoberry red-flowering currant Pacific dogwood ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+15-1131,20091,0.2,0.2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+15-1131,20091,0.04,0.02,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+15-1198,20103,0.71,0.71,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+15-1198,20103,6.3,0.1,C.2.b.2,Square Miles Of streambed made accessible (C.2.b.2),C.2,Fish Passage Improvement
+15-1198,20103,0.71,0.71,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+15-1198,20103,2,2,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+15-1198,20103,3,3,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+15-1198,20103,0.55,0.55,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+15-1198,20103,0.55,0.55,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+15-1198,20103,0.71,0.71,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+15-1198,20103,6.3,6.1,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+15-1198,20103,0,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+15-1198,20103,0.31,0.71,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+15-1198,20103,5,11.5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+15-1198,20103,Various natives.,"Thuja plicata, Picea sitchensis, Alnus rubra, Acer macrophyllum, Rubus spectabilis, Lonicera involucrata, Symphoricarpos albus, Cornus sericea, Salix sitchensis, S. lasiandra, S. scouleriana, Populus balsamifera, Physocarpus capitatus, Rosa nutkana, Spiraea douglasii, Oemlaria cerasiformis",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+15-1198,20103,5,10,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+15-1198,20103,0.31,0.71,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+16-1318,21112,225,250,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+16-1318,21112,225,250,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+16-1318,21112,2.4,2.4,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+16-1318,21112,250,250,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+16-1318,21112,2,2,C.9.e.2,Number of Tidegates Altered/Removed To Allow Fish Passage (C.9.e.2),C.9,Estuarine / Nearshore Project
+16-1318,21112,225,250,C.9.e.3,Acres opened To Fish Passage through tidegate alteration/removal (C.9.e.3),C.9,Estuarine / Nearshore Project
+16-1318,21112,1,1,C.9.g.2,Acres of Estuary Treated through fill material removal (C.9.g.2),C.9,Estuarine / Nearshore Project
+16-1318,21112,10,31,C.9.h.2,Acres of Estuary Treated with fill placement (C.9.h.2),C.9,Estuarine / Nearshore Project
+16-1318,21112,0,0,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+16-1318,21112,0,0,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+16-1318,21112,5,5,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+16-1318,21112,TBD,30%   Saltgrass  20%   Tufted Hairgrass  15%   Baltic Rush  20%   Red Fescue  15%   Meadow Barley,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+16-1318,21112,5,5,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+16-1356,21122,87.7,87.7,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+16-1356,21122,5700,5700,C.9.c.2,Yards (linear measure) of Channel Modified/Created (C.9.c.2),C.9,Estuarine / Nearshore Project
+16-1356,21122,4.4,4.4,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+16-1356,21122,1.3,1.3,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+16-1356,21122,87.7,87.7,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+16-1356,21122,1,1,C.9.e.2,Number of Tidegates Altered/Removed To Allow Fish Passage (C.9.e.2),C.9,Estuarine / Nearshore Project
+16-1356,21122,87.7,87.7,C.9.e.3,Acres opened To Fish Passage through tidegate alteration/removal (C.9.e.3),C.9,Estuarine / Nearshore Project
+16-1356,21122,6.1,6.1,C.9.h.2,Acres of Estuary Treated with fill placement (C.9.h.2),C.9,Estuarine / Nearshore Project
+16-1356,21122,10,10,C.9.i.2,Acres of Estuary Treated through slope regrading (C.9.i.2),C.9,Estuarine / Nearshore Project
+16-1356,21122,"Plant list being prepared, mixture of native shrubs and trees that are salt tolerant",Estuarine plants have seeded in naturally across most of the site,C.9.r.2,Species (scientific) name(s) of plants. (C.9.r.2),C.9,Estuarine / Nearshore Project
+16-1356,21122,2.1,40,C.9.r.3,Acres of Estuarine planting or  native plant establishment (C.9.r.3),C.9,Estuarine / Nearshore Project
+16-1356,21122,1.3,1.3,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+16-1356,21122,89,89,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+16-1356,21122,15,15,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+16-1356,21122,1.3,1.3,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+16-1539,21302,1.11,0.91,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+16-1539,21302,1.11,0.91,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+16-1539,21302,1.11,0.91,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+16-1539,21302,25.3,27.7,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+16-1539,21302,"Thuja plicata, Tsuga heterophylla, Pseudotsuga menziezi, Picea sitchensis, Rhamnus purshiana, Betula papyrifera, Corylus cornuta, Cornus stolonifera, Acer macrophyllum, Acer circinatum, Symphoricarpos albus, Populus balsamifera , Salix spp.",Abies grandis Picea sitchensis Pinus contorta Pseudotsuga menziesii Thuja plicata Tsuga heterophylla Acer macrophyllum Alnus rubra Betula papyrifera Crataegus douglasii Fraxinus latifolia Malus fusca Populus balsamifera  Prunus emerginata Quercus garryana Rhamnus purshiana Acer circinatum Amelanchier alnifolia Cornus stolonifera Corylus cornuta Holodiscus discolor Lonicera involucrata Mahonia spp. Oemleria cerasiformis Philadelphus lewisii Physocarpus capitatus Ribes sanguineum Rosa gymnocarpa  ,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+16-1539,21302,25.3,27.7,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+16-1539,21302,"Rubus discolor, Rubus laciniatus, Cirsium arvense, Cirsium vulgare, Phalaris arundinacea, Polygonum spp., Buddleia spp., Cytisus scoparius, Impatiens glandulifera","Rubus discolor, Rubus laciniatus, Cirsum arvense, Cirsium vulgare, Phalaris arundinacea, Polygonum spp., Buddleia spp., Cytisus scoparius ",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+16-1539,21302,25.3,22.6,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+16-1539,21302,1.01,2.2,C.11.b.2,Miles of Streambank provided stewardship (C.11.b.2),C.11,Site Stewardship Project
+16-1559,21326,74,74,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+16-1559,21326,74,74,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+16-1559,21326,0.26,0.33,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+16-1559,21326,74,74,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+16-1608,21372,2,2,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+16-1608,21372,2,2,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+16-1608,21372,0.99,0.99,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+16-1608,28655,0.01,0,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+16-1608,28655,1,1.31,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+16-1608,28655,1,2,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+16-1608,28655,1,0,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+16-1608,28655,2,2,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+16-1608,28656,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+16-1608,28656,1,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+16-1608,28656,0.8,0.8,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+16-1608,21372,0.99,0.99,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+16-1608,28655,1.3,1.31,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+16-1608,28656,0.8,0.8,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+16-2758,22678,5.43,5.43,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+16-2758,22678,5.43,5.43,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+16-2758,22678,1,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+16-2758,22678,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+18-1416,25293,0.2,0.2,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+18-1416,25293,1,1,C.9.f.2,Number of Culverts Modified/Removed To Allow Fish Passage (C.9.f.2),C.9,Estuarine / Nearshore Project
+18-1416,25293,0.2,0.2,C.9.f.3,Acres Opened To Fish Passage through culvert modification/removal (C.9.f.3),C.9,Estuarine / Nearshore Project
+18-1416,25293,phalaris arundinacea,phalaris arundinacea,C.9.j.2,Species (Scientific) Name(s) Of Estuarine Plants Removed (C.9.j.2),C.9,Estuarine / Nearshore Project
+18-1416,25293,0.2,0.2,C.9.j.3,Acres of Estuary Treated for plant removal/control (C.9.j.3),C.9,Estuarine / Nearshore Project
+18-1416,25293,0.2,0.2,C.9.q.2,Acres of Estuary Created (C.9.q.2),C.9,Estuarine / Nearshore Project
+18-1416,25293,0.1,0.1,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+18-1416,25293,0.1,0.1,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+18-1416,25293,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+18-1416,25293,0.2,0.2,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+18-1416,25293,3,3,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+18-1416,25293,0.1,0.1,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+18-1416,25293,1,1,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+18-1416,25293,4,4,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+18-1416,25293,0.1,0.1,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+18-1416,25293,0.2,0.2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+18-1416,25293,NULL,"Pinus contorta, Thuja plicata, Picea sitchensis, Acer circinatum, Mahonia aquifolium, Lonicera involucrata, Physocarpus capitatus, Morella californica, Rosa nutkana, Vaccinium ovatum, Amelanchier arborea, Philadelphus",C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+18-1416,25293,0.2,0.2,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+18-1416,25293,"Rubus armeniacus, Phalaris arundinacea","phalaris arundinacea, rubus armeniacus, cytisus scoparius, yellow flag iris",C.5.h.2,Species of Plants Treated/Removed in riparian (C.5.h.2),C.5,Riparian Habitat Project
+18-1416,25293,0.1,0.1,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+18-1416,25293,0.1,0.1,C.5.j.2,Acres of Riparian Area Treated. (C.5.j.2),C.5,Riparian Habitat Project
+18-1416,25293,0.1,0.1,C.5.h.4,Miles of streambank treated for plant removal/control (C.5.h.4),C.5,Riparian Habitat Project
+18-1532,25395,0.58,0.58,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+18-1532,25395,0.64,0.64,C.4.c.3,Miles of Stream Treated for channel reconfiguration and connectivity (C.4.c.3),C.4,Instream Habitat Project
+18-1532,25395,0,0,C.4.c.4,Miles of Off-Channel Stream Created or Connected (C.4.c.4),C.4,Instream Habitat Project
+18-1532,25395,0,0,C.4.c.5,Acres Of Channel/Off-Channel Connected Or Added (C.4.c.5),C.4,Instream Habitat Project
+18-1532,25395,1,0,C.4.c.6,Instream Pools Created/Added (C.4.c.6),C.4,Instream Habitat Project
+18-1532,25395,0.58,0.58,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+18-1532,25395,1,1,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+18-1532,25395,1,1,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+18-1532,25395,0.58,0.58,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+18-1532,25395,25,25,C.6.b.1,Acres of Upland Habitat Area Treated (C.6.b.1),C.6,Upland Habitat And Sediment Project
+18-1532,25395,0,0,C.6.b.2,Miles of Road Treated (C.6.b.2),C.6,Upland Habitat And Sediment Project
+18-1532,25395,0.7,0.7,C.6.d.2,Miles of Road Abandoned (C.6.d.2),C.6,Upland Habitat And Sediment Project
+18-1532,25395,7,7,C.6.e.3,Number of Erosion/Sediment Control Installations (C.6.e.3),C.6,Upland Habitat And Sediment Project
+18-1589,25448,4.21,4.21,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+18-1589,25448,4.21,4.21,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+18-1589,25448,1,1,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+18-1589,25448,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+18-1671,25537,1,2,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+18-1671,25537,37,37,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+18-1671,25537,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+18-2028,27027,0,0,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+18-2028,27027,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+18-2028,27027,2.46,2.46,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+18-2028,27027,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+18-2319,27426,250,250,C.9.d.3,Acres of Habitat Made Available To Salmonids through dike or berm modification/removal (C.9.d.3),C.9,Estuarine / Nearshore Project
+18-2319,27426,2,2,C.9.e.2,Number of Tidegates Altered/Removed To Allow Fish Passage (C.9.e.2),C.9,Estuarine / Nearshore Project
+18-2319,27426,250,250,C.9.e.3,Acres opened To Fish Passage through tidegate alteration/removal (C.9.e.3),C.9,Estuarine / Nearshore Project
+18-2319,27426,3,1,C.9.g.2,Acres of Estuary Treated through fill material removal (C.9.g.2),C.9,Estuarine / Nearshore Project
+18-2319,27426,1,31,C.9.h.2,Acres of Estuary Treated with fill placement (C.9.h.2),C.9,Estuarine / Nearshore Project
+18-2319,27426,250,250,C.9.b,Total Amount Of Estuarine / Nearshore Acres Treated (C.9.b),C.9,Estuarine / Nearshore Project
+18-2319,27426,250,250,C.9.c.3,Acres of Estuary Treated (C.9.c.3),C.9,Estuarine / Nearshore Project
+18-2319,27426,2.4,2.4,C.9.d.2,Miles Of Dikes Modified/Removed (C.9.d.2),C.9,Estuarine / Nearshore Project
+18-2319,27426,0.1,0.1,C.9.n.2,Acres Treated for debris removal (C.9.n.2),C.9,Estuarine / Nearshore Project
+19-1366,28507,0.38,0.38,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+19-1366,28507,0.38,0.38,C.4.d.3,Miles of Stream Treated for channel structure placement (C.4.d.3),C.4,Instream Habitat Project
+19-1366,28507,1,10,C.4.d.5,Pools Created through channel structure placement (C.4.d.5),C.4,Instream Habitat Project
+19-1366,28507,90,17,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+19-1366,28507,0.38,0.38,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+19-1366,28507,12.3,12.3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+19-1366,28507,NULL,Thuja plicata Pseudotsuga menziesii Tsuga heterophylla Picea Sitchensis Alnus rubra,C.5.c.2,Species Of Plants planted in riparian (C.5.c.2),C.5,Riparian Habitat Project
+19-1366,28507,12.3,12.3,C.5.c.3,Acres Planted in riparian (C.5.c.3),C.5,Riparian Habitat Project
+19-1366,28507,0.38,0.38,C.5.c.4,Miles of streambank planted (C.5.c.4),C.5,Riparian Habitat Project
+20-1661,30165,0.25,0.25,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+20-1661,30165,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+20-1661,30165,0.4,0.4,C.2.g.3,Miles of stream made accessible by bridge installation/repair (C.2.g.3),C.2,Fish Passage Improvement
+20-1661,30165,1,1,C.2.g.2,Number of bridges (C.2.g.2),C.2,Fish Passage Improvement
+99-1367,8627,1,1,C.4.b,Total Miles Of Instream Habitat Treated (C.4.b),C.4,Instream Habitat Project
+99-1367,8627,8,8,C.4.d.7,Number of structures placed in channel (C.4.d.7),C.4,Instream Habitat Project
+99-1367,8627,0,0,C.4.e.3,Miles of Streambank Stabilized (C.4.e.3),C.4,Instream Habitat Project
+99-1369,8633,1.3,1.3,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+99-1369,8633,2.3,2.3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+99-1369,8633,4,4,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+99-1381,8667,1,1,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+99-1381,8667,20,20,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+99-1381,8667,0,0,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+99-1382,8675,0.2,0.2,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+99-1382,8675,0.3,0.3,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+99-1382,8675,0.3,0.3,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+99-1384,8677,0.5,0.5,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+99-1384,8677,20,20,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+99-1384,8677,0,0,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+99-1401,8688,5.4,5.4,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+99-1401,8688,46,46,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+99-1401,8688,46,46,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+99-1425,8698,4,4,C.5.b.1,Total Riparian Miles Streambank Treated (C.5.b.1),C.5,Riparian Habitat Project
+99-1425,8698,3.2,3.2,C.5.b.2,Total Riparian Acres Treated (C.5.b.2),C.5,Riparian Habitat Project
+99-1425,8698,0,0,C.5.h.3,Acres of riparian treated for plant removal/control (C.5.h.3),C.5,Riparian Habitat Project
+99-1429,8704,38.7,38.7,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+99-1429,8704,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+99-1429,8704,0,0,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+99-1429,8704,38.7,38.7,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+99-1429,8704,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+99-1452,8721,5,5,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+99-1452,8721,3,3,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+99-1452,8721,5,5,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+99-1452,8721,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+99-1452,8721,3,3,C.2.f.2,Number of culverts (C.2.f.2),C.2,Fish Passage Improvement
+99-1452,8721,3,3,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+99-1706,8983,14,14,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+99-1706,8983,2,2,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+99-1706,8983,14,14,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+99-1706,8983,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+99-1706,8983,2,2,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
+99-1720,9008,3,3,C.2.b.1,Miles Of Stream Made Accessible (SRFB) (C.2.b.1),C.2,Fish Passage Improvement
+99-1720,9008,1,1,C.2.c.2,Number of Blockages/Impediments/Barriers Removed/Altered (C.2.c.2),C.2,Fish Passage Improvement
+99-1720,9008,3,3,C.2.f.3,Miles of stream made accessible by culvert installation/repair (C.2.f.3),C.2,Fish Passage Improvement
+99-1720,9008,0,0,C.2.i.3,Miles of stream made accessible by road crossing removal (C.2.i.3),C.2,Fish Passage Improvement
+99-1720,9008,1,1,C.2.b.4,Number of blockages / impediments / barriers impeding passage (C.2.b.4),C.2,Fish Passage Improvement
