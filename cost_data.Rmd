@@ -14,4 +14,14 @@ library(tidyverse)
 library(ggplot2)
 ```
 
-I want to load in data here
+```{r}
+## Import Cost data
+
+cost_project<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Project.csv"))
+cost_land_type<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Acquisition_Land_Type.csv"))
+cost_metrics<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Metrics.csv"))
+cost_costm<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Cost_Metrics.csv"))
+cost_ac_metrics<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Acquisition_Metrics.csv"))
+cost_worksite<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Worksite.csv"))
+```
+
