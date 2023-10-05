@@ -12,6 +12,7 @@ library(here)
 library(janitor)
 library(tidyverse)
 library(ggplot2)
+library(xlsx)
 ```
 
 ```{r}
@@ -26,6 +27,8 @@ cost_worksite<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Wor
 
 ```{r}
 ## Import Environmental Data (HARP)
-
+metrics<-read_csv(here("data", "SRP_metrics.csv")) %>% clean_names()
+metric_identifier<-as.data.frame(unique(metrics$metric_identifier))
+write.xlxs(metric_identifier, "unique_identifiers")
 ```
 
