@@ -27,5 +27,13 @@ cost_worksite<-read_csv(here("data", "SRP_Cost_Data", "NOAA_Stilly_Snohomish_Wor
 ```{r}
 ## Import Environmental Data (HARP)
 
+metric_sum <- cost_metrics %>% 
+  group_by(MetricIdentifier) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+
+
+ggplot(cost_metrics, aes(x = MetricIdentifier)) +
+  geom_bar()
 ```
 

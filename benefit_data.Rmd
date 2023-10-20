@@ -1,0 +1,31 @@
+---
+title: "benefit_data"
+author: "Ray Hunter"
+date: "2023-10-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(gt)
+```
+
+```{r}
+harp_bens <- read.csv("/Users/rayhunter/Desktop/GP/gp_anadromites/data/benefits/ind_subbasin_rest_20s_2023-09-21 - ind_subbasin_rest_20s_2023-09-21.csv")
+```
+
+```{r}
+harp_mod <- harp_bens %>% 
+  filter(pop == "fall_chinook")
+
+ben_by_scen <- harp_mod %>% 
+  group_by(scenario) %>% 
+    summarise(total_benefit = sum(n)) %>% 
+  arrange(desc(total_benefit))
+
+
+ben_by_scen %>% gt()
+```
+
