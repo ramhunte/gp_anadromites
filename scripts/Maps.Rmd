@@ -12,6 +12,7 @@ library(tidyverse)
 library(sf)
 library(ggspatial)
 library(tmap)
+library(leaflet)
 ```
 
 ```{r}
@@ -62,7 +63,14 @@ ggplot() +
 
 ```
 
+# interactive 
+```{r}
 
+
+  leaflet(flood_sf) %>%
+  addTiles() %>%
+  addPolygons()
+```
 
 
 
