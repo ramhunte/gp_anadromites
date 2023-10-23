@@ -31,6 +31,7 @@ flow_df <- fortify(flow_stl)
 ```
 
 ```{r}
+#compress into x and y (plotting hates z)
 flow_sf <- st_zm(flow_stl, what = "ZM")
 flood_sf <- st_zm(flood_stl, what = "ZM")
 subs_sf <- st_zm(subs_stl, what = "ZM")
