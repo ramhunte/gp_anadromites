@@ -1,13 +1,15 @@
 ---
-title: "maps"
-author: "Ray Hunter"
-date: "2023-10-20"
+title: "cost_floodplain"
+author: "Meghan Roberts"
+date: "2023-10-23"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
 
+```{r}
 library(tidyverse)
 library(sf)
 library(ggspatial)
@@ -36,40 +38,4 @@ flow_sf <- st_zm(flow_stl, what = "ZM")
 flood_sf <- st_zm(flood_stl, what = "ZM")
 subs_sf <- st_zm(subs_stl, what = "ZM")
 ```
-
-
-### Flow Map 
-```{r}
-
-
-
-ggplot() +
-  geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = flow_sf, aes(color = Habitat)) +
-  geom_sf(data = flood_sf, aes(fill = Period)) + 
-  theme_minimal() +
-  labs(title = "Stillaguamish Basin", color = "Stream type", fill = "Wetland Status")
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

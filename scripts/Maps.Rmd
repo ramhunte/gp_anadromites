@@ -52,7 +52,15 @@ ggplot() +
 ```
 
 
+## Flood Map 
+```{r}
+ggplot() + 
+  geom_sf(data = flood_df, aes(fill = "blue")) + 
+  theme_minimal()
 
+
+
+```
 
 
 
