@@ -1,0 +1,27 @@
+reach_name,multiplier
+MS_Snohomish,0.7
+Lower_MS_Skykomish,1.7
+Upper_MS_Skykomish,2
+Lower_NF_Skykomish,2.5
+Upper_NF_Skykomish,0.8
+Lower_SF_Skykomish,0.2
+Middle_SF_Skykomish,0.5
+Upper_SF_Skykomish,1
+Miller_River,1.5
+Beckler_River,1
+Foss_River,0.8
+Tye_River,0.8
+Olney_Creek,0.5
+Wallace_River,0.2
+Snoqualmie_Mouth,1
+Mid_MS_Snoqualmie,0.3
+Upper_MS_Snoq_01,0.3
+Upper_MS_Snoq_02,0.3
+Lower_Tolt_River,0.8
+NF_Tolt_River,0.1
+SF_Tolt_River,0.4
+Raging_River,0.5
+Lower_Pilchuck_River,1
+Middle_Pilchuck_River,1.8
+Upper_Pilchuck_River,1.2
+Lower Sultan_River,0.7
