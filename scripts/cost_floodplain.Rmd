@@ -51,7 +51,8 @@ flood_sf <- st_zm(flood_stl, what = "ZM")
 subs_sf <- st_zm(subs_stl, what = "ZM")
 ```
 
-Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names
+Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.
+Also change the low, medium and high division asscoiated with the multipliers
 ```{r}
 ## filtering for only floodplains that existed historically, but not currently
 hist_flood_stl<-flood_sf %>% 
@@ -67,8 +68,41 @@ hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
 side_channel_mult_stl<-read_csv(here("data", "HARP_Side_Channel_Mult_STL.csv"))
 #need to fix because not all reach names have noaa_subba matches
 ## Join the variables with the side channel multipliers
-hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))
-
+hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))%>% 
+  mutate(project_number = 1:n())
+## Subtract one from multiplier column and do absolute value
+hist_flood_stl_var_mult$multiplier<-abs(hist_flood_stl_var_mult$multiplier-1)
+## Histogram of Multiplier Values
+hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column", xlab = "Multiplier Values")
+## Define values for low, medium and high based on histogram
+## Low <0.4
+## Medium >0.4 and <1
+## High >1
 ```
 
+Both ponds have a side channel multiplier of 0
+Assumed substantial material cost for upper and lower cost estimates
+Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28% (https://www.officialdata.org/us/inflation/2003?amount=30000)
+```{r}
+# Create a function to calculate cost estimates with inflation adjustment
+calculate_pond_cost_inflation <- function(input_df) {
+  # Filter for hab_unit == Pond or Lake
+  filtered_df <- input_df %>% filter(hab_unit %in% c("Pond", "Lake"))
+  
+  # Create a new dataframe
+  pond_cost_stl <- data.frame(
+    project_number = filtered_df$project_number,
+    upper_cost = ifelse(filtered_df$multiplier < 0.4, 40000, 
+                        ifelse(filtered_df$multiplier <= 1, 60000, 80000)) * 1.6728,
+    lower_cost = ifelse(filtered_df$multiplier < 0.4, 30000, 
+                        ifelse(filtered_df$multiplier <= 1, 40000, 60000)) * 1.6728
+  )
+  
+  return(pond_cost_stl)
+}
+
+# Call the function with the provided dataframe
+pond_cost_stl_inflated <- calculate_pond_cost_inflation(hist_flood_stl_var_mult)
+
+```
 
