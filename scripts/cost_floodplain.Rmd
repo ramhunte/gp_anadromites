@@ -84,8 +84,8 @@ Both ponds have a side channel multiplier of 0
 Assumed substantial material cost for upper and lower cost estimates
 Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28% (https://www.officialdata.org/us/inflation/2003?amount=30000)
 ```{r}
-# Create a function to calculate cost estimates with inflation adjustment
-calculate_pond_cost_inflation <- function(input_df) {
+# Create a function to calculate cost estimates with inflation adjustment while retaining the geometry column
+calculate_pond_cost_inflation_geometry <- function(input_df) {
   # Filter for hab_unit == Pond or Lake
   filtered_df <- input_df %>% filter(hab_unit %in% c("Pond", "Lake"))
   
@@ -98,11 +98,14 @@ calculate_pond_cost_inflation <- function(input_df) {
                         ifelse(filtered_df$multiplier <= 1, 40000, 60000)) * 1.6728
   )
   
+  # Add the geometry column to the new dataframe
+  pond_cost_stl$geometry <- filtered_df$geometry
+  
   return(pond_cost_stl)
 }
 
 # Call the function with the provided dataframe
-pond_cost_stl_inflated <- calculate_pond_cost_inflation(hist_flood_stl_var_mult)
+pond_cost_stl_inflated_geometry <- calculate_pond_cost_inflation_geometry(hist_flood_stl_var_mult)
 
 ```
 
