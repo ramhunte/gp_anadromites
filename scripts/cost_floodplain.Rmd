@@ -16,6 +16,7 @@ library(ggspatial)
 library(tmap)
 library(here)
 library(janitor)
+library(ggplot2)
 ```
 # attemtp to make a source 
 ```{r}
@@ -50,14 +51,24 @@ flood_sf <- st_zm(flood_stl, what = "ZM")
 subs_sf <- st_zm(subs_stl, what = "ZM")
 ```
 
+Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names
 ```{r}
+## filtering for only floodplains that existed historically, but not currently
 hist_flood_stl<-flood_sf %>% 
   filter(period=="Hist")
+## filtering for specific columns to make the join cleaner
 slope_width_stl<-flow_sf %>% 
-  select(noaaid, slope, wint_width, pond_overl, chinook) %>% 
+  select(noaaid, slope, wint_width, pond_overl, chinook, noaa_subba) %>% 
   st_drop_geometry()
 #change width as needed
+## Join the floodplain habitats with the associated stream variables
 hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
+## read in side channel multiplier info
+side_channel_mult_stl<-read_csv(here("data", "HARP_Side_Channel_Mult_STL.csv"))
+#need to fix because not all reach names have noaa_subba matches
+## Join the variables with the side channel multipliers
+hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))
+
 ```
 
 
