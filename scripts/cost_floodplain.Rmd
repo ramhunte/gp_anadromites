@@ -83,19 +83,21 @@ hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column"
 Both ponds have a side channel multiplier of 0
 Assumed substantial material cost for upper and lower cost estimates
 Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28% (https://www.officialdata.org/us/inflation/2003?amount=30000)
+
+NEW ONE
 ```{r}
-# Create a function to calculate cost estimates with inflation adjustment while retaining the geometry column
-calculate_pond_cost_inflation_geometry <- function(input_df) {
+# Create a function to calculate cost estimates with inflation adjustment
+calculate_pond_cost_inflation_geometry_custom <- function(input_df, low_bound, medium_bound, high_bound) {
   # Filter for hab_unit == Pond or Lake
   filtered_df <- input_df %>% filter(hab_unit %in% c("Pond", "Lake"))
   
   # Create a new dataframe
   pond_cost_stl <- data.frame(
     project_number = filtered_df$project_number,
-    upper_cost = ifelse(filtered_df$multiplier < 0.4, 40000, 
-                        ifelse(filtered_df$multiplier <= 1, 60000, 80000)) * 1.6728,
-    lower_cost = ifelse(filtered_df$multiplier < 0.4, 30000, 
-                        ifelse(filtered_df$multiplier <= 1, 40000, 60000)) * 1.6728
+    upper_cost = ifelse(filtered_df$multiplier < medium_bound, 40000, 
+                        ifelse(filtered_df$multiplier <= high_bound, 60000, 80000)) * 1.6728,
+    lower_cost = ifelse(filtered_df$multiplier < medium_bound, 30000, 
+                        ifelse(filtered_df$multiplier <= high_bound, 40000, 60000)) * 1.6728
   )
   
   # Add the geometry column to the new dataframe
@@ -104,8 +106,14 @@ calculate_pond_cost_inflation_geometry <- function(input_df) {
   return(pond_cost_stl)
 }
 
-# Call the function with the provided dataframe
-pond_cost_stl_inflated_geometry <- calculate_pond_cost_inflation_geometry(hist_flood_stl_var_mult)
+# Define the bounds for low, medium, and high multipliers
+low_multiplier_bound <- 0
+medium_multiplier_bound <- 0.4
+high_multiplier_bound <- 1
+
+# Call the function with the provided dataframe and custom bounds
+pond_cost_stl_inflated_custom <- calculate_pond_cost_inflation_geometry_custom(
+  hist_flood_stl_var_mult, low_multiplier_bound, medium_multiplier_bound, high_multiplier_bound)
 ```
 
 Create a function that takes slope and width to determine stream energy
@@ -175,3 +183,4 @@ high_width_range <- c(70, 300) #arbitrary large number
 marsh_energy_stl <- assign_energy_width(hist_flood_stl_var_mult, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range)
 ```
 
+Create a function that takes different multiplier values and energies and creates a upper and lower cost range
