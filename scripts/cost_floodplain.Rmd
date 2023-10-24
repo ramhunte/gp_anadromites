@@ -15,6 +15,7 @@ library(sf)
 library(ggspatial)
 library(tmap)
 library(here)
+library(janitor)
 ```
 # attemtp to make a source 
 ```{r}
@@ -24,10 +25,22 @@ library(here)
 
 
 ```{r}
-flow_stl <- st_read(here("data", "Flowline_STL", "Flowline_STL_20220928.shp"))
-flood_stl <- st_read(here("data", "Floodplain_STL", "Floodplain_STL_20220928.shp"))
-subs_stl <- st_read(here("data", "Subbasins_STL", "Subbasins_STL_20220928.shp"))
+flow_stl <- st_read(here("data", "Flowline_STL", "Flowline_STL_20220928.shp")) %>% 
+  clean_names()
+flood_stl <- st_read(here("data", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
+  clean_names()
+subs_stl <- st_read(here("data", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% 
+  clean_names()
 ```
+
+```{r}
+hist_flood_stl<-flood_stl %>% 
+  filter(period=="Hist")
+slope_width_stl<-flow_stl %>% 
+  select(noaaid, slope, )
+```
+
+
 
 
 ```{r}
