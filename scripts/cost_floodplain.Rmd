@@ -33,15 +33,6 @@ subs_stl <- st_read(here("data", "Subbasins_STL", "Subbasins_STL_20220928.shp"))
   clean_names()
 ```
 
-```{r}
-hist_flood_stl<-flood_stl %>% 
-  filter(period=="Hist")
-slope_width_stl<-flow_stl %>% 
-  select(noaaid, slope, )
-```
-
-
-
 
 ```{r}
 #read in flow data 
@@ -58,4 +49,15 @@ flow_sf <- st_zm(flow_stl, what = "ZM")
 flood_sf <- st_zm(flood_stl, what = "ZM")
 subs_sf <- st_zm(subs_stl, what = "ZM")
 ```
+
+```{r}
+hist_flood_stl<-flood_sf %>% 
+  filter(period=="Hist")
+slope_width_stl<-flow_sf %>% 
+  select(noaaid, slope, wint_width, pond_overl, chinook) %>% 
+  st_drop_geometry()
+#change width as needed
+hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
+```
+
 
