@@ -247,6 +247,7 @@ marsh_cost_inflation_select<-marsh_cost_inflation %>%
   select(geometry, project_number, total_lower_cost, total_upper_cost)
 pond_cost_inflation_select<-pond_cost_inflation %>% 
   select(geometry, project_number, total_lower_cost, total_upper_cost)
-stilli_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_select)
+stilli_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_select) %>% 
+  mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
 ```
 
