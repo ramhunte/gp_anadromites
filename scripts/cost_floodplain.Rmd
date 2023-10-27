@@ -174,8 +174,8 @@ assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, h
 
 # Call the function with the provided dataframe and numeric range bounds
 low_slope_range <- c(0, 0.005)
-medium_slope_range <- c(0.005, 0.015)
-high_slope_range <- c(0.015, 20) #arbitrary large number
+medium_slope_range <- c(0.0051, 0.015)
+high_slope_range <- c(0.0151, 20) #arbitrary large number
 low_width_range <- c(0, 19)
 medium_width_range <- c(20, 69)
 high_width_range <- c(70, 300) #arbitrary large number
