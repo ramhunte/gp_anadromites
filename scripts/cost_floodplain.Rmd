@@ -6,74 +6,52 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+knitr::opts_chunk$set(echo = TRUE, include=FALSE, message = FALSE, error = FALSE)
 
-```{r}
-library(tidyverse)
-library(sf)
-library(ggspatial)
-library(tmap)
-library(here)
-library(janitor)
-library(ggplot2)
-```
-# attemtp to make a source 
-```{r}
-# source("common.R")
+
+#clearing environment
+rm(list = ls())
+
+#sourcing data
+source("../common.R")
 ```
 
 
 
-```{r}
-flow_stl <- st_read(here("data", "Flowline_STL", "Flowline_STL_20220928.shp")) %>% 
-  clean_names()
-flood_stl <- st_read(here("data", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
-  clean_names()
-subs_stl <- st_read(here("data", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% 
-  clean_names()
-```
-
-
-```{r}
-#read in flow data 
-flow_df <- fortify(flow_stl)
 
 
 
-
-```
-
-```{r}
-#compress into x and y (plotting hates z)
-flow_sf <- st_zm(flow_stl, what = "ZM")
-flood_sf <- st_zm(flood_stl, what = "ZM")
-subs_sf <- st_zm(subs_stl, what = "ZM")
-```
 
 Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.
 Also change the low, medium and high division asscoiated with the multipliers
+
+
+## Filtering floodplain data 
 ```{r}
 ## filtering for only floodplains that existed historically, but not currently
-hist_flood_stl<-flood_sf %>% 
+hist_flood_stl<-flood_stl %>% 
   filter(period=="Hist")
+
 ## filtering for specific columns to make the join cleaner
-slope_width_stl<-flow_sf %>% 
+slope_width_stl<-flow_stl %>% 
   select(noaaid, slope, wint_width, pond_overl, chinook, noaa_subba) %>% 
   st_drop_geometry()
+
 #change width as needed
 ## Join the floodplain habitats with the associated stream variables
 hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
-## read in side channel multiplier info
-side_channel_mult_stl<-read_csv(here("data", "HARP_Side_Channel_Mult_STL.csv"))
+
 #need to fix because not all reach names have noaa_subba matches
 ## Join the variables with the side channel multipliers
 hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))%>% 
   mutate(project_number = 1:n())
+
 ## Subtract one from multiplier column and do absolute value
 hist_flood_stl_var_mult$multiplier<-abs(hist_flood_stl_var_mult$multiplier-1)
+
 ## Histogram of Multiplier Values
 hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column", xlab = "Multiplier Values")
+
 ## Define values for low, medium and high based on histogram
 ## Low <0.4
 ## Medium >0.4 and <1
