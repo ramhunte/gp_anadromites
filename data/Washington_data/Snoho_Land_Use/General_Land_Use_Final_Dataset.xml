@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <origin/>
+                <pubdate>20180331</pubdate>
+                <title>Generalized_LUse_2012_FINAL_MASTER_projected</title>
+                <edition>2018</edition>
+                <geoform>document</geoform>
+                <serinfo>
+                    <sername>Puget Sound Mapping Project Zoning Base</sername>
+                    <issue>2018</issue>
+                </serinfo>
+                <onlink>https://services6.arcgis.com/tboeqGwETr5ppr5Q/arcgis/rest/services/Generalized_LUse_2012_FINAL_MASTER_projected/FeatureServer</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>This data set was developed as an information layer for the Washington State Department of Commerce. It is designed to be used as part of the Puget Sound Mapping Project to provide a generalized and standardized depiction of land uses and growth throughout the Puget Sound region.
+
+This map represents land uses, zoning abbreviations and zoning descriptions. Zoning data was collected in raster format and digitized by State Department of Commerce staff. The generalized depiction of intended future land use is based primarily upon 2012 zoning and 2010 assessor's records.NOTE: Because this is a large dataset, some geoprocessing operations (i.e. dissolve) may not work on the entire dataset. You will receive a topoengine error. Clipping out an area of interest (i.e. a county) and performing the operation on it instead of on the full dataset is a way to get around this software limitation.</abstract>
+            <purpose>This data set was developed as an information layer for the Washington State Department of Commerce. It is designed to be used as part of the Puget Sound Mapping Project to provide a generalized and standardized depiction of land uses and growth throughout the Puget Sound region.</purpose>
+        </descript>
+        <timeperd>
+            <timeinfo>
+                <rngdates>
+                    <begdate>20090122</begdate>
+                    <enddate>20170802</enddate>
+                </rngdates>
+            </timeinfo>
+            <current>Washington State borders. Data spans years 2009 to 2017.</current>
+        </timeperd>
+        <status>
+            <progress>Complete</progress>
+            <update>Annually</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-124.915071</westbc>
+                <eastbc>-116.708501</eastbc>
+                <northbc>49.049338</northbc>
+                <southbc>45.481543</southbc>
+            </bounding>
+        </spdom>
+        <keywords>
+            <theme>
+                <themekt>ISO 19115 Topic Categories</themekt>
+                <themekey>growth</themekey>
+                <themekey>land use</themekey>
+                <themekey>zoning</themekey>
+                <themekey>planning</themekey>
+            </theme>
+            <place>
+                <placekt>None</placekt>
+                <placekey>Washington</placekey>
+                <placekey>Puget Sound</placekey>
+            </place>
+        </keywords>
+        <accconst>Users who view, download, transfer or otherwise access or use the Data acknowledge the Terms of Use and Use Constraints. These Terms of Use and Use Constraints apply to any transferee, vendee or other end user and inform such user(s) of the Access Constraints, Terms of Use and Use Constraints.</accconst>
+        <useconst>Access Constraints: Users who view, download, transfer or otherwise access or use the Data acknowledge the Terms of Use and Use Constraints. These Terms of Use and Use Constraints apply to any transferee, vendee or other end user and inform such user(s) of the Access Constraints, Terms of Use and Use Constraints.Use Constraints: This data is provided “AS IS” and “WITH ALL FAULTS”. The data and related graphics are not legal documents and are not intended to be used as such. The Data is not intended to constitute advice nor is it to be used as a substitute for specific advice from a professional. Users should not act (or refrain from acting) based upon information in the Data. Users are solely responsible for ensuring the accuracy, currency and other quality of the Data. No warranty, expressed or implied, is made regarding the utility of the data and no warranty of fitness for a particular purpose or representation as to the quality of the data is made. The State of Washington and the City assume no responsibility of legal liability concerning the Data’s accuracy, reliability, completeness, timeliness or usefulness.</useconst>
+        <ptcontac>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Washington State Department of Commerce</cntorg>
+                    <cntper>Allan Johnson</cntper>
+                </cntorgp>
+                <cntpos>Research and Geospatial Project Manager</cntpos>
+                <cntaddr>
+                    <addrtype>physical</addrtype>
+                    <address>1011 Plum Street SE</address>
+                    <city>Olympia</city>
+                    <state>Washington</state>
+                    <postal>98504-2525</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>(360)725-5033</cntvoice>
+                <cntemail>allan.johnson@commerce.wa.gov</cntemail>
+                <hours>800-1700 Mon-Fri</hours>
+            </cntinfo>
+        </ptcontac>
+        <datacred>Washington State Dept. of Commerce</datacred>
+        <native>Version 6.2 (Build 9200) ; Esri ArcGIS 10.4.1.5686</native>
+    </idinfo>
+    <dataqual>
+        <logic>Zoning polygons were edited using visual guidance and therefore are not precise.  Some gaps or overlaps between polygons exist and have not been corrected.</logic>
+        <complete>Data has been gathered for Clallam, Jefferson, Island, King, Kitsap, Mason, Pierce, San Juan, Skagit, Snohomish, Thurston and Whatcom counties in addition to all cities contained therein.</complete>
+        <lineage>
+            <procstep>
+                <procdesc>CityUGA layers from the Department of Ecology were combined with Tax Code Area Boundaries layer from the Department of Revenue to create a geographic base layer.  Zoning layers were added to depict a generalized and standardized mosaic of land use patterns. Zoning was created through digitization of raster image.</procdesc>
+                <procdate>20180301</procdate>
+            </procstep>
+        </lineage>
+    </dataqual>
+    <spdoinfo>
+        <direct>Vector</direct>
+    </spdoinfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>PSMP_Base_Zoning</enttypl>
+                <enttypd>Attribute table</enttypd>
+                <enttypds>Department of Commerce</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>OBJECTID_1</attrlabl>
+                <attrdef>Internal feature number.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Sequential unique whole numbers that are automatically generated.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape</attrlabl>
+                <attrdef>Feature geometry.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Coordinates defining the features.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>OBJECTID</attrlabl>
+                <attrdef>Internal feature number.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Sequential unique whole numbers that are automatically generated.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>COUNTYNAME</attrlabl>
+                <attrdef>Name of county.</attrdef>
+                <attrdefs>Dept. of Revenue</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Counties within the State of Washington.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape_Leng</attrlabl>
+                <attrdef>Shape length.</attrdef>
+                <attrdefs>Dept. of Ecology</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Shape lengths contained within Ecology UGA dataset.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape_Length</attrlabl>
+                <attrdef>Length of feature in internal units.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Shape lengths contained within Ecology UGA dataset.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape_Area</attrlabl>
+                <attrdef>Area of feature in internal units squared.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Positive real numbers that are automatically generated.</udom>
+                    				
+                </attrdomv>
+            </attr>
+        </detailed>
+    </eainfo>
+    <distinfo>
+        <distrib>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Washington State Department of Commerce</cntorg>
+                    <cntper>Allan Johnson</cntper>
+                </cntorgp>
+                <cntpos>Reseach and Geospatial Project Manager</cntpos>
+                <cntaddr>
+                    <addrtype>physical</addrtype>
+                    <address>1011 Plum Street SE</address>
+                    <city>Olympia</city>
+                    <state>Washington</state>
+                    <postal>98504-2525</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>(360)725-5033</cntvoice>
+                <cntemail>allan.johnson@commerce.wa.gov</cntemail>
+                <hours>800-1700 Mon-Fri</hours>
+            </cntinfo>
+        </distrib>
+        <distliab>This data is provided “AS IS” and “WITH ALL FAULTS”. The data and related graphics are not legal documents and are not intended to be used as such. The Data is not intended to constitute advice nor is it to be used as a substitute for specific advice from a professional. Users should not act (or refrain from acting) based upon information in the Data. Users are solely responsible for ensuring the accuracy, currency and other quality of the Data. No warranty, expressed or implied, is made regarding the utility of the data and no warranty of fitness for a particular purpose or representation as to the quality of the data is made. The State of Washington and the City assume no responsibility of legal liability concerning the Data’s accuracy, reliability, completeness, timeliness or usefulness.</distliab>
+        <stdorder>
+            <digform>
+                <digtinfo>
+                    <formname>File Geodatabase Feature Class</formname>
+                </digtinfo>
+            </digform>
+        </stdorder>
+    </distinfo>
+    <metainfo>
+        <metd>20180306</metd>
+        <metc>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Washington State Department of Commerce</cntorg>
+                    <cntper>Allan Johnson</cntper>
+                </cntorgp>
+                <cntpos>Research and Geospatial Project Manager</cntpos>
+                <cntaddr>
+                    <addrtype>physical</addrtype>
+                    <address>1011 Plum Street SE</address>
+                    <city>Olympia</city>
+                    <state>Washington</state>
+                    <postal>98504-2525</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>(360)725-5033</cntvoice>
+                <cntemail>allan.johnson@commerce.wa.gov</cntemail>
+                <hours>800-1700 Mon-Fri</hours>
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>
