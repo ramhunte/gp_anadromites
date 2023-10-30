@@ -116,6 +116,52 @@ hist(hist_flood_stl_var_mult$wint_width, main = "Histogram of Width Column", xla
 ## High >70
 ```
 
+
+Create a function that takes different multiplier values and energies and creates a upper and lower cost range
+
+Currently using zero as a placeholder for when side channel multiplier values don't exist
+```{r}
+hist_flood_stl_var_mult<-hist_flood_stl_var_mult %>% 
+  mutate(earth_moving=ifelse(multiplier < medium_multiplier_bound, "low", 
+                        ifelse(multiplier <= high_multiplier_bound, "medium", "high")))
+
+calculate_marsh_cost <- function(input_df) {
+  input_df <- input_df %>%
+    mutate(
+      lower_cost = case_when(
+        earth_moving == "low" & energy == "low" ~ 20000,
+        earth_moving == "low" & energy == "medium" ~ 40000,
+        earth_moving == "low" & energy == "high" ~ 60000,
+        earth_moving == "medium" & energy == "low" ~ 40000,
+        earth_moving == "medium" & energy == "medium" ~ 70000,
+        earth_moving == "medium" & energy == "high" ~ 100000,
+        earth_moving == "high" & energy == "low" ~ 60000,
+        earth_moving == "high" & energy == "medium" ~ 130000,
+        earth_moving == "high" & energy == "high" ~ 200000,
+        # Add more conditions for other combinations here
+        TRUE ~ 0  # Default value if no conditions match
+      ),
+      upper_cost = case_when(
+        earth_moving == "low" & energy == "low" ~ 40000,
+        earth_moving == "low" & energy == "medium" ~ 70000,
+        earth_moving == "low" & energy == "high" ~ 90000,
+        earth_moving == "medium" & energy == "low" ~ 60000,
+        earth_moving == "medium" & energy == "medium" ~ 100000,
+        earth_moving == "medium" & energy == "high" ~ 200000,
+        earth_moving == "high" & energy == "low" ~ 100000,
+        earth_moving == "high" & energy == "medium" ~ 200000,
+        earth_moving == "high" & energy == "high" ~ 300000,
+        # Add more conditions for other combinations here
+        TRUE ~ 0  # Default value if no conditions match
+      )
+    )
+  
+  return(input_df)
+}
+
+
+```
+
 Need to define which energy levels are associated with each slope/width combo
 ---> did this in the google doc
 
@@ -165,49 +211,6 @@ medium_width_range <- c(20, 69)
 high_width_range <- c(70, 300) #arbitrary large number
 
 marsh_energy_stl <- assign_energy_width(hist_flood_stl_var_mult, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range)
-```
-
-Create a function that takes different multiplier values and energies and creates a upper and lower cost range
-
-Currently using zero as a placeholder for when side channel multiplier values don't exist
-```{r}
-hist_flood_stl_var_mult<-hist_flood_stl_var_mult %>% 
-  mutate(earth_moving=ifelse(multiplier < medium_multiplier_bound, "low", 
-                        ifelse(multiplier <= high_multiplier_bound, "medium", "high")))
-
-calculate_marsh_cost <- function(input_df) {
-  input_df <- input_df %>%
-    mutate(
-      lower_cost = case_when(
-        earth_moving == "low" & energy == "low" ~ 20000,
-        earth_moving == "low" & energy == "medium" ~ 40000,
-        earth_moving == "low" & energy == "high" ~ 60000,
-        earth_moving == "medium" & energy == "low" ~ 40000,
-        earth_moving == "medium" & energy == "medium" ~ 70000,
-        earth_moving == "medium" & energy == "high" ~ 100000,
-        earth_moving == "high" & energy == "low" ~ 60000,
-        earth_moving == "high" & energy == "medium" ~ 130000,
-        earth_moving == "high" & energy == "high" ~ 200000,
-        # Add more conditions for other combinations here
-        TRUE ~ 0  # Default value if no conditions match
-      ),
-      upper_cost = case_when(
-        earth_moving == "low" & energy == "low" ~ 40000,
-        earth_moving == "low" & energy == "medium" ~ 70000,
-        earth_moving == "low" & energy == "high" ~ 90000,
-        earth_moving == "medium" & energy == "low" ~ 60000,
-        earth_moving == "medium" & energy == "medium" ~ 100000,
-        earth_moving == "medium" & energy == "high" ~ 200000,
-        earth_moving == "high" & energy == "low" ~ 100000,
-        earth_moving == "high" & energy == "medium" ~ 200000,
-        earth_moving == "high" & energy == "high" ~ 300000,
-        # Add more conditions for other combinations here
-        TRUE ~ 0  # Default value if no conditions match
-      )
-    )
-  
-  return(input_df)
-}
 
 marsh_cost <- calculate_marsh_cost(marsh_energy_stl)
 
@@ -219,6 +222,7 @@ marsh_cost_inflation <- marsh_cost %>%
   mutate(total_lower_cost=lower_cost*area_a) %>% 
   mutate(total_upper_cost=upper_cost*area_a)
 ```
+
 
 ```{r}
 marsh_cost_inflation_select<-marsh_cost_inflation %>% 
