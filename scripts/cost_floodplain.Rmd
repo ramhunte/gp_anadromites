@@ -34,7 +34,7 @@ hist_flood_stl<-flood_stl %>%
 
 ## filtering for specific columns to make the join cleaner
 slope_width_stl<-flow_stl %>% 
-  select(noaaid, slope, wint_width, pond_overl, chinook, noaa_subba) %>% 
+  select(noaaid, slope, wint_width, pond_overl, chinook, noaa_subba, habitat) %>% 
   st_drop_geometry()
 
 #change width as needed
@@ -121,9 +121,23 @@ Create a function that takes different multiplier values and energies and create
 
 Currently using zero as a placeholder for when side channel multiplier values don't exist
 ```{r}
-hist_flood_stl_var_mult<-hist_flood_stl_var_mult %>% 
-  mutate(earth_moving=ifelse(multiplier < medium_multiplier_bound, "low", 
-                        ifelse(multiplier <= high_multiplier_bound, "medium", "high")))
+# #old method of calculating earth moving with just multiplier
+# hist_flood_stl_var_mult<-hist_flood_stl_var_mult %>%
+#   mutate(earth_moving_old=ifelse(multiplier < medium_multiplier_bound, "low",
+#                         ifelse(multiplier <= high_multiplier_bound, "medium", "high")))
+
+#new way of calculating earth moving with multiplier and stream size
+hist_flood_stl_var_mult <- hist_flood_stl_var_mult %>% 
+  mutate(earth_moving = case_when(
+    habitat == "SmStream" & multiplier < medium_multiplier_bound ~ "low",
+    habitat == "SmStream" & multiplier <= high_multiplier_bound ~ "medium",
+    habitat == "SmStream" & multiplier > high_multiplier_bound ~ "high",
+    habitat == "LgStream" & multiplier < medium_multiplier_bound ~ "medium",
+    habitat == "LgStream" & multiplier <= high_multiplier_bound ~ "high",
+    habitat == "LgStream" & multiplier > high_multiplier_bound ~ "high",
+    TRUE ~ "unknown"  # You can add a default case if needed
+  ))
+
 
 calculate_marsh_cost <- function(input_df) {
   input_df <- input_df %>%
