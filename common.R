@@ -8,22 +8,36 @@ library(ggplot2)
 
 ######################################### Reading Data ##########################################
 
+
+                                ################ HARP #################
 #flowline stillaguamish 
-flow_stl <- st_read(here("data", "Flowline_STL", "Flowline_STL_20220928.shp")) %>% 
+flow_stl <- st_read(here("data", "HARP", "Flowline_STL", "Flowline_STL_20220928.shp")) %>% 
   clean_names()
 flow_stl <- st_zm(flow_stl, what = "ZM") #removing z
 
 #floodplain stillaguamish
-flood_stl <- st_read(here("data", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
+flood_stl <- st_read(here("data", "HARP", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
   clean_names()
 flood_stl <- st_zm(flood_stl, what = "ZM") #removing z
 
 #subbasins stillaguamish
-subs_stl <- st_read(here("data", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% 
+subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% 
   clean_names()
 subs_stl <- st_zm(subs_stl, what = "ZM") #removing z
 
 ## side channel multiplier stillaguamish 
-side_channel_mult_stl<-read_csv(here("data", "HARP_Side_Channel_Mult_STL.csv"))
+side_channel_mult_stl<-read_csv(here("data", "HARP", "HARP_Side_Channel_Mult_STL.csv"))
+
+
+
+                                 ################ Washington #################
+
+## land use data Snohomish County 
+# link: https://geo.wa.gov/datasets/a0ddbd4e0e2141b3841a6a42ff5aff46_0/explore?filters=eyJOQU1FIjpbIlNub2hvbWlzaCJdfQ%3D%3D&location=46.980958%2C-117.609917%2C6.41
+snoho_lu <- st_read(here("data", "Washington_data", "Snoho_Land_Use", "General_Land_Use_Final_Dataset.shp"))
+
+
+
+
 
 
