@@ -81,6 +81,8 @@ calculate_pond_cost_inflation_geometry_custom <- function(input_df, low_bound, m
   # Add the geometry and area column to the new dataframe
   pond_cost_stl$geometry <- filtered_df$geometry
   pond_cost_stl$area_ha <- filtered_df$area_ha
+  pond_cost_stl$noaa_subba <- filtered_df$noaa_subba
+  pond_cost_stl$hab_unit <- filtered_df$hab_unit
   
   return(pond_cost_stl)
 }
@@ -239,11 +241,48 @@ marsh_cost_inflation <- marsh_cost %>%
 
 
 ```{r}
+#marsh costs
 marsh_cost_inflation_select<-marsh_cost_inflation %>% 
-  select(geometry, project_number, total_lower_cost, total_upper_cost)
+  select(geometry, project_number, noaa_subba, hab_unit,total_lower_cost, total_upper_cost)
+
+#pond costs
 pond_cost_inflation_select<-pond_cost_inflation %>% 
-  select(geometry, project_number, total_lower_cost, total_upper_cost)
-stilli_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_select) %>% 
+  select(geometry, project_number, noaa_subba, hab_unit, total_lower_cost, total_upper_cost)
+
+#total costs 
+stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_select) %>% 
   mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
+
+#grouped total costs 
+stilly_subbasin_cost <- stilly_total_cost %>% 
+  group_by(noaa_subba) %>% 
+  summarise(total_lower_cost = sum(total_lower_cost), total_upper_cost = sum(total_upper_cost)) %>%
+  st_drop_geometry()
+
+
+#need to join the subbasin geometries 
+ 
+ stilly_subbasin_cost <- left_join(subs_stl, stilly_subbasin_cost, by = "noaa_subba") %>% 
+   select(noaa_subba, total_lower_cost, total_upper_cost, geometry) %>% 
+   mutate(avg_cost = (total_lower_cost + total_upper_cost)/2)
+  
+#final lower and upper cost estimates
+ final_cost_range <- c(sum(stilly_subbasin_cost$total_lower_cost, na.rm = T), sum(stilly_subbasin_cost$total_upper_cost, na.rm = T))
+ 
+
 ```
+
+
+
+```{r}
+ ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = stilly_subbasin_cost, aes(fill = avg_cost)) +
+# scale_fill_binned(breaks = c(5000000, 20000000, 100000000)) +
+  scale_fill_viridis_c(breaks = c(5000000, 20000000, 100000000)) +
+  # scale_fill_continuous() +
+  theme_minimal()
+```
+
+
 

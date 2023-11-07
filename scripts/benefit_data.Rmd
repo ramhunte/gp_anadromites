@@ -8,16 +8,13 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(tidyverse)
-library(gt)
+source("../common.R")
 ```
 
-```{r}
-harp_bens <- read.csv("/Users/rayhunter/Desktop/GP/gp_anadromites/data/benefits/ind_subbasin_rest_20s_2023-09-21 - ind_subbasin_rest_20s_2023-09-21.csv")
-```
+
 
 ```{r}
-harp_mod <- harp_bens %>% 
+harp_mod <- stilly_bens %>% 
   filter(pop == "fall_chinook")
 
 ben_by_scen <- harp_mod %>% 

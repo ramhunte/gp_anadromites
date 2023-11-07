@@ -28,6 +28,10 @@ subs_stl <- st_zm(subs_stl, what = "ZM") #removing z
 ## side channel multiplier stillaguamish 
 side_channel_mult_stl<-read_csv(here("data", "HARP", "HARP_Side_Channel_Mult_STL.csv"))
 
+                                ################ HARP Benefits #################
+
+stilly_bens <- read.csv(here("data", "HARP", "benefits", "ind_subbasin_rest_20s_2023-09-21 - ind_subbasin_rest_20s_2023-09-21.csv"))
+
 
 
                                  ################ Washington #################
