@@ -1,5 +1,6 @@
 library(tidyverse)
 library(sf)
+library(terra)
 library(ggspatial)
 library(tmap)
 library(here)
