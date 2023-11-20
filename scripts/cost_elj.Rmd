@@ -41,11 +41,15 @@ min_distances <- apply(distances, 1, min)
 flow_stl$distance_to_nearest_road_m <- min_distances
 flow_stl$distance_to_nearest_road_mi <- flow_stl$distance_to_nearest_road_m *0.000621371
 
+min(flow_stl$distance_to_nearest_road_mi)
+max(flow_stl$distance_to_nearest_road_mi)
+hist(flow_stl$distance_to_nearest_road_mi)
+
 # Print the resulting data.frame
-print(flow_stl)
+print(flow_stl$distance_to_nearest_road_mi)
 
 # Check the CRS of sf_streamreaches
 crs_streamreaches <- st_crs(flow_stl)
 print(crs_streamreaches$units)
 ```
-
+## WRITE A FUNCTION THAT GIVES RELATIVE COST BASED ON ENERGY AND 
