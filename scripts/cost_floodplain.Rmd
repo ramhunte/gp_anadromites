@@ -16,16 +16,14 @@ rm(list = ls())
 source("../common.R")
 ```
 
-Reminders
-*Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.
-*Also change the low, medium and high division associated with the multipliers
+Reminders *Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.* Also change the low, medium and high division associated with the multipliers
 
+## Filtering floodplain data
 
-## Filtering floodplain data 
 ```{r}
 ## filtering for only floodplains that existed historically, but not currently
-hist_flood_stl<-flood_stl %>% 
-  filter(period=="Hist")
+hist_flood_stl<-flood_stl 
+  # filter(period=="Hist")
 
 ## filtering for specific columns to make the join cleaner
 slope_width_stl<-flow_stl %>% 
@@ -39,7 +37,9 @@ hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
 #need to fix because not all reach names have noaa_subba matches
 ## Join the variables with the side channel multipliers
 hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))%>% 
-  mutate(project_number = 1:n())
+  mutate(project_number = 1:n()) %>% 
+  #some of the reaches dont have side channel multipliers b/c no significant fp habitat, so we are giving them a vlaue of 1.001 so NA values are not present 
+  mutate(multiplier = ifelse(is.na(multiplier), 1.001, multiplier))
 
 ## Subtract one from multiplier column and do absolute value
 hist_flood_stl_var_mult$multiplier<-abs(hist_flood_stl_var_mult$multiplier-1)
@@ -53,11 +53,10 @@ hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column"
 ## High >1
 ```
 
-Both ponds have a side channel multiplier of 0
-Assumed substantial material cost for upper and lower cost estimates
-Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28% (https://www.officialdata.org/us/inflation/2003?amount=30000)
+Both ponds have a side channel multiplier of 0 Assumed substantial material cost for upper and lower cost estimates Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28% (<https://www.officialdata.org/us/inflation/2003?amount=30000>)
 
 NEW ONE
+
 ```{r}
 # Create a function to calculate cost estimates with inflation adjustment
 calculate_pond_cost_inflation_geometry_custom <- function(input_df, low_bound, medium_bound, high_bound) {
@@ -98,6 +97,7 @@ pond_cost_inflation <- pond_cost_stl_inflated_custom %>%
 ```
 
 Check distribution of slopes and wint_width
+
 ```{r}
 ## Make histogram of slope
 hist(hist_flood_stl_var_mult$slope, main = "Histogram of Slope Column", xlab = "Slope Values")
@@ -113,10 +113,10 @@ hist(hist_flood_stl_var_mult$wint_width, main = "Histogram of Width Column", xla
 ## High >70
 ```
 
-
 Create a function that takes different multiplier values and energies and creates a upper and lower cost range
 
 Currently using zero as a placeholder for when side channel multiplier values don't exist
+
 ```{r}
 # #old method of calculating earth moving with just multiplier
 # hist_flood_stl_var_mult<-hist_flood_stl_var_mult %>%
@@ -173,8 +173,7 @@ calculate_marsh_cost <- function(input_df) {
 
 ```
 
-Need to define which energy levels are associated with each slope/width combo
----> did this in the google doc
+Need to define which energy levels are associated with each slope/width combo ---\> did this in the google doc
 
 THIS FUNCTION DEFINES ENERGY BASED ON SLOPE AND WINT_WIDTH
 
@@ -242,7 +241,6 @@ marsh_cost_inflation <- marsh_cost %>%
   mutate(total_upper_cost=upper_cost*area_a)
 ```
 
-
 ```{r}
 #marsh costs
 marsh_cost_inflation_select<-marsh_cost_inflation %>% 
@@ -257,6 +255,9 @@ stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_se
   mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
 
 #grouped total costs 
+
+### ISSUE IS HERE: 
+
 stilly_subbasin_cost <- stilly_total_cost %>% 
   group_by(noaa_subba) %>% 
   summarise(total_lower_cost = sum(total_lower_cost), total_upper_cost = sum(total_upper_cost)) %>%
@@ -275,8 +276,6 @@ stilly_subbasin_cost <- stilly_total_cost %>%
 
 ```
 
-
-
 ```{r}
  ggplot() +
   geom_sf(data = subs_stl, aes()) +
@@ -290,6 +289,21 @@ stilly_subbasin_cost <- stilly_total_cost %>%
   theme_minimal()+
   labs(fill="Average Cost ($)")
 ```
+
+
+
+# looking at polygons of all habitat type 
+```{r}
+ggplot() +
+  geom_sf(data = subs_stl) +
+  geom_sf(data = flood_stl, aes(fill = period)) +
+  theme_minimal()
+```
+
+
+
+
+
 
 
 

@@ -29,22 +29,21 @@ source("../common.R")
 
 ### 2) COST OF RIPARIAN PLANTING PROJECTS ($/acre)
 ```{r}
-## matrix with levels of site preparation ( avergae slope ) and output from materials/accessibility 
+## matrix with levels of site preparation ( average slope ) and output from materials/accessibility 
+# need to measure the average slope around a stream within 50m 
 ```
 
 #### 2.1) 
 
 ```{r}
-                    ############## creating a buffer ################# 
-
-# need to measure the average slope around a stream within 50m 
-
+                     
+                     
+# creating a 50m buffer
 flow_buff <- st_buffer(flow_stl, dist = 50)
 
 
-              ############# importing elevation raster data ##############
-
-## Data: https://gis.ess.washington.edu/data/raster/tenmeter/byquad/info.html
+# importing elevation raster data
+# Data: https://gis.ess.washington.edu/data/raster/tenmeter/byquad/info.html
 
 
 # listing the dem elevation files 
@@ -54,36 +53,34 @@ elev_list <- list.files(path = "/Users/rayhunter/Desktop/GP/gp_anadromites/data/
 #  rasterizing elevation dem files and storing them in a collection 
 elev_list_rast <- sprc(lapply(elev_list, rast))
 
-#combinging rasters into 1 
+# combining rasters into 1 
 elev_mos <- mosaic(elev_list_rast)
 
-# projecting flow_buff crs (using NAD83 which is more accurate) onto raster data (originally using NAD27)      
-elev_mos <- project(elev_mos, flow_buff)
-
-
-#checking crs 
-writeLines(crs(flow_buff))
-#class(flow_buff)
-writeLines(crs(elev_mos))
-#class(elev_moss)
-
-
-
-
-#cropping and masking raster data to stream buffer
+# cropping and masking raster data to stream buffer
 crop_rast <- crop(elev_mos, flow_buff, mask = TRUE)
 
 #calculating slope of data
 buff_slope <- terrain(x = crop_rast, v = "slope", unit = "degrees")
 
-plot(crop_rast)
-# plot(elev_mos)
-plot(buff_slope)
-# hist(crop_rast)
+# projecting flow_buff crs (using NAD83 which is more accurate) onto raster data (originally using NAD27)      
+buff_slope <- project(buff_slope, flow_buff)
+
+
+# writeLines(crs(flow_buff))
+#bclass(flow_buff)
+
+# writeLines(crs(elev_mos))
+#bclass(elev_moss)
 
 
 
-          ############### zonal statistics ####################
+
+
+
+
+# plot(crop_rast)
+# plot(buff_slope)
+
 
 
 # calculate the average slope in degrees w/ in a 50m buffer of each reach 
@@ -96,7 +93,17 @@ slope_zonal <- zonal(buff_slope,
                   buff_rast, 
                   fun = "mean", 
                   na.rm = TRUE)
-summary(slope_zonal)
+
+# summary(slope_zonal)
+
+
+
+# joining zonal stats back to polygon
+# currently labeled as slope.y in the df 
+
+avg_slope <- left_join(flow_buff,
+                         slope_zonal, 
+                       by = "noaaid")
 
 ```
 
@@ -107,10 +114,18 @@ summary(slope_zonal)
 
 # elev_mos_df <- as.data.frame(elev_mos, xy = TRUE)
 
+
+#trying to figure out why there are NA values in small buffer polygons 
+
+avg_slope2 <- avg_slope %>% 
+  filter(is.na(slope.y))
+
+
 ggplot() +
   # # ggplotting raster layer (only run if needed)
   # geom_raster(data = elev_mos_df, aes(x = x, y = y, fill = q525)) +
-  geom_sf(data = flow_buff, aes()) +
+  geom_sf(data = flow_buff, color = "red") +
+  geom_sf(data = avg_slope2, fill = "black") +
   # geom_sf(data = flow_stl, color = "red") +
   
   # geom_sf(data = flood_sf, aes(fill = Period)) + 
