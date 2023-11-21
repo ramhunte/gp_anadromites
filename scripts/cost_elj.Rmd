@@ -159,6 +159,7 @@ flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, h
 stilly_bens_filtered<-stilly_bens %>% filter(pop=="fall_chinook" & perc_change>0 & scenario=="Wood")
 wood_ben_basin<-unique(stilly_bens_filtered$subbasin_num)
 wood_ben_basin<-as.data.frame(wood_ben_basin) %>% rename("subbasin_n"="wood_ben_basin")
+wood_ben_basin$subbasin_n<-as.character(wood_ben_basin$subbasin_n)
 flow_stl_wood<-left_join(wood_ben_basin, flow_stl, by="subbasin_n")
 ```
 
