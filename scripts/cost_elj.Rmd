@@ -155,12 +155,17 @@ flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, h
 
 ## FILTER TO REACHES WHERE WOOD IS A BENEFIT
 ```{r}
-
+#only keep reaches where there is a benefit of wood to chinook
+stilly_bens_filtered<-stilly_bens %>% filter(pop=="fall_chinook" & perc_change>0 & scenario=="Wood")
+wood_ben_basin<-unique(stilly_bens_filtered$subbasin_num)
+wood_ben_basin<-as.data.frame(wood_ben_basin) %>% rename("subbasin_n"="wood_ben_basin")
+flow_stl_wood<-left_join(wood_ben_basin, flow_stl, by="subbasin_n")
 ```
 
 ## WRITE A FUNCTION THAT GIVES RELATIVE COST BASED ON ENERGY (materials) AND TRANSPORTATION
 ##### INTERMEDIATE COST
 ```{r}
+#energy column is called energy (low, medium and high) and transportation is distance_to_nearest_road_mi (values are low, medium and high)
 
 ```
 
