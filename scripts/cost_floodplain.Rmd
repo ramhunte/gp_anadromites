@@ -102,7 +102,7 @@ pond_cost_inflation <- pond_cost_stl_inflated_custom %>%
   mutate(total_upper_cost=upper_cost*area_a)
 ```
 
-Create a function that takes slope and width to determine stream energy
+Check distribution of slopes and wint_width
 ```{r}
 ## Make histogram of slope
 hist(hist_flood_stl_var_mult$slope, main = "Histogram of Slope Column", xlab = "Slope Values")
@@ -181,7 +181,7 @@ calculate_marsh_cost <- function(input_df) {
 Need to define which energy levels are associated with each slope/width combo
 ---> did this in the google doc
 
-ONE VALUE IS UNKNOWN???
+THIS FUNCTION DEFINES ENERGY BASED ON SLOPE AND WINT_WIDTH
 
 ```{r}
 # Create a function to assign energy values based on slope and wint_width ranges
