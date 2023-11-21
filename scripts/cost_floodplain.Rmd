@@ -16,14 +16,9 @@ rm(list = ls())
 source("../common.R")
 ```
 
-
-
-
-
-
-
-Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.
-Also change the low, medium and high division asscoiated with the multipliers
+Reminders
+*Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.
+*Also change the low, medium and high division associated with the multipliers
 
 
 ## Filtering floodplain data 

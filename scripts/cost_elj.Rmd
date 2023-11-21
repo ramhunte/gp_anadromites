@@ -96,7 +96,6 @@ quantiles_width
 
 Function that assigns an energy value to the streams
 ```{r}
-
 # Create a function to assign energy values based on slope and wint_width ranges
 assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_wint_width_range, medium_wint_width_range, high_wint_width_range) {
   # # Filter for hab_unit == Marsh
@@ -151,11 +150,33 @@ high_width_range <- c(11.289, 300) #arbitrary large number
 
 flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range)
 
-unique(flow_stl$energy)
+# unique(flow_stl$energy)
 ```
 
+## FILTER TO REACHES WHERE WOOD IS A BENEFIT
+```{r}
+
+```
 
 ## WRITE A FUNCTION THAT GIVES RELATIVE COST BASED ON ENERGY (materials) AND TRANSPORTATION
+##### INTERMEDIATE COST
+```{r}
+
+```
+
+## WRITE A FUNCTION THAT GIVES COST RANGES BASED ON PREVIOUS COST FUNCTION AND STREAM FLOW RATE
+```{r}
+
+```
+
+## APPLY INFLATION TO COST RANGES
+```{r}
+
+```
+
+## APPLY THE COST PER ACRE TO MILES OF STREAM
+  # units of the above function are in $/stream mile (Ranges given by per stream mile (assuming 100-400 pieces per stream mile.) All other cells ranges given per structure.
+All costs ranges assume purchased material.)
 ```{r}
 
 ```
