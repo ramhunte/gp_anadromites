@@ -197,7 +197,7 @@ calculate_intermediate_cost <- function(input_df) {
 calculate_final_cost <- function(input_df) {
   input_df <- input_df %>%
     mutate(
-      lower_cost = case_when(
+      lower_cost_estimate = case_when(
         relative_cost == "low" & energy == "low" ~ 10000,
         relative_cost == "low" & energy == "medium" ~ 20000,
         relative_cost == "low" & energy == "high" ~ 10000,
@@ -209,7 +209,7 @@ calculate_final_cost <- function(input_df) {
         relative_cost == "high" & energy == "high" ~ 60000,
         TRUE ~ 0  # Default value if no conditions match
       ),
-      upper_cost = case_when(
+      upper_cost_estimate = case_when(
         relative_cost == "low" & energy == "low" ~ 30000,
         relative_cost == "low" & energy == "medium" ~ 50000,
         relative_cost == "low" & energy == "high" ~ 20000,
@@ -229,7 +229,7 @@ calculate_final_cost <- function(input_df) {
 elj_no_inf_cost <- calculate_final_cost(intermediate_cost)
 ```
 
-## APPLY INFLATION TO COST RANGES
+## APPLY PRODUCER PRICE INDICES TO COST RANGES
 ```{r}
 
 ```
@@ -238,6 +238,10 @@ elj_no_inf_cost <- calculate_final_cost(intermediate_cost)
   # units of the above function are in $/stream mile (Ranges given by per stream mile (assuming 100-400 pieces per stream mile.) All other cells ranges given per structure.
 All costs ranges assume purchased material.)
 ```{r}
-
+#convert reach length from meters to miles
+elj_no_inf_cost$length_mi<-elj_no_inf_cost$length*0.000621371
+#multiply miles by $/mile to get total dollars
+elj_no_inf_cost$final_lower_cost<-elj_no_inf_cost$lower_cost_estimate*elj_no_inf_cost$length_mi
+elj_no_inf_cost$final_upper_cost<-elj_no_inf_cost$upper_cost_estimate*elj_no_inf_cost$length_mi
 ```
 
