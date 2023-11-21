@@ -168,14 +168,68 @@ flow_stl_wood<-left_join(wood_ben_basin, flow_stl, by="subbasin_n")
 ```{r}
 #energy column is called energy (low, medium and high) and transportation is distance_to_nearest_road_mi (values are low, medium and high)
 
+calculate_intermediate_cost <- function(input_df) {
+  input_df <- input_df %>%
+    mutate(
+      relative_cost = case_when(
+        transportation == "low" & energy == "low" |
+        transportation == "low" & energy == "medium" ~ "low",
+        transportation == "low" & energy == "high" |
+        transportation == "medium" & energy == "low" |
+        transportation == "medium" & energy == "medium" ~ "medium",
+        transportation == "medium" & energy == "high" |
+        transportation == "high" & energy == "low" |
+        transportation == "high" & energy == "medium" |
+        transportation == "high" & energy == "high" ~ "high",
+        # Add more conditions for other combinations here
+        TRUE ~ "Unknown"  # Default value if no conditions match
+      )
+    )
+  
+  return(input_df)
+}
+  intermediate_cost <- calculate_intermediate_cost(flow_stl_wood)
+
 ```
 
 ## WRITE A FUNCTION THAT GIVES COST RANGES BASED ON PREVIOUS COST FUNCTION AND STREAM FLOW RATE
 ```{r}
+calculate_final_cost <- function(input_df) {
+  input_df <- input_df %>%
+    mutate(
+      lower_cost_estimate = case_when(
+        relative_cost == "low" & energy == "low" ~ 10000,
+        relative_cost == "low" & energy == "medium" ~ 20000,
+        relative_cost == "low" & energy == "high" ~ 10000,
+        relative_cost == "medium" & energy == "low" ~ 20000,
+        relative_cost == "medium" & energy == "medium" ~ 15000,
+        relative_cost == "medium" & energy == "high" ~ 40000,
+        relative_cost == "high" & energy == "low" ~ 20000,
+        relative_cost == "high" & energy == "medium" ~ 40000,
+        relative_cost == "high" & energy == "high" ~ 60000,
+        TRUE ~ 0  # Default value if no conditions match
+      ),
+      upper_cost_estimate = case_when(
+        relative_cost == "low" & energy == "low" ~ 30000,
+        relative_cost == "low" & energy == "medium" ~ 50000,
+        relative_cost == "low" & energy == "high" ~ 20000,
+        relative_cost == "medium" & energy == "low" ~ 50000,
+        relative_cost == "medium" & energy == "medium" ~ 45000,
+        relative_cost == "medium" & energy == "high" ~ 60000,
+        relative_cost == "high" & energy == "low" ~ 40000,
+        relative_cost == "high" & energy == "medium" ~ 70000,
+        relative_cost == "high" & energy == "high" ~ 80000,
+        TRUE ~ 0  # Default value if no conditions match
+      )
+    )
+  
+  return(input_df)
+}
 
+elj_no_inf_cost <- calculate_final_cost(intermediate_cost)
 ```
 
-## APPLY INFLATION TO COST RANGES
+## APPLY PRODUCER PRICE INDICES TO COST RANGES
 ```{r}
 
 ```
@@ -184,6 +238,10 @@ flow_stl_wood<-left_join(wood_ben_basin, flow_stl, by="subbasin_n")
   # units of the above function are in $/stream mile (Ranges given by per stream mile (assuming 100-400 pieces per stream mile.) All other cells ranges given per structure.
 All costs ranges assume purchased material.)
 ```{r}
-
+#convert reach length from meters to miles
+elj_no_inf_cost$length_mi<-elj_no_inf_cost$length*0.000621371
+#multiply miles by $/mile to get total dollars
+elj_no_inf_cost$final_lower_cost<-elj_no_inf_cost$lower_cost_estimate*elj_no_inf_cost$length_mi
+elj_no_inf_cost$final_upper_cost<-elj_no_inf_cost$upper_cost_estimate*elj_no_inf_cost$length_mi
 ```
 
