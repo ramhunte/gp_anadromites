@@ -77,8 +77,11 @@ hist(flow_stl$slope, main = "Histogram of Slope Column", xlab = "Slope Values")
 # Calculate quantiles to split data into three equal sections
 quantiles_slope <- quantile(flow_stl$slope, probs = c(1/3, 2/3), na.rm = TRUE)
 quantiles_slope
-
+flow_stl$slope_perc<-flow_stl$slope*100
+flow_stl$slope_degrees <- atan(flow_stl$slope_perc / 100) * (180 / pi)
+hist(flow_stl$slope_degrees, main = "Histogram of Slope Column", xlab = "Slope Values")
 ## Define values for low, medium and high based on histogram
+#maybe 10, 20, 30
 ## Low <0.0038
 ## Medium >0.00381 and <0.0214
 ## High >0.0215
@@ -86,6 +89,7 @@ quantiles_slope
 hist(flow_stl$wint_width, main = "Histogram of Width Column", xlab = "Width Values")
 quantiles_width <- quantile(flow_stl$wint_width, probs = c(1/3, 2/3), na.rm = TRUE)
 quantiles_width
+# 20, 40, infin
 ## Define values for low, medium and high based on histogram
 ## Low <3.394
 ## Medium >3.395 and <11.288
@@ -97,7 +101,7 @@ quantiles_width
 Function that assigns an energy value to the streams
 ```{r}
 # Create a function to assign energy values based on slope and wint_width ranges
-assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_wint_width_range, medium_wint_width_range, high_wint_width_range) {
+assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_wint_width_range, medium_wint_width_range, high_wint_width_range, slope) {
   # # Filter for hab_unit == Marsh
   # filtered_df <- input_df %>% filter(hab_unit == "Marsh")
   
@@ -141,16 +145,16 @@ assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, h
 }
 
 # Call the function with the provided dataframe and numeric range bounds
-low_slope_range <- c(0, 0.0038)
-medium_slope_range <- c(0.00381, 0.0214)
-high_slope_range <- c(0.0215, 20) #arbitrary large number
-low_width_range <- c(0, 3.394)
-medium_width_range <- c(3.395, 11.288)
-high_width_range <- c(11.289, 300) #arbitrary large number
+low_slope_range <- c(0, 10)
+medium_slope_range <- c(10.0000000001, 20)
+high_slope_range <- c(20.0000000001, 1000) #arbitrary large number
+low_width_range <- c(0, 20)
+medium_width_range <- c(20.0000000001, 40)
+high_width_range <- c(40.0000000001, 300) #arbitrary large number
 
-flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range)
+flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range, slope_degrees)
 
-# unique(flow_stl$energy)
+unique(flow_stl$energy)
 ```
 
 ## FILTER TO REACHES WHERE WOOD IS A BENEFIT
