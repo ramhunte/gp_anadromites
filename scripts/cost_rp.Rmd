@@ -37,11 +37,6 @@ source("../common.R")
 
 ```{r}
                      
-                     
-# creating a 50m buffer
-flow_buff <- st_buffer(flow_stl, dist = 50)
-
-
 # importing elevation raster data
 # Data: https://gis.ess.washington.edu/data/raster/tenmeter/byquad/info.html
 
@@ -53,59 +48,65 @@ elev_list <- list.files(path = "/Users/rayhunter/Desktop/GP/gp_anadromites/data/
 #  rasterizing elevation dem files and storing them in a collection 
 elev_list_rast <- sprc(lapply(elev_list, rast))
 
-# combining rasters into 1 
+# combining rasters into 1 mosaic
 elev_mos <- mosaic(elev_list_rast)
 
-# cropping and masking raster data to stream buffer
-crop_rast <- crop(elev_mos, flow_buff, mask = TRUE)
+#calculating slope from elevation data
+full_slope <- terrain(x = elev_mos, v = "slope", unit = "degrees")
+plot(full_slope)
 
-#calculating slope of data
-buff_slope <- terrain(x = crop_rast, v = "slope", unit = "degrees")
-
-# projecting flow_buff crs (using NAD83 which is more accurate) onto raster data (originally using NAD27)      
-buff_slope <- project(buff_slope, flow_buff)
-
+# projecting NAD83 (which is more accurate and used by the NOAA files) onto raster data (originally using NAD27)  
+full_slope <- project(full_slope, "EPSG:26910")
 
 # writeLines(crs(flow_buff))
-#bclass(flow_buff)
+# writeLines(crs(full_slope))
 
-# writeLines(crs(elev_mos))
-#bclass(elev_moss)
+# creating a 50m buffer around stream edges
+flow_buff <- st_buffer(flow_stl, dist = 50, endCapStyle = "FLAT")
+
+# cropping and masking slope raster data to stream buffer
+crop_rast <- crop(full_slope, flow_buff, mask = TRUE)
+plot(crop_rast)
+
+#extract mean 
+extract <- extract(crop_rast, flow_buff, fun = mean)
+
+#joining
+flow_buff <- flow_buff %>% 
+  mutate(avg_slope = extract$slope)
 
 
 
-
-
-
-
-# plot(crop_rast)
-# plot(buff_slope)
-
-
+hist(flow_buff$avg_slope)
 
 # calculate the average slope in degrees w/ in a 50m buffer of each reach 
 
-buff_rast <- rasterize(vect(flow_buff),
-                      buff_slope,
-                      field = "noaaid")
+# buff_rast <- rasterize(vect(flow_buff),
+#                       crop_rast,
+#                       field = "noaaid")
+# 
+# slope_zonal <- zonal(crop_rast,
+#                   buff_rast,
+#                   fun = "mean",
+#                   na.rm = TRUE)
+#
+# avg_slope <- left_join(flow_buff,
+#                          slope_zonal, 
+#                        by = "noaaid") %>% 
+#   rename(avg_slope = slope.y)
 
-slope_zonal <- zonal(buff_slope, 
-                  buff_rast, 
-                  fun = "mean", 
-                  na.rm = TRUE)
-
-# summary(slope_zonal)
+# #trying to figure out why there are NA values in small buffer polygons 
+# 
+# avg_slope2 <- avg_slope %>% 
+#   filter(is.na(avg_slope))
 
 
 
-# joining zonal stats back to polygon
-# currently labeled as slope.y in the df 
 
-avg_slope <- left_join(flow_buff,
-                         slope_zonal, 
-                       by = "noaaid")
+
 
 ```
+
 
 
 ```{r}
@@ -115,17 +116,13 @@ avg_slope <- left_join(flow_buff,
 # elev_mos_df <- as.data.frame(elev_mos, xy = TRUE)
 
 
-#trying to figure out why there are NA values in small buffer polygons 
-
-avg_slope2 <- avg_slope %>% 
-  filter(is.na(slope.y))
-
 
 ggplot() +
   # # ggplotting raster layer (only run if needed)
   # geom_raster(data = elev_mos_df, aes(x = x, y = y, fill = q525)) +
-  geom_sf(data = flow_buff, color = "red") +
-  geom_sf(data = avg_slope2, fill = "black") +
+  # geom_sf(data = flow_buff, color = "red") +
+  geom_sf(data = flow_buff, aes(col = avg_slope)) +
+  scale_color_viridis_c() +
   # geom_sf(data = flow_stl, color = "red") +
   
   # geom_sf(data = flood_sf, aes(fill = Period)) + 
