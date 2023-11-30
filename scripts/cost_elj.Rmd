@@ -22,6 +22,7 @@ source("../common.R")
 ```
 
 ## FIND THE NEAREST ROAD TO EACH STREAM REACH and ASSIGN LMH
+# only run once and then just load in the flow_stl_mod
 ```{r}
 # Create sf objects
 sf_roads <- st_as_sf(roads_stl)
@@ -66,6 +67,7 @@ create_transportation_column <- function(distance_column) {
 
 # Apply the function to create the 'transportation' column (all are low)
 flow_stl$transportation <- create_transportation_column(flow_stl$distance_to_nearest_road_mi)
+# sf::st_write(flow_stl, here("data", "HARP", "flow_stl_mod.shp"), row.names=FALSE, append = FALSE)
 ```
 
 ## STOLEN FROM FLOODPLAIN
@@ -247,5 +249,26 @@ elj_no_inf_cost$length_mi<-elj_no_inf_cost$length*0.000621371
 #multiply miles by $/mile to get total dollars
 elj_no_inf_cost$final_lower_cost<-elj_no_inf_cost$lower_cost_estimate*elj_no_inf_cost$length_mi
 elj_no_inf_cost$final_upper_cost<-elj_no_inf_cost$upper_cost_estimate*elj_no_inf_cost$length_mi
+elj_no_inf_cost$avg_cost<-(elj_no_inf_cost$final_lower_cost+elj_no_inf_cost$final_upper_cost)/2
+```
+
+## MAP THE RESULTS
+
+#this doesn't load correctly yet
+```{r}
+#convert to sf for mapping purposes
+elj_no_inf_cost_sf <- st_as_sf(elj_no_inf_cost)
+ ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = elj_no_inf_cost_sf, aes(fill = avg_cost)) +
+  scale_fill_viridis_b(breaks = c(0, 1500, 4500, 7000),
+                       #labels = c("0", "$4500", "$7000")
+                       ) +
+  # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
+  
+  #geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(fill="Average Cost ($)")
 ```
 

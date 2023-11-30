@@ -11,10 +11,15 @@ library(ggplot2)
 
 
                                 ################ HARP #################
-#flowline stillaguamish 
-flow_stl <- st_read(here("data", "HARP", "Flowline_STL", "Flowline_STL_20220928.shp")) %>% 
+#flowline stillaguamish without distance to nearest road
+flow_stl <- st_read(here("data", "HARP", "Flowline_STL", "Flowline_STL_20220928.shp")) %>%
   clean_names()
 flow_stl <- st_zm(flow_stl, what = "ZM") #removing z
+
+# #flowline stillaguamish with distance to nearest road (created in the cost_elj document)
+# flow_stl <- st_read(here("data", "HARP", "flow_stl_mod.shp")) %>%
+#   clean_names()
+# flow_stl <- st_zm(flow_stl, what = "ZM") #removing z
 
 #floodplain stillaguamish
 flood_stl <- st_read(here("data", "HARP", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
