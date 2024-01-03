@@ -22,50 +22,57 @@ source("../common.R")
 ```
 
 ## FIND THE NEAREST ROAD TO EACH STREAM REACH and ASSIGN LMH
+# only run once and then just load in the flow_stl_mod
 ```{r}
-# Create sf objects
-sf_roads <- st_as_sf(roads_stl)
-sf_streamreaches <- st_as_sf(flow_stl, coords = c("lon", "lat"), crs = 4326)
+# # Create sf objects
+# sf_roads <- st_as_sf(roads_stl)
+# sf_streamreaches <- st_as_sf(flow_stl, coords = c("lon", "lat"), crs = 4326)
+# 
+# # Check and match CRS
+# if (!identical(st_crs(sf_roads), st_crs(sf_streamreaches))) {
+#   sf_roads <- st_transform(sf_roads, st_crs(sf_streamreaches))
+# }
+# # Find the distance from each stream to the nearest road
+# distances <- st_distance(sf_streamreaches, sf_roads)
+# 
+# # Extract the minimum distance for each stream reach
+# min_distances <- apply(distances, 1, min)
+# 
+# # Add the distances to the original data.frame
+# flow_stl$distance_to_nearest_road_m <- min_distances
+# flow_stl$distance_to_nearest_road_mi <- flow_stl$distance_to_nearest_road_m *0.000621371
+# 
+# min(flow_stl$distance_to_nearest_road_mi)
+# max(flow_stl$distance_to_nearest_road_mi)
+# hist(flow_stl$distance_to_nearest_road_mi)
+# 
+# # Print the resulting data.frame
+# print(flow_stl$distance_to_nearest_road_mi)
+# 
+# # Check the CRS of sf_streamreaches
+# crs_streamreaches <- st_crs(flow_stl)
+# print(crs_streamreaches$units)
+# 
+# # make a column assigning low, medium or high distance depending on the numerical distance to nearest road
+# 
+# create_transportation_column <- function(distance_column) {
+#   transportation_column <- cut(
+#     distance_column,
+#     breaks = c(-Inf, 7, 20, Inf),
+#     labels = c("low", "medium", "high"),
+#     include.lowest = TRUE
+#   )
+#   return(transportation_column)
+# }
+# 
+# # Apply the function to create the 'transportation' column (all are low)
+# flow_stl$transportation <- create_transportation_column(flow_stl$distance_to_nearest_road_mi)
+# transportation_info<-flow_stl %>% select(c(noaaid, transportation)) %>% st_drop_geometry()
+# write.csv(transportation_info, here("data", "HARP", "stl_transportation.csv"), row.names=FALSE)
 
-# Check and match CRS
-if (!identical(st_crs(sf_roads), st_crs(sf_streamreaches))) {
-  sf_roads <- st_transform(sf_roads, st_crs(sf_streamreaches))
-}
-# Find the distance from each stream to the nearest road
-distances <- st_distance(sf_streamreaches, sf_roads)
+# #### load in csv file and join to flow_stl
+# flow_stl_mod<-full_join(flow_stl, transportation_stl)
 
-# Extract the minimum distance for each stream reach
-min_distances <- apply(distances, 1, min)
-
-# Add the distances to the original data.frame
-flow_stl$distance_to_nearest_road_m <- min_distances
-flow_stl$distance_to_nearest_road_mi <- flow_stl$distance_to_nearest_road_m *0.000621371
-
-min(flow_stl$distance_to_nearest_road_mi)
-max(flow_stl$distance_to_nearest_road_mi)
-hist(flow_stl$distance_to_nearest_road_mi)
-
-# Print the resulting data.frame
-print(flow_stl$distance_to_nearest_road_mi)
-
-# Check the CRS of sf_streamreaches
-crs_streamreaches <- st_crs(flow_stl)
-print(crs_streamreaches$units)
-
-# make a column assigning low, medium or high distance depending on the numerical distance to nearest road
-
-create_transportation_column <- function(distance_column) {
-  transportation_column <- cut(
-    distance_column,
-    breaks = c(-Inf, 7, 20, Inf),
-    labels = c("low", "medium", "high"),
-    include.lowest = TRUE
-  )
-  return(transportation_column)
-}
-
-# Apply the function to create the 'transportation' column (all are low)
-flow_stl$transportation <- create_transportation_column(flow_stl$distance_to_nearest_road_mi)
 ```
 
 ## STOLEN FROM FLOODPLAIN
@@ -247,5 +254,26 @@ elj_no_inf_cost$length_mi<-elj_no_inf_cost$length*0.000621371
 #multiply miles by $/mile to get total dollars
 elj_no_inf_cost$final_lower_cost<-elj_no_inf_cost$lower_cost_estimate*elj_no_inf_cost$length_mi
 elj_no_inf_cost$final_upper_cost<-elj_no_inf_cost$upper_cost_estimate*elj_no_inf_cost$length_mi
+elj_no_inf_cost$avg_cost<-(elj_no_inf_cost$final_lower_cost+elj_no_inf_cost$final_upper_cost)/2
+```
+
+## MAP THE RESULTS
+
+#this doesn't load correctly yet
+```{r}
+#convert to sf for mapping purposes
+elj_no_inf_cost_sf <- st_as_sf(elj_no_inf_cost)
+ ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = elj_no_inf_cost_sf, aes(fill = avg_cost)) +
+  scale_fill_viridis_b(breaks = c(0, 1500, 4500, 7000),
+                       #labels = c("0", "$4500", "$7000")
+                       ) +
+  # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
+  
+  #geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(fill="Average Cost ($)")
 ```
 
