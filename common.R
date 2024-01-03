@@ -16,10 +16,12 @@ flow_stl <- st_read(here("data", "HARP", "Flowline_STL", "Flowline_STL_20220928.
   clean_names()
 flow_stl <- st_zm(flow_stl, what = "ZM") #removing z
 
-# #flowline stillaguamish with distance to nearest road (created in the cost_elj document)
-# flow_stl <- st_read(here("data", "HARP", "flow_stl_mod.shp")) %>%
-#   clean_names()
-# flow_stl <- st_zm(flow_stl, what = "ZM") #removing z
+#csv stillaguamish with distance to nearest road (created in the cost_elj document)
+transportation_stl <- read.csv(here("data", "HARP", "stl_transportation.csv")) %>%
+  clean_names()
+
+#join the flowline and the transportation column
+flow_stl<-full_join(flow_stl, transportation_stl)
 
 #floodplain stillaguamish
 flood_stl <- st_read(here("data", "HARP", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
@@ -48,6 +50,4 @@ snoho_lu <- st_read(here("data", "Washington_data", "Snoho_Land_Use", "General_L
 
 
 roads_stl <- st_read(here("data", "Washington_data", "WA_roads_thin.gpkg"))
-
-
 
