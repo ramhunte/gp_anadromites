@@ -21,13 +21,19 @@ Reminders *Remember to change the width value (as needed) and fix the matching b
 ## Filtering floodplain data
 
 ```{r}
-## filtering for only floodplains that existed historically, but not currently
-hist_flood_stl<-flood_stl 
+#taking just the geometries and names of subbasins
+#changing crs to match floodplain habitat crs
+subs_mod <- subs_stl %>% 
+  select(noaa_subba) %>% 
+  st_transform(26910)
+
+## fiding the sub basins that each fp habitat lies in. If it lies in multiple sub basins, it was split up into multiple polygons by the sub basin (performed by st_intersection)
+hist_flood_stl <- st_intersection(subs_mod, flood_stl) 
   # filter(period=="Hist")
 
 ## filtering for specific columns to make the join cleaner
 slope_width_stl<-flow_stl %>% 
-  select(noaaid, slope, wint_width, pond_overl, chinook, noaa_subba, habitat) %>% 
+  select(noaaid, slope, wint_width, pond_overl, chinook, habitat) %>% 
   st_drop_geometry()
 
 #change width as needed
@@ -256,7 +262,6 @@ stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_se
 
 #grouped total costs 
 
-### ISSUE IS HERE: 
 
 stilly_subbasin_cost <- stilly_total_cost %>% 
   group_by(noaa_subba) %>% 
@@ -292,15 +297,18 @@ stilly_subbasin_cost <- stilly_total_cost %>%
 
 
 
-# looking at polygons of all habitat type 
+
+
 ```{r}
-ggplot() +
+test <- ggplot() +
   geom_sf(data = subs_stl) +
-  geom_sf(data = flood_stl, aes(fill = period)) +
-  theme_minimal()
+  geom_sf(data = stilly_total_cost, aes(fill = noaa_subba)) +
+  theme_minimal() 
+test
+
+test + theme(legend.position = "none")
+  
 ```
-
-
 
 
 
