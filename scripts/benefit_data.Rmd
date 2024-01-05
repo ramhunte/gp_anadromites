@@ -39,7 +39,6 @@ rp_bens<-stilly_bens %>% filter(scenario=="Shade" & pop=="fall_chinook")
 ##need to load each cost rmd before these will work bc of the environment clearing
 #floodplain
 flood_cost_ben <- full_join(stilly_subbasin_cost, flood_bens, by = c("noaa_subba" = "subbasin"))
-
 #ELJ
 ##need to change this out for the inflation adjusted cost **********
 elj_cost_ben <- full_join(elj_no_inf_cost_sf, elj_bens, by = c("noaa_subba" = "subbasin"))
@@ -52,6 +51,10 @@ Calculate this by dividing the average cost by number of fish increase
 Should we also do by perc_change?
 ```{r}
 #floodplain
+##need to manipulate values so that when n=0 the ratio is very low, also I need the value to be NA when avg_cost is NA
+flood_cost_ben <- flood_cost_ben %>%
+  mutate(ratio = ifelse(n == 0, 0, avg_cost / n))
+
 #ELJ
 elj_cost_ben$ratio<-elj_cost_ben$avg_cost/elj_cost_ben$n
 #RP
@@ -59,7 +62,15 @@ elj_cost_ben$ratio<-elj_cost_ben$avg_cost/elj_cost_ben$n
 
 ## floodplain map
 ```{r}
-
+ ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = flood_cost_ben, aes(fill = ratio)) +
+  # scale_fill_viridis_b(breaks = c(0, 45000000, 90000000),
+  #                      labels = c("0 Million", "45 Million", "90 Million")) +
+  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(fill="Cost Benefit Ratio")
 ```
 
 ## ELJ map
