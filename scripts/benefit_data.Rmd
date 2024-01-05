@@ -10,9 +10,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 source("../common.R")
 ```
+## do not clear environment
 
 
-
+##IDK what this is??
 ```{r}
 harp_mod <- stilly_bens %>% 
   filter(pop == "fall_chinook")
@@ -24,5 +25,55 @@ ben_by_scen <- harp_mod %>%
 
 
 ben_by_scen %>% gt()
+```
+
+## first separate benefits into dataframes by type
+```{r}
+flood_bens<-stilly_bens %>% filter(scenario=="Floodplain" & pop=="fall_chinook")
+elj_bens<-stilly_bens %>% filter(scenario=="Wood" & pop=="fall_chinook")  
+rp_bens<-stilly_bens %>% filter(scenario=="Shade" & pop=="fall_chinook")
+```
+
+## join the benefit dataframes with the cost dataframes
+```{r}
+##need to load each cost rmd before these will work bc of the environment clearing
+#floodplain
+flood_cost_ben <- full_join(stilly_subbasin_cost, flood_bens, by = c("noaa_subba" = "subbasin"))
+
+#ELJ
+##need to change this out for the inflation adjusted cost **********
+elj_cost_ben <- full_join(elj_no_inf_cost_sf, elj_bens, by = c("noaa_subba" = "subbasin"))
+
+#RP
+```
+
+## calculate cost benefit ratio
+Calculate this by dividing the average cost by number of fish increase
+Should we also do by perc_change?
+```{r}
+#floodplain
+#ELJ
+elj_cost_ben$ratio<-elj_cost_ben$avg_cost/elj_cost_ben$n
+#RP
+```
+
+## floodplain map
+```{r}
+
+```
+
+## ELJ map
+```{r}
+ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = elj_cost_ben, aes(color = ratio)) + #use color, not fill bc line
+  # scale_color_viridis_c(breaks = c(0, 1500, 4500, 1), option = "B")
+  theme_minimal()+
+  labs(fill="Average Cost ($)")
+```
+
+## RP map
+```{r}
+
 ```
 
