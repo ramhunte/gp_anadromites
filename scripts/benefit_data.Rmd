@@ -51,11 +51,14 @@ Calculate this by dividing the average cost by number of fish increase
 Should we also do by perc_change?
 ```{r}
 #floodplain
-##need to manipulate values so that when n=0 the ratio is very low, also I need the value to be NA when avg_cost is NA
+##need to manipulate values so that when n=0 (zero fish are benefitted) the ratio is 0, also I need the value to be NA when avg_cost is NA
+##logically the value should never be NA (that means we didn't calculate a price for a basin with benefits)
 flood_cost_ben <- flood_cost_ben %>%
   mutate(ratio = NA) %>% 
   mutate(ratio = ifelse(!is.na(avg_cost), avg_cost / n, NA))
 flood_cost_ben$ratio <- replace(flood_cost_ben$ratio, is.infinite(flood_cost_ben$ratio), 0)
+flood_cost_ben <- flood_cost_ben %>%
+  mutate(ratio_log = if_else(!is.na(ratio) & ratio != 0, log(ratio), NA_real_))
 
 #ELJ
 elj_cost_ben$ratio<-elj_cost_ben$avg_cost/elj_cost_ben$n
@@ -64,9 +67,21 @@ elj_cost_ben$ratio<-elj_cost_ben$avg_cost/elj_cost_ben$n
 
 ## floodplain map
 ```{r}
+#regular scale
  ggplot() +
   geom_sf(data = subs_stl, aes()) +
   geom_sf(data = flood_cost_ben, aes(fill = ratio)) +
+  # scale_fill_viridis_b(breaks = c(0, 45000000, 90000000),
+  #                      labels = c("0 Million", "45 Million", "90 Million")) +
+  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(fill="Cost Benefit Ratio")
+
+#log scale
+ ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = flood_cost_ben, aes(fill = ratio_log)) +
   # scale_fill_viridis_b(breaks = c(0, 45000000, 90000000),
   #                      labels = c("0 Million", "45 Million", "90 Million")) +
   geom_sf(data = flow_stl, color = "blue", alpha = .3) +
