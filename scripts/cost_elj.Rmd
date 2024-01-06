@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #clearing environment
-# rm(list = ls())
+rm(list = ls())
 #sourcing data
 source("../common.R")
 ```
@@ -242,7 +242,10 @@ elj_no_inf_cost <- calculate_final_cost(intermediate_cost)
 
 ## APPLY PRODUCER PRICE INDICES TO COST RANGES
 ```{r}
-
+#apply inflation and then par down the dataframe
+elj_cost<-elj_no_inf_cost %>% 
+  mutate(lower_cost_estimate=lower_cost_estimate*1.6728,
+           upper_cost_estimate=upper_cost_estimate*1.6728) 
 ```
 
 ## APPLY THE COST PER ACRE TO MILES OF STREAM
@@ -250,21 +253,22 @@ elj_no_inf_cost <- calculate_final_cost(intermediate_cost)
 All costs ranges assume purchased material.)
 ```{r}
 #convert reach length from meters to miles
-elj_no_inf_cost$length_mi<-elj_no_inf_cost$length*0.000621371
+elj_cost$length_mi<-elj_cost$length*0.000621371
 #multiply miles by $/mile to get total dollars
-elj_no_inf_cost$final_lower_cost<-elj_no_inf_cost$lower_cost_estimate*elj_no_inf_cost$length_mi
-elj_no_inf_cost$final_upper_cost<-elj_no_inf_cost$upper_cost_estimate*elj_no_inf_cost$length_mi
-elj_no_inf_cost$avg_cost<-(elj_no_inf_cost$final_lower_cost+elj_no_inf_cost$final_upper_cost)/2
+elj_cost$final_lower_cost<-elj_cost$lower_cost_estimate*elj_cost$length_mi
+elj_cost$final_upper_cost<-elj_cost$upper_cost_estimate*elj_cost$length_mi
+elj_cost$avg_cost<-(elj_cost$final_lower_cost+elj_cost$final_upper_cost)/2
 ```
 
 ## MAP THE RESULTS
 ```{r}
 #convert to sf for mapping purposes
-elj_no_inf_cost_sf <- st_as_sf(elj_no_inf_cost)
+elj_cost_sf <- st_as_sf(elj_cost)%>% 
+  select(noaaid,final_lower_cost, final_upper_cost, avg_cost, noaa_subba)
 ggplot() +
   geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = elj_no_inf_cost_sf, aes(color = avg_cost)) + #use color, not fill bc line
-  scale_color_viridis_c(breaks = c(0, 1500, 4500, 7000), option = "E", name = "Average Cost ($)", direction=-1)+
+  geom_sf(data = elj_cost_sf, aes(color = avg_cost)) + #use color, not fill bc line
+  scale_color_viridis_c(breaks = c(0, 3000, 6000, 9000), option = "E", name = "Average Cost ($)", direction=-1)+
   theme_minimal()
 ```
 
@@ -272,12 +276,12 @@ ggplot() +
 ## Figure showing cost per subbasin graphically
 ```{r}
 #creating a column with pretty subbasin names
-elj_no_inf_cost_sf$subbasin_name <- str_replace_all(elj_no_inf_cost_sf$noaa_subba, "_", " ") 
-elj_no_inf_cost_sf$subbasin_name <-str_replace_all(elj_no_inf_cost_sf$subbasin_name, "Stillaguamish", "")
-elj_no_inf_cost_sf$subbasin_name <-str_replace_all(elj_no_inf_cost_sf$subbasin_name, "mainstem", "Mainstem")
+elj_cost_sf$subbasin_name <- str_replace_all(elj_cost_sf$noaa_subba, "_", " ") 
+elj_cost_sf$subbasin_name <-str_replace_all(elj_cost_sf$subbasin_name, "Stillaguamish", "")
+elj_cost_sf$subbasin_name <-str_replace_all(elj_cost_sf$subbasin_name, "mainstem", "Mainstem")
 
 #create a summary table that has the lower, upper and average cost by subbasin
-elj_summary<-elj_no_inf_cost_sf %>% group_by(subbasin_name) %>% 
+elj_summary<-elj_cost_sf %>% group_by(subbasin_name) %>% 
   summarise(
     sum_final_lower_cost = sum(final_lower_cost, na.rm = TRUE),
     sum_final_upper_cost = sum(final_upper_cost, na.rm = TRUE),
@@ -287,14 +291,14 @@ elj_summary<-elj_no_inf_cost_sf %>% group_by(subbasin_name) %>%
 #figure itself
 ggplot(elj_summary, aes(x = subbasin_name)) +
   geom_errorbar(
-    aes(ymin = sum_final_lower_cost/1000, ymax = sum_final_upper_cost/1000),
+    aes(ymin = sum_final_lower_cost/1000000, ymax = sum_final_upper_cost/1000000),
     position = "dodge",
     width = 0.2
   ) +
-  geom_point(aes(y = sum_avg_cost/1000), position = "dodge", size = 3) +
+  geom_point(aes(y = sum_avg_cost/1000000), position = "dodge", size = 3) +
   labs(title = "Costs per Subbasin in the Stillaguamish",
        x = "Subbasin",
-       y = "Cost (Thousands of Dollars)") +
+       y = "Cost (Millions of Dollars)") +
   theme_minimal()+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
