@@ -63,11 +63,11 @@ flood_cost_ben <- flood_cost_ben %>%
 #ELJ
 elj_cost_ben$ratio_n<-elj_cost_ben$avg_cost/elj_cost_ben$n
 elj_cost_ben <- elj_cost_ben %>%
-  mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio != 0, log(ratio_n), NA_real_))
+  mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n), NA_real_))
 #RP
 ```
 
-## floodplain map
+## floodplain map (shows cost per salmon for all subbasins)
 ```{r}
 #regular scale
  ggplot() +
@@ -91,6 +91,24 @@ elj_cost_ben <- elj_cost_ben %>%
   theme_minimal()+
   labs(fill="Cost Benefit Ratio")
 ```
+## Floodplain figure
+```{r}
+ggplot(flood_cost_ben, aes(x = reorder(subbasin_name, -avg_cost),
+                            # x = subbasin_name, #for regular ordering
+                           y = avg_cost/1000000)) +
+  geom_bar(stat = "summary", fun = "mean", fill = "black") +
+  labs(title = "Average Cost by Subbasin",
+       x = "Subbasin Name",
+       y = "Average Cost (Millions of Dollars)") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+## Floodplain figure highlighting top 5 subbasin
+```{r}
+
+```
+
 
 ## ELJ map
 ```{r}

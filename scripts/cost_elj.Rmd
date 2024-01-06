@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #clearing environment
-rm(list = ls())
+#rm(list = ls())
 #sourcing data
 source("../common.R")
 ```
