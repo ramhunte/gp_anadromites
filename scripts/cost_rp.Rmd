@@ -21,53 +21,7 @@ source("../common.R")
 ### 1) IMPACT OF SITE ACCESSIBILITY AND MATERIALS ON COSTS
 
 ## 1.1) SITE ACCESSABILITY: FIND THE NEAREST ROAD TO EACH STREAM REACH and ASSIGN LMH (STOLEN FROM ELJ)
-```{r}
-# Create sf objects
-sf_roads <- st_as_sf(roads_stl)
-sf_streamreaches <- st_as_sf(flow_stl, coords = c("lon", "lat"), crs = 4326)
-
-# Check and match CRS
-if (!identical(st_crs(sf_roads), st_crs(sf_streamreaches))) {
-  sf_roads <- st_transform(sf_roads, st_crs(sf_streamreaches))
-}
-# Find the distance from each stream to the nearest road
-distances <- st_distance(sf_streamreaches, sf_roads)
-
-# Extract the minimum distance for each stream reach
-min_distances <- apply(distances, 1, min)
-
-# Add the distances to the original data.frame
-flow_stl$distance_to_nearest_road_m <- min_distances
-flow_stl$distance_to_nearest_road_mi <- flow_stl$distance_to_nearest_road_m *0.000621371
-
-
-#inspecting
-min(flow_stl$distance_to_nearest_road_mi)
-max(flow_stl$distance_to_nearest_road_mi)
-hist(flow_stl$distance_to_nearest_road_mi)
-
-# Print the resulting data.frame
-print(flow_stl$distance_to_nearest_road_mi)
-
-# Check the CRS of sf_streamreaches
-crs_streamreaches <- st_crs(flow_stl)
-print(crs_streamreaches$units)
-
-# make a column assigning low, medium or high distance depending on the numerical distance to nearest road
-
-create_transportation_column <- function(distance_column) {
-  transportation_column <- cut(
-    distance_column,
-    breaks = c(-Inf, 7, 20, Inf),
-    labels = c("low", "medium", "high"),
-    include.lowest = TRUE
-  )
-  return(transportation_column)
-}
-
-# Apply the function to create the 'transportation' column (all are low)
-flow_stl$transportation <- create_transportation_column(flow_stl$distance_to_nearest_road_mi)
-```
+* in common R, the transportation (site accessability) was added to the `flow_stl` data frame
 
 
 ## 1.2) MATERIALS: STREAM ENERGY USED TO CALCULATE MATERIALS COSTS (STOLEN FROM ELJ)
@@ -143,7 +97,7 @@ unique(flow_stl$energy)
 calculate_intermediate_cost <- function(input_df) {
   input_df <- input_df %>%
     mutate(
-      relative_cost = case_when(
+      intermediate_cost = case_when(
         transportation == "low" & energy == "low" |
         transportation == "low" & energy == "medium" ~ "low",
         transportation == "low" & energy == "high" |
@@ -194,7 +148,7 @@ elev_mos <- mosaic(elev_list_rast)
 
 #calculating slope from elevation data
 full_slope <- terrain(x = elev_mos, v = "slope", unit = "degrees")
-plot(full_slope)
+# plot(full_slope)
 
 # projecting NAD83 (which is more accurate and used by the NOAA files) onto raster data (originally using NAD27)  
 full_slope <- project(full_slope, "EPSG:26910")
@@ -207,7 +161,7 @@ flow_buff <- st_buffer(flow_stl, dist = 50, endCapStyle = "FLAT")
 
 # cropping and masking slope raster data to stream buffer
 crop_rast <- crop(full_slope, flow_buff, mask = TRUE)
-plot(crop_rast)
+# plot(crop_rast)
 
 #extract mean 
 extract <- extract(crop_rast, flow_buff, fun = mean)
@@ -215,31 +169,6 @@ extract <- extract(crop_rast, flow_buff, fun = mean)
 #joining to original flow_stl 
 flow_stl <- flow_stl %>% 
   mutate(avg_bank_slope = extract$slope)
-
-
-
-hist(flow_buff$avg_slope)
-
-# calculate the average slope in degrees w/ in a 50m buffer of each reach 
-
-# buff_rast <- rasterize(vect(flow_buff),
-#                       crop_rast,
-#                       field = "noaaid")
-# 
-# slope_zonal <- zonal(crop_rast,
-#                   buff_rast,
-#                   fun = "mean",
-#                   na.rm = TRUE)
-#
-# avg_slope <- left_join(flow_buff,
-#                          slope_zonal, 
-#                        by = "noaaid") %>% 
-#   rename(avg_slope = slope.y)
-
-# #trying to figure out why there are NA values in small buffer polygons 
-# 
-# avg_slope2 <- avg_slope %>% 
-#   filter(is.na(avg_slope))
 
 
 
@@ -252,37 +181,20 @@ high_slope <- c(20.001, Inf)
 
 bank_slope_cost_fun <- function(slope) {
   bank_slope_class <- ifelse(slope > 0 & slope <= 10, "low",
-                ifelse(slope > 10 & slope <= 20, "med", "high"))
+                ifelse(slope > 10 & slope <= 20, "medium", "high"))
   return(bank_slope_class)
 }
 
 flow_stl <- flow_stl %>%
-  mutate(bank_slope_class = bank_slope_cost_fun(avg_slope))
+  mutate(bank_slope_class = bank_slope_cost_fun(avg_bank_slope),
+        #creating acres of riparian vegetaion. may need to be changed
+         #2x the area of the stream reach converted to acres
+         rip_acres = 2*length*wint_width*0.000247105
+         )
 
 
 ```
 
-
-### INSPECTING DATA ON MAP ###
-```{r}
-# # plotting raster as a df so that it can be plotted in ggplot 
-# # computationally expensive, so only run if needed 
-
-# elev_mos_df <- as.data.frame(elev_mos, xy = TRUE)
-
-
-ggplot() +
-  # # ggplotting raster layer (only run if needed)
-  # geom_raster(data = elev_mos_df, aes(x = x, y = y, fill = q525)) +
-  # geom_sf(data = flow_buff, color = "red") +
-  geom_sf(data = flow_buff, aes(col = avg_slope)) +
-  scale_color_viridis_c() +
-  # geom_sf(data = flow_stl, color = "red") +
-  
-  # geom_sf(data = flood_sf, aes(fill = Period)) + 
-  theme_minimal() 
-  # labs(title = "Stillaguamish Basin", color = "Stream type", fill = "Wetland Status")
-```
 
 
 ### 3) COST OF RIPARIAN PLANTING PROJECTS 
@@ -293,7 +205,7 @@ rp_cost <- function(input_df) {
   input_df <- input_df %>%
     mutate(
       #creating a column for low end of cost spectrum 
-      lower_cost = case_when(
+      lower_cost = rip_acres*case_when(
         intermediate_cost == "low" & bank_slope_class == "low" ~ 5000,
         intermediate_cost == "low" & bank_slope_class == "medium" ~ 20000,
         intermediate_cost == "low" & bank_slope_class == "high" ~ 60000,
@@ -307,7 +219,7 @@ rp_cost <- function(input_df) {
         TRUE ~ 0  # Default value if no conditions match
       ),
       #creating a column for high end of cost spectrum 
-      upper_cost = case_when(
+      upper_cost = rip_acres*case_when(
        intermediate_cost == "low" & bank_slope_class == "low" ~ 25000,
         intermediate_cost == "low" & bank_slope_class == "medium" ~ 50000,
         intermediate_cost == "low" & bank_slope_class == "high" ~ 100000,
@@ -325,17 +237,31 @@ rp_cost <- function(input_df) {
   return(input_df)
 }
 
-rp_cost_final <- rp_cost(intermediate_cost)
+rp_cost_final <- rp_cost(flow_stl)
+```
+
+
+##SUBBASIN SUMMARY 
+```{r}
+subba_rp_cost <- rp_cost_final %>% 
+  group_by(noaa_subba) %>% 
+  summarize(lower_subba_cost = sum(lower_cost),
+            upper_subba_cost = sum(upper_cost))
 ```
 
 
 
+
 #### NEXT STEPS: 
-* Problem: all relative costs are low b/c transportation is all "low" and energy is all "low" or "medium"
+* Problem: all intermediate costs are low b/c transportation is all "low" and energy is all "low" or "medium"
 * need to figure out how many acres along each stream need to be restored
   - cost estimates are given in $/acre. Literature says at least 30m inland
-  - maybe multiple winter stream width by 25%? both sides of stream?
-* how many acres along each side of the stream are being restored?
+  - right now, I multiplied the area of the stream (length x winter width) by 2 and converted to acres. no idea if this is right
+  
+ASSUMPTIONS
+* this assumes full restoration of all banks of every stream. what if we only want to restore partial riparian vegetation?
+* assuming riparian vegetation is 2x the area of the stream
+
 
 
 
