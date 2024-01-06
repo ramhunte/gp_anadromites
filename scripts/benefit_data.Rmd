@@ -64,9 +64,11 @@ flood_cost_ben <- flood_cost_ben %>%
 elj_cost_ben$ratio_n<-elj_cost_ben$avg_cost/elj_cost_ben$n
 elj_cost_ben <- elj_cost_ben %>%
   mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n), NA_real_))
+
 #RP
 ```
 
+################# Floodplain graphs ############################################
 ## floodplain map (shows cost per salmon for all subbasins)
 ```{r}
 #regular scale
@@ -106,9 +108,16 @@ ggplot(flood_cost_ben, aes(x = reorder(subbasin_name, -avg_cost),
 
 ## Floodplain figure highlighting top 5 subbasin
 ```{r}
-
+flood_cost_ben_top5<- flood_cost_ben %>% 
+  arrange(desc(ratio_n)) %>% 
+  slice_head(n = 5)
+ggplot() +
+  geom_sf(data = subs_stl, aes()) + #all subbasins
+  geom_sf(data = flood_cost_ben_top5, aes(), fill="red") #select subbasin
 ```
 
+
+################# ELJ graphs ############################################
 
 ## ELJ map
 ```{r}
@@ -126,7 +135,19 @@ ggplot() +
   scale_color_viridis_c(option = "E", name = "Log Cost per Fish Increase", direction=-1)+
   theme_minimal()
 ```
+## ELJ figure highlighting top 5 subbasin
+```{r}
+elj_cost_ben_top5<- elj_cost_ben %>% 
+  arrange(desc(ratio_n)) %>% 
+  slice_head(n = 5)
+ggplot() +
+  geom_sf(data = subs_stl, aes()) + #all subbasins
+  geom_sf(data = elj_cost_ben_top5, aes(), fill="red") #select subbasin
+```
 
+
+
+################# Riparian Planting graphs ############################################
 ## RP map
 ```{r}
 
