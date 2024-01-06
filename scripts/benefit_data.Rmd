@@ -53,7 +53,9 @@ Should we also do by perc_change?
 #floodplain
 ##need to manipulate values so that when n=0 the ratio is very low, also I need the value to be NA when avg_cost is NA
 flood_cost_ben <- flood_cost_ben %>%
-  mutate(ratio = ifelse(n == 0, 0, avg_cost / n))
+  mutate(ratio = NA) %>% 
+  mutate(ratio = ifelse(!is.na(avg_cost), avg_cost / n, NA))
+flood_cost_ben$ratio <- replace(flood_cost_ben$ratio, is.infinite(flood_cost_ben$ratio), 0)
 
 #ELJ
 elj_cost_ben$ratio<-elj_cost_ben$avg_cost/elj_cost_ben$n
