@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, include=FALSE, message = FALSE, error = FALSE
 
 
 #clearing environment
-rm(list = ls())
+# rm(list = ls())
 
 #sourcing data
 source("../common.R")
@@ -281,12 +281,14 @@ stilly_subbasin_cost <- stilly_total_cost %>%
 
 ```
 
+##MAP
 ```{r}
  ggplot() +
   geom_sf(data = subs_stl, aes()) +
   geom_sf(data = stilly_subbasin_cost, aes(fill = avg_cost)) +
   scale_fill_viridis_b(breaks = c(5000000, 20000000, 100000000),
-                       labels = c("5 Million", "20 Million", "100 Million")) +
+                       labels = c("5 Million", "20 Million", "100 Million"), option = "E", 
+                       direction=-1) +
   # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
   
   geom_sf(data = flow_stl, color = "blue", alpha = .3) +
@@ -295,8 +297,26 @@ stilly_subbasin_cost <- stilly_total_cost %>%
   labs(fill="Average Cost ($)")
 ```
 
-
-
+##Figure showing cost per subbasin graphically
+```{r}
+#creating a column with pretty subbasin names
+stilly_subbasin_cost$subbasin_name <- str_replace_all(stilly_subbasin_cost$noaa_subba, "_", " ") 
+stilly_subbasin_cost$subbasin_name <-str_replace_all(stilly_subbasin_cost$subbasin_name, "Stillaguamish", "")
+stilly_subbasin_cost$subbasin_name <-str_replace_all(stilly_subbasin_cost$subbasin_name, "mainstem", "Mainstem")
+#figure itself
+ggplot(stilly_subbasin_cost, aes(x = subbasin_name)) +
+  geom_errorbar(
+    aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),
+    position = "dodge",
+    width = 0.2
+  ) +
+  geom_point(aes(y = avg_cost/1000000), position = "dodge", size = 3) +
+  labs(title = "Costs per Subbasin in the Stillaguamish",
+       x = "Subbasin",
+       y = "Cost (Millions of Dollars)") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
 
 
 ```{r}

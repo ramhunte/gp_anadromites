@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #clearing environment
-rm(list = ls())
+# rm(list = ls())
 #sourcing data
 source("../common.R")
 ```
@@ -258,22 +258,44 @@ elj_no_inf_cost$avg_cost<-(elj_no_inf_cost$final_lower_cost+elj_no_inf_cost$fina
 ```
 
 ## MAP THE RESULTS
-
-#this doesn't load correctly yet
 ```{r}
 #convert to sf for mapping purposes
 elj_no_inf_cost_sf <- st_as_sf(elj_no_inf_cost)
- ggplot() +
+ggplot() +
   geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = elj_no_inf_cost_sf, aes(fill = avg_cost)) +
-  scale_fill_viridis_b(breaks = c(0, 1500, 4500, 7000),
-                       #labels = c("0", "$4500", "$7000")
-                       ) +
-  # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
-  
-  #geom_sf(data = flow_stl, color = "blue", alpha = .3) +
-  # scale_fill_continuous() +
+  geom_sf(data = elj_no_inf_cost_sf, aes(color = avg_cost)) + #use color, not fill bc line
+  scale_color_viridis_c(breaks = c(0, 1500, 4500, 7000), option = "E", name = "Average Cost ($)", direction=-1)+
+  theme_minimal()
+```
+
+
+## Figure showing cost per subbasin graphically
+```{r}
+#creating a column with pretty subbasin names
+elj_no_inf_cost_sf$subbasin_name <- str_replace_all(elj_no_inf_cost_sf$noaa_subba, "_", " ") 
+elj_no_inf_cost_sf$subbasin_name <-str_replace_all(elj_no_inf_cost_sf$subbasin_name, "Stillaguamish", "")
+elj_no_inf_cost_sf$subbasin_name <-str_replace_all(elj_no_inf_cost_sf$subbasin_name, "mainstem", "Mainstem")
+
+#create a summary table that has the lower, upper and average cost by subbasin
+elj_summary<-elj_no_inf_cost_sf %>% group_by(subbasin_name) %>% 
+  summarise(
+    sum_final_lower_cost = sum(final_lower_cost, na.rm = TRUE),
+    sum_final_upper_cost = sum(final_upper_cost, na.rm = TRUE),
+    sum_avg_cost = sum(avg_cost, na.rm = TRUE)
+  )
+
+#figure itself
+ggplot(elj_summary, aes(x = subbasin_name)) +
+  geom_errorbar(
+    aes(ymin = sum_final_lower_cost/1000, ymax = sum_final_upper_cost/1000),
+    position = "dodge",
+    width = 0.2
+  ) +
+  geom_point(aes(y = sum_avg_cost/1000), position = "dodge", size = 3) +
+  labs(title = "Costs per Subbasin in the Stillaguamish",
+       x = "Subbasin",
+       y = "Cost (Thousands of Dollars)") +
   theme_minimal()+
-  labs(fill="Average Cost ($)")
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
