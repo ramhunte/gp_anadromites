@@ -244,8 +244,8 @@ elj_no_inf_cost <- calculate_final_cost(intermediate_cost)
 ```{r}
 #apply inflation and then par down the dataframe
 elj_cost<-elj_no_inf_cost %>% 
-  mutate(lower_cost_estimate=lower_cost_estimate*1.6728,
-           upper_cost_estimate=upper_cost_estimate*1.6728) 
+  mutate(lower_cost_estimate=lower_cost_estimate*ppi,
+           upper_cost_estimate=upper_cost_estimate*ppi) 
 ```
 
 ## APPLY THE COST PER ACRE TO MILES OF STREAM
@@ -268,7 +268,7 @@ elj_cost_sf <- st_as_sf(elj_cost)%>%
 ggplot() +
   geom_sf(data = subs_stl, aes()) +
   geom_sf(data = elj_cost_sf, aes(color = avg_cost)) + #use color, not fill bc line
-  scale_color_viridis_c(breaks = c(0, 3000, 6000, 9000), option = "E", name = "Average Cost ($)", direction=-1)+
+  scale_color_viridis_c(breaks = c(0, 4000, 8000, 12000), option = "E", name = "Average Cost ($)", direction=-1)+
   theme_minimal()
 ```
 

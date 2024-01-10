@@ -59,11 +59,16 @@ hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column"
 ## High >1
 ```
 
-Both ponds have a side channel multiplier of 0 Assumed substantial material cost for upper and lower cost estimates Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28% (<https://www.officialdata.org/us/inflation/2003?amount=30000>)
+Both ponds have a side channel multiplier of 0 Assumed substantial material cost for upper and lower cost estimates Assumes inflation rate of 2.61% per year between 2003 and today, producing a cumulative price increase of 67.28%
+(PPI used: https://fred.stlouisfed.org/series/WPUSI012011)
+2003-03-01: 145.200
+2023-11-01: 327.242
+percent change
 
 NEW ONE
 
 ```{r}
+
 # Create a function to calculate cost estimates with inflation adjustment
 calculate_pond_cost_inflation_geometry_custom <- function(input_df, low_bound, medium_bound, high_bound) {
   # Filter for hab_unit == Pond or Lake
@@ -73,9 +78,9 @@ calculate_pond_cost_inflation_geometry_custom <- function(input_df, low_bound, m
   pond_cost_stl <- data.frame(
     project_number = filtered_df$project_number,
     upper_cost = ifelse(filtered_df$multiplier < medium_bound, 40000, 
-                        ifelse(filtered_df$multiplier <= high_bound, 60000, 80000)) * 1.6728,
+                        ifelse(filtered_df$multiplier <= high_bound, 60000, 80000)) * ppi,
     lower_cost = ifelse(filtered_df$multiplier < medium_bound, 30000, 
-                        ifelse(filtered_df$multiplier <= high_bound, 40000, 60000)) * 1.6728
+                        ifelse(filtered_df$multiplier <= high_bound, 40000, 60000)) * ppi
   )
   
   # Add the geometry and area column to the new dataframe
