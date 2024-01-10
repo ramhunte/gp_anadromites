@@ -15,16 +15,16 @@ source("../common.R")
 
 ##IDK what this is??
 ```{r}
-harp_mod <- stilly_bens %>% 
-  filter(pop == "fall_chinook")
-
-ben_by_scen <- harp_mod %>% 
-  group_by(scenario) %>% 
-    summarise(total_benefit = sum(n)) %>% 
-  arrange(desc(total_benefit))
-
-
-ben_by_scen %>% gt()
+# harp_mod <- stilly_bens %>% 
+#   filter(pop == "fall_chinook")
+# 
+# ben_by_scen <- harp_mod %>% 
+#   group_by(scenario) %>% 
+#     summarise(total_benefit = sum(n)) %>% 
+#   arrange(desc(total_benefit))
+# 
+# 
+# ben_by_scen %>% gt()
 ```
 
 ## first separate benefits into dataframes by type
@@ -135,11 +135,17 @@ ggplot() +
   scale_color_viridis_c(option = "E", name = "Log Cost per Fish Increase", direction=-1)+
   theme_minimal()
 ```
-## ELJ figure highlighting top 5 subbasin
+## ELJ figure highlighting top 5 stream segments (only in 2 subbasins)
 ```{r}
-elj_cost_ben_top5<- elj_cost_ben %>% 
+# join to another df with geometry is associated with floodplain, but the river
+elj_cost_ben_no_geo<-st_drop_geometry(elj_cost_ben)
+stl_subs_geo<-subs_stl %>% select(noaa_subba)
+elj_cost_ben_sub<-left_join(elj_cost_ben_no_geo, stl_subs_geo)
+#then take top 5 subbasins
+elj_cost_ben_top5<- elj_cost_ben_sub %>% 
   arrange(desc(ratio_n)) %>% 
   slice_head(n = 5)
+elj_cost_ben_top5<-st_as_sf(elj_cost_ben_top5)
 ggplot() +
   geom_sf(data = subs_stl, aes()) + #all subbasins
   geom_sf(data = elj_cost_ben_top5, aes(), fill="red") #select subbasin
