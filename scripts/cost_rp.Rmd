@@ -8,7 +8,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, include=FALSE, message = FALSE, error = FALSE)
 
-
 #clearing environment
 rm(list = ls())
 
@@ -16,7 +15,8 @@ rm(list = ls())
 source("../common.R")
 ```
 
-
+                      ### Important ### 
+adjust PPI from common R
 
 ### 1) IMPACT OF SITE ACCESSIBILITY AND MATERIALS ON COSTS
 
@@ -26,9 +26,24 @@ source("../common.R")
 
 ## 1.2) MATERIALS: STREAM ENERGY USED TO CALCULATE MATERIALS COSTS (STOLEN FROM ELJ)
 ```{r}
-
+#create a slope percent and degrees for flow_stl 
 flow_stl$slope_perc<-flow_stl$slope*100
 flow_stl$slope_degrees <- atan(flow_stl$slope_perc / 100) * (180 / pi)
+
+
+#filter to just subbasins with benefits in shade for chinook
+stilly_bens_rp <- stilly_bens %>% 
+  filter(pop == "fall_chinook" &
+         perc_change > 0 &
+        scenario == "Shade"
+         ) 
+
+#filter flow_stl to just streams with beenfits for shade and chinook 
+flow_stl_rp <- flow_stl %>% 
+  filter(noaa_subba %in% unique(stilly_bens_rp$subbasin))
+
+
+#----------------------------------------------------------------
 
 
 # Create a function to assign energy values based on slope and wint_width ranges
@@ -83,9 +98,12 @@ low_width_range <- c(0, 20)
 medium_width_range <- c(20.0000000001, 40)
 high_width_range <- c(40.0000000001, 300) #arbitrary large number
 
-flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range, slope_degrees)
 
-unique(flow_stl$energy)
+  
+#assigning energy 
+flow_stl_rp <- assign_energy_width(flow_stl_rp, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range, slope_degrees)
+
+unique(flow_stl_rp$energy)
 ```
 
 
@@ -114,7 +132,7 @@ calculate_intermediate_cost <- function(input_df) {
   
   return(input_df)
 }
-  flow_stl <- calculate_intermediate_cost(flow_stl)
+  flow_stl_rp <- calculate_intermediate_cost(flow_stl_rp)
 
 ```
 
@@ -157,7 +175,7 @@ full_slope <- project(full_slope, "EPSG:26910")
 # writeLines(crs(full_slope))
 
 # creating a 50m buffer around stream edges
-flow_buff <- st_buffer(flow_stl, dist = 50, endCapStyle = "FLAT")
+flow_buff <- st_buffer(flow_stl_rp, dist = 50, endCapStyle = "FLAT")
 
 # cropping and masking slope raster data to stream buffer
 crop_rast <- crop(full_slope, flow_buff, mask = TRUE)
@@ -167,7 +185,7 @@ crop_rast <- crop(full_slope, flow_buff, mask = TRUE)
 extract <- extract(crop_rast, flow_buff, fun = mean)
 
 #joining to original flow_stl 
-flow_stl <- flow_stl %>% 
+flow_stl_rp <- flow_stl_rp %>% 
   mutate(avg_bank_slope = extract$slope)
 
 
@@ -185,7 +203,8 @@ bank_slope_cost_fun <- function(slope) {
   return(bank_slope_class)
 }
 
-flow_stl <- flow_stl %>%
+#assigning a bank slop class
+flow_stl_rp <- flow_stl_rp %>%
   mutate(bank_slope_class = bank_slope_cost_fun(avg_bank_slope),
         #creating acres of riparian vegetaion. may need to be changed
          #2x the area of the stream reach converted to acres
@@ -237,7 +256,7 @@ rp_cost <- function(input_df) {
   return(input_df)
 }
 
-rp_cost_final <- rp_cost(flow_stl)
+rp_cost_final <- rp_cost(flow_stl_rp)
 ```
 
 

@@ -18,6 +18,19 @@ source("../common.R")
 
 Reminders *Remember to change the width value (as needed) and fix the matching between noaa_subba and reach_names.* Also change the low, medium and high division associated with the multipliers
 
+
+##### IMPORTANT NOTES #######
+
+
+* I think that a lot of the streams we mapped from the flow_stl dont need to be included b/c they dont have Chinook in them. A lot of the upper streams only have steelhead and coho (check shiny app https://acg-noaa.shinyapps.io/harpviewer/ under "streams map" and then select only chinook). Maybe need to filter flow_stl to just chinook? Otherwise we are restoring areas that dont have Chinook in them 
+
+* Maybe we need to filter habitat back to just historic? it looks like we have prices and benefits for subbasins that Tim doesnt 
+
+
+
+
+
+
 ## Filtering floodplain data
 
 ```{r}
@@ -27,8 +40,12 @@ subs_mod <- subs_stl %>%
   select(noaa_subba) %>% 
   st_transform(26910)
 
+# flood_stl_hist <- flood_stl %>% 
+  # filter(period == "Hist")
+
+
 ## fiding the sub basins that each fp habitat lies in. If it lies in multiple sub basins, it was split up into multiple polygons by the sub basin (performed by st_intersection)
-hist_flood_stl <- st_intersection(subs_mod, flood_stl) 
+hist_flood_stl <- st_intersection(subs_mod, filter(flood_stl, period %in% "Hist")) 
   # filter(period=="Hist")
 
 ## filtering for specific columns to make the join cleaner
