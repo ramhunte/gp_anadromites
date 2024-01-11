@@ -51,3 +51,14 @@ snoho_lu <- st_read(here("data", "Washington_data", "Snoho_Land_Use", "General_L
 
 roads_stl <- st_read(here("data", "Washington_data", "WA_roads_thin.gpkg"))
 
+
+
+                                ################ Producer Price Index ############
+# (PPI used: https://fred.stlouisfed.org/series/WPUSI012011)
+# 2003-03-01: 145.200
+# 2023-11-01: 327.242
+# percent change
+ppi_2003<-145.200
+ppi_2023<-327.242
+ppi_perc<-((ppi_2023-ppi_2003)/ppi_2003)*100
+ppi<-1+(ppi_perc/100)
