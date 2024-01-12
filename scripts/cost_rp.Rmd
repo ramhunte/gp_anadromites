@@ -15,8 +15,6 @@ rm(list = ls())
 source("../common.R")
 ```
 
-                      ### Important ### 
-adjust PPI from common R
 
 ### 1) IMPACT OF SITE ACCESSIBILITY AND MATERIALS ON COSTS
 
@@ -192,11 +190,22 @@ flow_stl_rp <- flow_stl_rp %>%
 
 ######## CLASSIFY SLOPE LOW, MED, HIGH ########
 
-low_slope <- c(0, 10)
-med_slope <- c(10.001, 20)
-high_slope <- c(20.001, Inf)
+###########I don't think this is needed anymore but double check 
+
+# low_slope <- c(0, 10)
+# med_slope <- c(10.001, 20)
+# high_slope <- c(20.001, Inf)
+
+#################################################
 
 
+
+
+
+
+
+
+#### Apply function to classify slope 
 bank_slope_cost_fun <- function(slope) {
   bank_slope_class <- ifelse(slope > 0 & slope <= 10, "low",
                 ifelse(slope > 10 & slope <= 20, "medium", "high"))
@@ -224,6 +233,7 @@ rp_cost <- function(input_df) {
   input_df <- input_df %>%
     mutate(
       #creating a column for low end of cost spectrum 
+      #multiply the total number of acres by the cost per acre
       lower_cost = rip_acres*case_when(
         intermediate_cost == "low" & bank_slope_class == "low" ~ 5000,
         intermediate_cost == "low" & bank_slope_class == "medium" ~ 20000,
@@ -238,6 +248,7 @@ rp_cost <- function(input_df) {
         TRUE ~ 0  # Default value if no conditions match
       ),
       #creating a column for high end of cost spectrum 
+      #multiply the total number of acres by the cost per acre
       upper_cost = rip_acres*case_when(
        intermediate_cost == "low" & bank_slope_class == "low" ~ 25000,
         intermediate_cost == "low" & bank_slope_class == "medium" ~ 50000,
@@ -262,12 +273,39 @@ rp_cost_final <- rp_cost(flow_stl_rp)
 
 ##SUBBASIN SUMMARY 
 ```{r}
-subba_rp_cost <- rp_cost_final %>% 
+#calculating final cost riparian planting by subbasin 
+subba_rp_cost <- rp_cost_final %>%
+  #dropping stream geometries
+  st_drop_geometry() %>% 
+  #grouping by subbasin
   group_by(noaa_subba) %>% 
-  summarize(lower_subba_cost = sum(lower_cost),
-            upper_subba_cost = sum(upper_cost))
+  #adding up all lower cost ranges for reach costs by subbasin and multiplying by the producer price index 
+  summarize(lower_subba_cost = sum(lower_cost)*ppi,
+            upper_subba_cost = sum(upper_cost)*ppi,
+            avg_subba_cost = (lower_subba_cost + upper_subba_cost)/2) %>% 
+  #joining with subs_stl to get the geometries of the subbasins
+  right_join(subs_stl[,1] ) %>% 
+  #reassigning it as sf b/c geometries became empty after le
+  st_as_sf()
+
+
 ```
 
+### MAPPING 
+```{r}
+ggplot() +
+  geom_sf(data = subba_rp_cost, aes(fill = avg_subba_cost)) +
+  scale_color_viridis_c() +
+  scale_fill_viridis_b(breaks = c(20000000, 40000000, 60000000),
+                       labels = c("$20", "$40", "$60"), option = "E") +
+                       # direction=-1) +
+  
+  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(title = "Average Cost of Riparian Planting by Subbasin") +
+  labs(fill="$ Millions")
+```
 
 
 
