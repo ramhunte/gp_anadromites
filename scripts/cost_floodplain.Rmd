@@ -333,7 +333,7 @@ ggplot(stilly_subbasin_cost, aes(x = subbasin_name)) +
     width = 0.2
   ) +
   geom_point(aes(y = avg_cost/1000000), position = "dodge", size = 3) +
-  labs(title = "Costs per Subbasin in the Stillaguamish",
+  labs(title = "FP Costs per Subbasin in the Stillaguamish",
        x = "Subbasin",
        y = "Cost (Millions of Dollars)") +
   theme_minimal()+

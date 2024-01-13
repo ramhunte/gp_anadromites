@@ -13,6 +13,8 @@ rm(list = ls())
 
 #sourcing data
 source("../common.R")
+
+setwd(here())
 ```
 
 
@@ -33,8 +35,7 @@ flow_stl$slope_degrees <- atan(flow_stl$slope_perc / 100) * (180 / pi)
 stilly_bens_rp <- stilly_bens %>% 
   filter(pop == "fall_chinook" &
          perc_change > 0 &
-        scenario == "Shade"
-         ) 
+        scenario == "Shade") 
 
 #filter flow_stl to just streams with beenfits for shade and chinook 
 flow_stl_rp <- flow_stl %>% 
@@ -135,8 +136,6 @@ calculate_intermediate_cost <- function(input_df) {
 ```
 
 
-#####################################################################################################
-
 ### 2) COST OF RIPARIAN PLANTING PROJECTS ($/acre)
 
 ```{r}
@@ -147,80 +146,52 @@ calculate_intermediate_cost <- function(input_df) {
 #### 2.1) LEVEL OF SITE PREPARATION 
 
 ```{r}
-                     
-# importing elevation raster data
+#### creating a slope raster file of the stillaguamish, extractign average slope by surround stream reach buffer, and classifying it as low, medium, or high to estimate level of site preparation
+###---------------------------------------------------------------------------------------
+
+# importing multiple elevation raster data files (stored in "elevation" folder) from:
 # Data: https://gis.ess.washington.edu/data/raster/tenmeter/byquad/info.html
 
-
 # listing the dem elevation files 
-elev_list <- list.files(path = "/Users/rayhunter/Desktop/GP/gp_anadromites/data/elevation", "dem$", 
-                   full.names = TRUE)
+elev_list <- list.files(path = "../data/elevation", "dem$", full.names = TRUE)
 
 #  rasterizing elevation dem files and storing them in a collection 
-elev_list_rast <- sprc(lapply(elev_list, rast))
+elev_list_rast <- sprc(lapply(elev_list, rast)) 
 
 # combining rasters into 1 mosaic
-elev_mos <- mosaic(elev_list_rast)
-
+slope_rast <- mosaic(elev_list_rast) %>% 
+# projecting NAD83 to mach NOAA stream data
+ project("EPSG:26910") %>% 
 #calculating slope from elevation data
-full_slope <- terrain(x = elev_mos, v = "slope", unit = "degrees")
-# plot(full_slope)
-
-# projecting NAD83 (which is more accurate and used by the NOAA files) onto raster data (originally using NAD27)  
-full_slope <- project(full_slope, "EPSG:26910")
-
-# writeLines(crs(flow_buff))
-# writeLines(crs(full_slope))
+terrain(v = "slope", unit = "degrees")
 
 # creating a 50m buffer around stream edges
 flow_buff <- st_buffer(flow_stl_rp, dist = 50, endCapStyle = "FLAT")
 
 # cropping and masking slope raster data to stream buffer
-crop_rast <- crop(full_slope, flow_buff, mask = TRUE)
-# plot(crop_rast)
+crop_rast <- crop(slope_rast, flow_buff, mask = TRUE)
 
 #extract mean 
 extract <- extract(crop_rast, flow_buff, fun = mean)
 
-#joining to original flow_stl 
+#joining avg slope to original flow_stl 
 flow_stl_rp <- flow_stl_rp %>% 
   mutate(avg_bank_slope = extract$slope)
 
-
-
-######## CLASSIFY SLOPE LOW, MED, HIGH ########
-
-###########I don't think this is needed anymore but double check 
-
-# low_slope <- c(0, 10)
-# med_slope <- c(10.001, 20)
-# high_slope <- c(20.001, Inf)
-
-#################################################
-
-
-
-
-
-
-
-
-#### Apply function to classify slope 
+#### create function to classify slope 
 bank_slope_cost_fun <- function(slope) {
   bank_slope_class <- ifelse(slope > 0 & slope <= 10, "low",
                 ifelse(slope > 10 & slope <= 20, "medium", "high"))
   return(bank_slope_class)
 }
 
-#assigning a bank slop class
+#assigning a bank slope class w/ function
 flow_stl_rp <- flow_stl_rp %>%
   mutate(bank_slope_class = bank_slope_cost_fun(avg_bank_slope),
         #creating acres of riparian vegetaion. may need to be changed
          #2x the area of the stream reach converted to acres
          rip_acres = 2*length*wint_width*0.000247105
          )
-
-
 ```
 
 
@@ -285,14 +256,24 @@ subba_rp_cost <- rp_cost_final %>%
             avg_subba_cost = (lower_subba_cost + upper_subba_cost)/2) %>% 
   #joining with subs_stl to get the geometries of the subbasins
   right_join(subs_stl[,1] ) %>% 
+  #add subbasin salmon ppltn projected and current %>% 
+  left_join(stilly_bens_rp %>% 
+              select(subbasin, n, n_curr), by = c("noaa_subba" = "subbasin")) %>% 
+  # finding increased increased fish from intervention
+  mutate(n_new = n - n_curr,
+         #creatign a cost ebenfit ratio by dividing avg cost by # new fish
+         cb_ratio = avg_subba_cost/n_new) %>% 
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
 
 ```
 
-### MAPPING 
+### Mapping 
+
+# MAP #1: Average Cost of RP Planting by Subbasin 
 ```{r}
+#total cost
 ggplot() +
   geom_sf(data = subba_rp_cost, aes(fill = avg_subba_cost)) +
   scale_color_viridis_c() +
@@ -307,9 +288,45 @@ ggplot() +
   labs(fill="$ Millions")
 ```
 
+#Supporting Cost Figure 
+```{r}
+ggplot(subba_rp_cost, aes(x = noaa_subba)) +
+  geom_errorbar(
+    aes(ymin = lower_subba_cost/1000000, ymax = upper_subba_cost/1000000),
+    position = "dodge",
+    width = 0.2
+  ) +
+  geom_point(aes(y = avg_subba_cost/1000000), position = "dodge", size = 3) +
+  labs(title = "FP Costs per Subbasin in the Stillaguamish",
+       x = "Subbasin",
+       y = "Cost (Millions of Dollars)") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+
+# MAP #2: Cost Benefit Ratio by Subbasin
+```{r}
+#total cost
+ggplot() +
+  geom_sf(data = subba_rp_cost, aes(fill = cb_ratio)) +
+  # scale_color_viridis_c() +
+  scale_fill_viridis_b(breaks = c(20000000, 40000000, 60000000),
+                       labels = c("$20", "$40", "$60"), option = "E") +
+                       # direction=-1) +
+  
+  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(title = "Cost Benefit Ratio by Subbasin") +
+  labs(fill="$ Millions")
+```
+
+
 
 
 #### NEXT STEPS: 
+* CB ratio seems a bit wack. Shade only predicted to increase salmon by 0-15 per subbasin? refer to still_bens_rp
 * Problem: all intermediate costs are low b/c transportation is all "low" and energy is all "low" or "medium"
 * need to figure out how many acres along each stream need to be restored
   - cost estimates are given in $/acre. Literature says at least 30m inland
