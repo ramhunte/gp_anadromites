@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, include=FALSE, message = FALSE, error = FALSE
 
 
 #clearing environment
-# rm(list = ls())
+rm(list = ls())
 
 #sourcing data
 source("../common.R")
