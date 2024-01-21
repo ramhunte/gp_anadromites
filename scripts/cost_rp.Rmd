@@ -193,7 +193,7 @@ flow_stl_rp <- flow_stl_rp %>%
          rip_acres = 60*length*0.000247105,
         #calculating % change in canopy open angle to estimate how much riparian restoration needs to be done in rip_acres
         #current angle - historical angle / current angle x 100 to get % change
-        can_ang_chng = ((can_ang - hist_ang)/can_ang)
+        can_ang_chng = ((can_ang - hist_ang)/hist_ang)
          )
 ```
 
@@ -271,6 +271,8 @@ subba_rp_cost <- rp_cost_final %>%
   st_as_sf()
 
 
+
+write.csv(subba_rp_cost, file = here("data", "final_dfs", "rp_costs.csv"))
 ```
 
 ### Mapping 

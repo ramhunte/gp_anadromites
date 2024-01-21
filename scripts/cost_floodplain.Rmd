@@ -303,6 +303,13 @@ stilly_subbasin_cost <- stilly_total_cost %>%
 
 ```
 
+#Combining benefits with final data 
+```{r}
+# stilly_subbasin_cost %>% 
+```
+
+
+
 ##MAP
 ```{r}
  ggplot() +
