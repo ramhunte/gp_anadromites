@@ -45,8 +45,8 @@ flow_stl_rp <- flow_stl %>%
 #----------------------------------------------------------------
 
 
-# Create a function to assign energy values based on slope and wint_width ranges
-assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_wint_width_range, medium_wint_width_range, high_wint_width_range, slope) {
+# Create a function to assign energy values based on slope and bf_width ranges
+assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_bf_width_range, medium_bf_width_range, high_bf_width_range, slope) {
   # # Filter for hab_unit == Marsh
   # filtered_df <- input_df %>% filter(hab_unit == "Marsh")
   
@@ -55,33 +55,33 @@ assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, h
     mutate(energy = case_when(
       # low slope, low range
       (slope >= low_slope_range[1] & slope <= low_slope_range[2] & 
-       wint_width >= low_wint_width_range[1] & wint_width <= low_wint_width_range[2]) |
+       bf_width >= low_bf_width_range[1] & bf_width <= low_bf_width_range[2]) |
       # medium slope, low width
       (slope > low_slope_range[2] & slope <= medium_slope_range[2] & 
-       wint_width >= low_wint_width_range[1] & wint_width <= low_wint_width_range[2]) |
+       bf_width >= low_bf_width_range[1] & bf_width <= low_bf_width_range[2]) |
       # low slope, medium width
       (slope >= low_slope_range[1] & slope <= low_slope_range[2] & 
-       wint_width > low_wint_width_range[2] & wint_width <= medium_wint_width_range[2]) 
+       bf_width > low_bf_width_range[2] & bf_width <= medium_bf_width_range[2]) 
       ~ "low",
       # low slope, high width
       (slope >= low_slope_range[1] & slope <= low_slope_range[2] & 
-       wint_width > medium_wint_width_range[2] & wint_width <= high_wint_width_range[2]) |
+       bf_width > medium_bf_width_range[2] & bf_width <= high_bf_width_range[2]) |
       # medium slope, medium width
       (slope > low_slope_range[2] & slope <= medium_slope_range[2] & 
-       wint_width > low_wint_width_range[2] & wint_width <= medium_wint_width_range[2]) |
+       bf_width > low_bf_width_range[2] & bf_width <= medium_bf_width_range[2]) |
       # high slope, low width
       (slope > medium_slope_range[2] & slope <= high_slope_range[2] & 
-       wint_width >= low_wint_width_range[1] & wint_width <= low_wint_width_range[2])
+       bf_width >= low_bf_width_range[1] & bf_width <= low_bf_width_range[2])
        ~ "medium",
       # high slope, high width
       (slope > medium_slope_range[2] & slope <= high_slope_range[2] & 
-       wint_width > medium_wint_width_range[2] & wint_width <= high_wint_width_range[2]) |
+       bf_width > medium_bf_width_range[2] & bf_width <= high_bf_width_range[2]) |
       # medium slope, high width
       (slope > low_slope_range[2] & slope <= medium_slope_range[2] & 
-       wint_width > medium_wint_width_range[2] & wint_width <= high_wint_width_range[2]) |
+       bf_width > medium_bf_width_range[2] & bf_width <= high_bf_width_range[2]) |
       # high slope, medium width
       (slope > medium_slope_range[2] & slope <= high_slope_range[2] & 
-       wint_width > low_wint_width_range[2] & wint_width <= medium_wint_width_range[2])
+       bf_width > low_bf_width_range[2] & bf_width <= medium_bf_width_range[2])
        ~ "high",
       TRUE ~ "Unknown"  # Handle any other cases
     ))
@@ -94,8 +94,8 @@ low_slope_range <- c(0, 10)
 medium_slope_range <- c(10.0000000001, 20)
 high_slope_range <- c(20.0000000001, 1000) #arbitrary large number
 low_width_range <- c(0, 20)
-medium_width_range <- c(20.0000000001, 40)
-high_width_range <- c(40.0000000001, 300) #arbitrary large number
+medium_width_range <- c(20.0000000001, 70)
+high_width_range <- c(70.0000000001, 300) #arbitrary large number
 
 
   
@@ -336,7 +336,7 @@ ggplot() +
 * Problem: all intermediate costs are low b/c transportation is all "low" and energy is all "low" or "medium"
 * need to figure out how many acres along each stream need to be restored
   - cost estimates are given in $/acre. Literature says at least 30m inland
-  - right now, I multiplied the area of the stream (length x winter width) by 2 and converted to acres. no idea if this is right
+  - right now, I multiplied the area of the stream (length x bankfull width) by 2 and converted to acres. no idea if this is right
   
 ASSUMPTIONS
 * this assumes full restoration of all banks of every stream. what if we only want to restore partial riparian vegetation?

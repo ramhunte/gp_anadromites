@@ -105,6 +105,10 @@ ggplot() +
 
 
 
+```{r}
+ggplot(flow_stl, aes( x= fpw)) +
+  geom_histogram()
+```
 
 
 
