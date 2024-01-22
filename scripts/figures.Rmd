@@ -12,7 +12,7 @@ library(tidyverse)
 library(sf)
 library(terra)
 library(ggspatial)
-library(tmap)
+# library(tmap)
 library(here)
 library(janitor)
 library(ggplot2)
@@ -22,11 +22,11 @@ library(ggplot2)
 #reading in data 
 
 #floodplain habitat
-
+read_csv(here("data", "final_dfs", "fp_costs.csv"))
 #engineered log jams 
-
+read_csv(here("data", "final_dfs", "elj_costs.csv"))
 #riparian planting 
-read.csv(here("final_dfs", "rp_costs.csv"))
+read_csv(here("data", "final_dfs", "rp_costs.csv"))
 ```
 
 #LAND USE 

@@ -44,13 +44,13 @@ subs_mod <- subs_stl %>%
   # filter(period == "Hist")
 
 
-## fiding the sub basins that each fp habitat lies in. If it lies in multiple sub basins, it was split up into multiple polygons by the sub basin (performed by st_intersection)
+## finding the sub basins that each fp habitat lies in. If it lies in multiple sub basins, it was split up into multiple polygons by the sub basin (performed by st_intersection)
 hist_flood_stl <- st_intersection(subs_mod, filter(flood_stl, period %in% "Hist")) 
   # filter(period=="Hist")
 
 ## filtering for specific columns to make the join cleaner
 slope_width_stl<-flow_stl %>% 
-  select(noaaid, slope, wint_width, pond_overl, chinook, habitat) %>% 
+  select(noaaid, slope, bf_width, pond_overl, chinook, habitat) %>% 
   st_drop_geometry()
 
 #change width as needed
@@ -124,7 +124,7 @@ pond_cost_inflation <- pond_cost_stl_inflated_custom %>%
   mutate(total_upper_cost=upper_cost*area_a)
 ```
 
-Check distribution of slopes and wint_width
+Check distribution of slopes and bf_width
 
 ```{r}
 ## Make histogram of slope
@@ -134,7 +134,7 @@ hist(hist_flood_stl_var_mult$slope, main = "Histogram of Slope Column", xlab = "
 ## Medium >0.005 and <0.015
 ## High >0.015
 ## Make histogram of width
-hist(hist_flood_stl_var_mult$wint_width, main = "Histogram of Width Column", xlab = "Width Values")
+hist(hist_flood_stl_var_mult$bf_width, main = "Histogram of Width Column", xlab = "Width Values")
 ## Define values for low, medium and high based on histogram
 ## Low <20
 ## Medium >20 and <70
@@ -203,11 +203,11 @@ calculate_marsh_cost <- function(input_df) {
 
 Need to define which energy levels are associated with each slope/width combo ---\> did this in the google doc
 
-THIS FUNCTION DEFINES ENERGY BASED ON SLOPE AND WINT_WIDTH
+THIS FUNCTION DEFINES ENERGY BASED ON SLOPE AND BF_WIDTH
 
 ```{r}
-# Create a function to assign energy values based on slope and wint_width ranges
-assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_wint_width_range, medium_wint_width_range, high_wint_width_range) {
+# Create a function to assign energy values based on slope and bf_width ranges
+assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, high_slope_range, low_bf_width_range, medium_bf_width_range, high_bf_width_range) {
   # Filter for hab_unit == Marsh
   filtered_df <- input_df %>% filter(hab_unit == "Marsh")
   # Create a new column "energy" based on conditions
@@ -215,33 +215,33 @@ assign_energy_width <- function(input_df, low_slope_range, medium_slope_range, h
     mutate(energy = case_when(
       # low slope, low range
       (slope >= low_slope_range[1] & slope <= low_slope_range[2] & 
-       wint_width >= low_wint_width_range[1] & wint_width <= low_wint_width_range[2]) |
+       bf_width >= low_bf_width_range[1] & bf_width <= low_bf_width_range[2]) |
       # medium slope, low width
       (slope > low_slope_range[2] & slope <= medium_slope_range[2] & 
-       wint_width >= low_wint_width_range[1] & wint_width <= low_wint_width_range[2]) |
+       bf_width >= low_bf_width_range[1] & bf_width <= low_bf_width_range[2]) |
       # low slope, medium width
       (slope >= low_slope_range[1] & slope <= low_slope_range[2] & 
-       wint_width > low_wint_width_range[2] & wint_width <= medium_wint_width_range[2]) 
+       bf_width > low_bf_width_range[2] & bf_width <= medium_bf_width_range[2]) 
       ~ "low",
       # low slope, high width
       (slope >= low_slope_range[1] & slope <= low_slope_range[2] & 
-       wint_width > medium_wint_width_range[2] & wint_width <= high_wint_width_range[2]) |
+       bf_width > medium_bf_width_range[2] & bf_width <= high_bf_width_range[2]) |
       # medium slope, medium width
       (slope > low_slope_range[2] & slope <= medium_slope_range[2] & 
-       wint_width > low_wint_width_range[2] & wint_width <= medium_wint_width_range[2]) |
+       bf_width > low_bf_width_range[2] & bf_width <= medium_bf_width_range[2]) |
       # high slope, low width
       (slope > medium_slope_range[2] & slope <= high_slope_range[2] & 
-       wint_width >= low_wint_width_range[1] & wint_width <= low_wint_width_range[2])
+       bf_width >= low_bf_width_range[1] & bf_width <= low_bf_width_range[2])
        ~ "medium",
       # high slope, high width
       (slope > medium_slope_range[2] & slope <= high_slope_range[2] & 
-       wint_width > medium_wint_width_range[2] & wint_width <= high_wint_width_range[2]) |
+       bf_width > medium_bf_width_range[2] & bf_width <= high_bf_width_range[2]) |
       # medium slope, high width
       (slope > low_slope_range[2] & slope <= medium_slope_range[2] & 
-       wint_width > medium_wint_width_range[2] & wint_width <= high_wint_width_range[2]) |
+       bf_width > medium_bf_width_range[2] & bf_width <= high_bf_width_range[2]) |
       # high slope, medium width
       (slope > medium_slope_range[2] & slope <= high_slope_range[2] & 
-       wint_width > low_wint_width_range[2] & wint_width <= medium_wint_width_range[2])
+       bf_width > low_bf_width_range[2] & bf_width <= medium_bf_width_range[2])
        ~ "high",
       TRUE ~ "Unknown"  # Handle any other cases
     ))
@@ -269,6 +269,7 @@ marsh_cost_inflation <- marsh_cost %>%
   mutate(total_upper_cost=upper_cost*area_a)
 ```
 
+#combining the marsh costs and the pond costs
 ```{r}
 #marsh costs
 marsh_cost_inflation_select<-marsh_cost_inflation %>% 
@@ -283,7 +284,6 @@ stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_se
   mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
 
 #grouped total costs 
-
 
 stilly_subbasin_cost <- stilly_total_cost %>% 
   group_by(noaa_subba) %>% 
@@ -302,12 +302,6 @@ stilly_subbasin_cost <- stilly_total_cost %>%
  
 
 ```
-
-#Combining benefits with final data 
-```{r}
-# stilly_subbasin_cost %>% 
-```
-
 
 
 ##MAP
@@ -359,6 +353,23 @@ test + theme(legend.position = "none")
   
 ```
 
+## incorporating benefits
+```{r}
+flood_cost_ben <- full_join(stilly_subbasin_cost, flood_bens, by = c("noaa_subba" = "subbasin"))
+##need to manipulate values so that when n_diff=0 (zero fish are benefitted) the ratio is 0, also I need the value to be NA when avg_cost is NA
+##logically the value should never be NA (that means we didn't calculate a price for a basin with benefits)
+flood_cost_ben <- flood_cost_ben %>%
+  mutate(ratio_n = ifelse(!is.na(avg_cost), avg_cost / pmax(1, n-n_curr), NA))
+
+# flood_cost_ben <- flood_cost_ben %>%
+#   mutate(ratio_n = NA) %>% 
+#   mutate(ratio_n = ifelse(!is.na(avg_cost), avg_cost / n-n_curr, NA))
+flood_cost_ben$ratio_n <- replace(flood_cost_ben$ratio_n, is.infinite(flood_cost_ben$ratio_n), 0)
+flood_cost_ben <- flood_cost_ben %>%
+  mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n), NA_real_))
+
+write.csv(flood_cost_ben, here("data", "final_dfs", "fp_costs.csv"))
+```
 
 
 
