@@ -54,14 +54,18 @@ Should we also do by perc_change?
 ##need to manipulate values so that when n=0 (zero fish are benefitted) the ratio is 0, also I need the value to be NA when avg_cost is NA
 ##logically the value should never be NA (that means we didn't calculate a price for a basin with benefits)
 flood_cost_ben <- flood_cost_ben %>%
-  mutate(ratio_n = NA) %>% 
-  mutate(ratio_n = ifelse(!is.na(avg_cost), avg_cost / n, NA))
-flood_cost_ben$ratio <- replace(flood_cost_ben$ratio, is.infinite(flood_cost_ben$ratio), 0)
+  mutate(ratio_n = ifelse(!is.na(avg_cost), avg_cost / pmax(1, n-n_curr), NA))
+
+# flood_cost_ben <- flood_cost_ben %>%
+#   mutate(ratio_n = NA) %>% 
+#   mutate(ratio_n = ifelse(!is.na(avg_cost), avg_cost / n-n_curr, NA))
+flood_cost_ben$ratio_n <- replace(flood_cost_ben$ratio_n, is.infinite(flood_cost_ben$ratio_n), 0)
 flood_cost_ben <- flood_cost_ben %>%
-  mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio != 0, log(ratio_n), NA_real_))
+  mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n), NA_real_))
 
 #ELJ
-elj_cost_ben$ratio_n<-elj_cost_ben$avg_cost/elj_cost_ben$n
+elj_cost_ben$n_diff<-elj_cost_ben$n=elj_cost_ben$n_curr
+elj_cost_ben$ratio_n<-elj_cost_ben$avg_cost/(elj_cost_ben$n_diff)
 elj_cost_ben <- elj_cost_ben %>%
   mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n), NA_real_))
 
