@@ -156,8 +156,8 @@ low_slope_range <- c(0, 10)
 medium_slope_range <- c(10.0000000001, 20)
 high_slope_range <- c(20.0000000001, 1000) #arbitrary large number
 low_width_range <- c(0, 20)
-medium_width_range <- c(20.0000000001, 40)
-high_width_range <- c(40.0000000001, 300) #arbitrary large number
+medium_width_range <- c(20.0000000001, 70)
+high_width_range <- c(70.0000000001, 300) #arbitrary large number
 
 flow_stl <- assign_energy_width(flow_stl, low_slope_range, medium_slope_range, high_slope_range, low_width_range, medium_width_range, high_width_range, slope_degrees)
 
@@ -248,18 +248,70 @@ elj_cost<-elj_no_inf_cost %>%
            upper_cost_estimate=upper_cost_estimate*ppi) 
 ```
 
+## CREATE A NEW FUNCTION THAT ADDRESS PROBLEM WITH $/MILE AND $/STRUCTURE
 ## APPLY THE COST PER ACRE TO MILES OF STREAM
   # units of the above function are in $/stream mile (Ranges given by per stream mile (assuming 100-400 pieces per stream mile.) All other cells ranges given per structure.
 All costs ranges assume purchased material.)
+50% restored for $/stream mile cases
+assume 1 project per 500 meter reach for those that are $/structure
+
 ```{r}
-#convert reach length from meters to miles
-elj_cost$length_mi<-elj_cost$length*0.000621371
-#multiply miles by $/mile to get total dollars
-#also only apply ELJ costs to 50% of the stream mileage
-elj_cost$final_lower_cost<-elj_cost$lower_cost_estimate*elj_cost$length_mi*0.5
-elj_cost$final_upper_cost<-elj_cost$upper_cost_estimate*elj_cost$length_mi*0.5
+elj_cost <- elj_cost %>%
+  rowwise() %>%
+  mutate(
+    final_lower_cost = ifelse((relative_cost == 'low' && energy == 'low') || (relative_cost == 'medium' && energy == 'low') || (relative_cost == 'low' && energy == 'medium'),
+                                  lower_cost_estimate * length * 0.000621371 *0.5,
+                                  lower_cost_estimate*1),
+    final_upper_cost = ifelse((relative_cost == 'low' && energy == 'low') || (relative_cost == 'medium' && energy == 'low') || (relative_cost == 'low' && energy == 'medium'),
+                                  upper_cost_estimate * length * 0.000621371 *0.5,
+                                  upper_cost_estimate*1)
+  )
+
 elj_cost$avg_cost<-(elj_cost$final_lower_cost+elj_cost$final_upper_cost)/2
 ```
+
+
+```{r}
+# #checking if any streams fall into the category that I would need to consider $/structure
+# unique(elj_cost[c("relative_cost", "energy")])
+# #convert reach length from meters to miles
+# elj_cost$length_mi<-elj_cost$length*0.000621371
+# #multiply miles by $/mile to get total dollars
+# #also only apply ELJ costs to 50% of the stream mileage
+# elj_cost$final_lower_cost<-elj_cost$lower_cost_estimate*elj_cost$length_mi*0.5
+# elj_cost$final_upper_cost<-elj_cost$upper_cost_estimate*elj_cost$length_mi*0.5
+# elj_cost$avg_cost<-(elj_cost$final_lower_cost+elj_cost$final_upper_cost)/2
+```
+
+## FIND THE COST PER SUBBASIN
+```{r}
+#filtering the benefits
+elj_bens<-stilly_bens %>% filter(scenario=="Wood" & pop=="fall_chinook")
+#calculating final cost riparian planting by subbasin 
+elj_cost_subbasin <- elj_cost %>%
+  #dropping stream geometries
+  st_drop_geometry() %>% 
+  #grouping by subbasin
+  group_by(noaa_subba) %>% 
+  #adding up all lower cost ranges for reach costs by subbasin 
+  summarize(lower_subba_cost = sum(final_lower_cost),
+            upper_subba_cost = sum(final_upper_cost),
+            avg_subba_cost = (lower_subba_cost + upper_subba_cost)/2) %>% 
+  #joining with subs_stl to get the geometries of the subbasins
+  right_join(subs_stl[,1] ) %>% 
+  #add subbasin salmon ppltn projected and current %>% 
+  left_join(elj_bens %>% 
+              select(subbasin, n, n_curr), by = c("noaa_subba" = "subbasin")) %>% 
+  # finding increased increased fish from intervention
+  mutate(n_diff = n - n_curr,
+         #creating a cost benefit ratio by dividing avg cost by # new fish
+         n_ratio = avg_subba_cost/n_diff) %>% 
+  #reassigning it as sf b/c geometries became empty after le
+  st_as_sf()
+
+write.csv(elj_cost_subbasin , here("data", "final_dfs", "elj_costs.csv"))
+```
+
 
 ## MAP THE RESULTS
 ```{r}
@@ -304,15 +356,15 @@ ggplot(elj_summary, aes(x = subbasin_name)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
-#incorporate benefits into df (from benefit_data)
-```{r}
-elj_bens<-stilly_bens %>% filter(scenario=="Wood" & pop=="fall_chinook")
-elj_cost_ben <- full_join(elj_cost_sf, elj_bens, by = c("noaa_subba" = "subbasin"))
-#calculate cost benefit ratio
-elj_cost_ben$n_diff<-elj_cost_ben$n-elj_cost_ben$n_curr
-elj_cost_ben$ratio_n<-elj_cost_ben$avg_cost/(elj_cost_ben$n_diff)
-elj_cost_ben <- elj_cost_ben %>%
-  mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n),NA_real_))
-write.csv(elj_cost_ben, here("data", "final_dfs", "elj_costs.csv"))
-```
+<!-- #incorporate benefits into df (from benefit_data) -->
+<!-- ```{r} -->
+
+<!-- elj_cost_ben <- full_join(elj_cost_sf, elj_bens, by = c("noaa_subba" = "subbasin")) -->
+<!-- #calculate cost benefit ratio -->
+<!-- elj_cost_ben$n_diff<-elj_cost_ben$n-elj_cost_ben$n_curr -->
+<!-- elj_cost_ben$ratio_n<-elj_cost_ben$avg_cost/(elj_cost_ben$n_diff) -->
+<!-- elj_cost_ben <- elj_cost_ben %>% -->
+<!--   mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n),NA_real_)) -->
+<!-- write.csv(elj_cost_ben, here("data", "final_dfs", "elj_costs.csv")) -->
+<!-- ``` -->
 

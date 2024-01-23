@@ -2,7 +2,7 @@ library(tidyverse)
 library(sf)
 library(terra)
 library(ggspatial)
-library(tmap)
+#library(tmap)
 library(here)
 library(janitor)
 library(ggplot2)
@@ -46,10 +46,10 @@ stilly_bens <- read.csv(here("data", "HARP", "benefits", "ind_subbasin_rest_20s_
 
 ## land use data Snohomish County 
 # link: https://geo.wa.gov/datasets/a0ddbd4e0e2141b3841a6a42ff5aff46_0/explore?filters=eyJOQU1FIjpbIlNub2hvbWlzaCJdfQ%3D%3D&location=46.980958%2C-117.609917%2C6.41
-snoho_lu <- st_read(here("data", "Washington_data", "Snoho_Land_Use", "General_Land_Use_Final_Dataset.shp"))
+# snoho_lu <- st_read(here("data", "Washington_data", "Snoho_Land_Use", "General_Land_Use_Final_Dataset.shp"))
 
 
-roads_stl <- st_read(here("data", "Washington_data", "WA_roads_thin.gpkg"))
+# roads_stl <- st_read(here("data", "Washington_data", "WA_roads_thin.gpkg"))
 
 
 
