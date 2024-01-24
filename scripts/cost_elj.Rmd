@@ -305,12 +305,33 @@ elj_cost_subbasin <- elj_cost %>%
   # finding increased increased fish from intervention
   mutate(n_diff = n - n_curr,
          #creating a cost benefit ratio by dividing avg cost by # new fish
-         n_ratio = avg_subba_cost/n_diff) %>% 
+         cb_ratio = avg_subba_cost/n_diff) %>% 
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
-write.csv(elj_cost_subbasin , here("data", "final_dfs", "elj_costs.csv"))
+st_write(elj_cost_subbasin , here("data", "final_dfs", "elj_costs.gpkg"))
 ```
+# MAP #1: Average Cost of RP Planting by Subbasin 
+```{r}
+#total cost
+# hist(elj_cost_subbasin$avg_subba_cost)
+ggplot() +
+  geom_sf(data = elj_cost_subbasin, aes(fill = avg_subba_cost)) +
+  # scale_color_viridis_c() +
+  scale_fill_viridis_b(
+    # breaks = c(10000000, 20000000, 30000000),
+    #                    labels = c("$20", "$40", "$60"), 
+    option = "E") +
+                       # direction=-1) +
+  
+  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(title = "Average Cost of Riparian Planting by Subbasin") +
+  labs(fill="$ Millions")
+```
+
+
 
 
 ## MAP THE RESULTS

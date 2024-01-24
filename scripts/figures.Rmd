@@ -16,18 +16,38 @@ library(ggspatial)
 library(here)
 library(janitor)
 library(ggplot2)
+
+#sourcing data
+source("../common.R")
 ```
 
 ```{r}
 #reading in data 
 
 #floodplain habitat
-read_csv(here("data", "final_dfs", "fp_costs.csv"))
+floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) 
 #engineered log jams 
-read_csv(here("data", "final_dfs", "elj_costs.csv"))
+elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
 #riparian planting 
-read_csv(here("data", "final_dfs", "rp_costs.csv"))
+rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg"))
 ```
+
+## Floodplain
+```{r}
+ ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = floodplain, aes(fill = avg_cost)) +
+  # scale_fill_viridis_b(breaks = c(5000000, 20000000, 100000000),
+  #                      labels = c("5 Million", "20 Million", "100 Million"), option = "E", 
+  #                      direction=-1) +
+  # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
+  
+  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
+  # scale_fill_continuous() +
+  theme_minimal()+
+  labs(fill="Average Cost ($)")
+```
+
 
 #LAND USE 
 ```{r}
