@@ -2,9 +2,11 @@
 title: "final_figures"
 author: "Ray Hunter"
 date: "2024-01-17"
-output: html_document
+output: 
+  html_document:
+    code_folding: "hide"
 ---
-
+## Preliminary Results {.tabset}
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -37,29 +39,104 @@ elj$restoration_type<-"elj"
 #riparian planting 
 rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg"))
 rp$restoration_type<-"rp"
-```
 
-```{r}
+
 #creating one large dataframe
 all_cost_benefit <- rbind(elj, rp)
 all_cost_benefit<-rbind(all_cost_benefit, floodplain)
 ```
 
 
-## Floodplain
 ```{r}
- ggplot() +
-  geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = all_cost_benefit, aes(fill = avg_cost)) +
-  # scale_fill_viridis_b(breaks = c(5000000, 20000000, 100000000),
-  #                      labels = c("5 Million", "20 Million", "100 Million"), option = "E", 
-  #                      direction=-1) +
-  # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
+####MAPPING COSTS
+# Assuming 'all_cost_benefit' is your dataframe
+unique_types <- unique(all_cost_benefit$restoration_type)
+
+# Create a list to store individual ggplot objects
+cost_plot_list <- list()
+
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
   
-  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
-  # scale_fill_continuous() +
-  theme_minimal()+
-  labs(fill="Average Cost ($)")
+  # Create ggplot for the current restoration_type
+  plot <- ggplot() +
+    geom_sf(data = subs_stl, aes()) +
+    geom_sf(data = subset_data, aes(fill = avg_subba_cost/1000000)) +
+    scale_fill_gradient(low = "#90CE9F", high = "#0C4019") +  # Adjust colors as needed
+    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+    theme_minimal() +
+    labs(fill = "Average Cost\n(Millions of Dollars)") 
+  
+  # Append the plot to the list
+  cost_plot_list[[rest_type]] <- plot
+}
+
+# # Save the individual plots
+# for (rest_type in unique_types) {
+#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
+
+# Assuming you have already generated and stored the plots in the list 'plot_list'
+
+# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
+# print(cost_plot_list[["rp"]])
+# print(cost_plot_list[["floodplain"]])
+# print(cost_plot_list[["elj"]])
+```
+
+```{r}
+####MAPPING BENEFITS
+# Create a list to store individual ggplot objects
+benefit_plot_list <- list()
+
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  
+  # Create ggplot for the current restoration_type
+  plot <- ggplot() +
+    geom_sf(data = subs_stl, aes()) +
+    geom_sf(data = subset_data, aes(fill = n_diff)) +
+    scale_fill_gradient(low = "#C576D8", high = "#471054") +  # Adjust colors as needed
+    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+    theme_minimal() +
+    labs(fill = "Increase in Number\nof Spawners Resulting\nfrom Restoration") 
+  
+  # Append the plot to the list
+  benefit_plot_list[[rest_type]] <- plot
+}
+
+# # Save the individual plots
+# for (rest_type in unique_types) {
+#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
+
+# Assuming you have already generated and stored the plots in the list 'plot_list'
+
+# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
+# print(benefit_plot_list[["rp"]])
+# print(benefit_plot_list[["floodplain"]])
+# print(benefit_plot_list[["elj"]])
+```
+
+```{r}
+###MAPPING COST BENEFIT RATIO
+```
+ 
+### Riparian Planting
+```{r}
+print(benefit_plot_list[["rp"]])
+```
+
+### Engineered Log Jams
+```{r}
+print(benefit_plot_list[["elj"]])
+```
+
+### Floodplain Restoration
+```{r}
+print(benefit_plot_list[["floodplain"]])
 ```
 
 
