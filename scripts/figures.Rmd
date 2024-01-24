@@ -25,18 +25,32 @@ source("../common.R")
 #reading in data 
 
 #floodplain habitat
-floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) 
+floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>% 
+  rename("lower_subba_cost"="total_lower_cost")%>% 
+  rename("upper_subba_cost"="total_upper_cost")%>% 
+  rename("avg_subba_cost"="avg_cost") %>% 
+  select(-c("scenario", "subbasin_name", "pop", "subbasin_num", "perc_change"))
+floodplain$restoration_type<-"floodplain"
 #engineered log jams 
 elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
+elj$restoration_type<-"elj"
 #riparian planting 
 rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg"))
+rp$restoration_type<-"rp"
 ```
+
+```{r}
+#creating one large dataframe
+all_cost_benefit <- rbind(elj, rp)
+all_cost_benefit<-rbind(all_cost_benefit, floodplain)
+```
+
 
 ## Floodplain
 ```{r}
  ggplot() +
   geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = floodplain, aes(fill = avg_cost)) +
+  geom_sf(data = all_cost_benefit, aes(fill = avg_cost)) +
   # scale_fill_viridis_b(breaks = c(5000000, 20000000, 100000000),
   #                      labels = c("5 Million", "20 Million", "100 Million"), option = "E", 
   #                      direction=-1) +
