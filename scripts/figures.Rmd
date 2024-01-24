@@ -8,7 +8,7 @@ output:
 ---
 ## Preliminary Results {.tabset}
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 library(tidyverse)
 library(sf)
@@ -19,6 +19,7 @@ library(here)
 library(janitor)
 library(ggplot2)
 library(kableExtra)
+library(knitr)
 
 #sourcing data
 source("../common.R")
@@ -59,11 +60,15 @@ all_cost_benefit$subbasin_name <-str_replace_all(all_cost_benefit$subbasin_name,
 unique_types <- unique(all_cost_benefit$restoration_type)
 ```
 
-```{r}
-#### TOP FIVE SUBBASINS PER ACTION (CB RATIO)
+
+```{r, fig.cap="Top 5 Subbasins for Riparian Planting"}
+
+# Create an empty list to store datasets
+top_subbasins_list <- list()
+
 # Loop through each restoration_type
 for (rest_type in unique_types) {
-  cat("Top five subbasins for Restoration Type:", rest_type, "\n")
+  # cat("Top five subbasins for Restoration Type:", rest_type, "\n")
   
   # Subset the data for the current restoration_type
   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
@@ -74,13 +79,33 @@ for (rest_type in unique_types) {
     head(5) %>% 
     select(subbasin_name, lower_subba_cost, avg_subba_cost, upper_subba_cost, n_diff, cb_ratio) %>% st_drop_geometry()
   
-  # Print the formatted table
-  print(kable(top_subbasins, format = "markdown"))
+  # Store the dataset in the list
+  top_subbasins_list[[rest_type]] <- top_subbasins
   
   cat("\n")
 }
+
+# # Apply kable to each dataset in the list
+# kable_output <- lapply(top_subbasins_list, function(dataset) {
+#   kable(dataset, format = "markdown")
+# })
+
+# # Print the kable output
+# print(kable_output)
+kable(top_subbasins_list[["rp"]], "html") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
 ```
 
+```{r, fig.cap="Top 5 Subbasins for Engineered Log Jams"}
+kable(top_subbasins_list[["elj"]], "html") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+```{r, fig.cap="Top 5 Subbasins for Floodplain Restoration"}
+kable(top_subbasins_list[["floodplain"]], "html") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
 
 
 ```{r}
