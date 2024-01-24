@@ -144,13 +144,8 @@ hist(hist_flood_stl_var_mult$bf_width, main = "Histogram of Width Column", xlab 
 Create a function that takes different multiplier values and energies and creates a upper and lower cost range
 
 Currently using zero as a placeholder for when side channel multiplier values don't exist
-
+## PLACE THE NEW FLOODPLAIN HABITAT HERE
 ```{r}
-# #old method of calculating earth moving with just multiplier
-# hist_flood_stl_var_mult<-hist_flood_stl_var_mult %>%
-#   mutate(earth_moving_old=ifelse(multiplier < medium_multiplier_bound, "low",
-#                         ifelse(multiplier <= high_multiplier_bound, "medium", "high")))
-
 #new way of calculating earth moving with multiplier and stream size
 hist_flood_stl_var_mult <- hist_flood_stl_var_mult %>% 
   mutate(earth_moving = case_when(
