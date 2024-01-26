@@ -79,8 +79,8 @@ elj_cost_ben <- elj_cost_ben %>%
  ggplot() +
   geom_sf(data = subs_stl, aes()) +
   geom_sf(data = flood_cost_ben, aes(fill = ratio_n)) +
-  # scale_fill_viridis_b(breaks = c(0, 45000000, 90000000),
-  #                      labels = c("0 Million", "45 Million", "90 Million")) +
+  scale_fill_viridis_b(breaks = c(0, 45000000, 90000000),
+                       labels = c("0 Million", "45 Million", "90 Million")) +
   geom_sf(data = flow_stl, color = "blue", alpha = .3) +
   # scale_fill_continuous() +
   theme_minimal()+
@@ -132,12 +132,12 @@ ggplot() +
   scale_color_viridis_c(option = "E", name = "Cost per Fish Increase", direction=-1)+
   theme_minimal()
 
-#log scale
-ggplot() +
-  geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = elj_cost_ben, aes(color = ratio_n_log)) + #use color, not fill bc line
-  scale_color_viridis_c(option = "E", name = "Log Cost per Fish Increase", direction=-1)+
-  theme_minimal()
+# #log scale
+# ggplot() +
+#   geom_sf(data = subs_stl, aes()) +
+#   geom_sf(data = elj_cost_ben, aes(color = ratio_n_log)) + #use color, not fill bc line
+#   scale_color_viridis_c(option = "E", name = "Log Cost per Fish Increase", direction=-1)+
+#   theme_minimal()
 ```
 ## ELJ figure highlighting top 5 stream segments (only in 2 subbasins)
 ```{r}

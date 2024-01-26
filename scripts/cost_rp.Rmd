@@ -264,15 +264,13 @@ subba_rp_cost <- rp_cost_final %>%
   left_join(stilly_bens_rp %>% 
               select(subbasin, n, n_curr), by = c("noaa_subba" = "subbasin")) %>% 
   # finding increased increased fish from intervention
-  mutate(n_new = n - n_curr,
+  mutate(n_diff = n - n_curr,
          #creatign a cost ebenfit ratio by dividing avg cost by # new fish
-         cb_ratio = avg_subba_cost/n_new) %>% 
+         cb_ratio = avg_subba_cost/n_diff) %>% 
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
-
-
-write.csv(subba_rp_cost, file = here("data", "final_dfs", "rp_costs.csv"))
+st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"))
 ```
 
 ### Mapping 

@@ -2,11 +2,13 @@
 title: "final_figures"
 author: "Ray Hunter"
 date: "2024-01-17"
-output: html_document
+output: 
+  html_document:
+    code_folding: "hide"
 ---
-
+## Preliminary Results {.tabset}
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 library(tidyverse)
 library(sf)
@@ -16,99 +18,393 @@ library(ggspatial)
 library(here)
 library(janitor)
 library(ggplot2)
+library(kableExtra)
+library(knitr)
+
+#sourcing data
+source("../common.R")
 ```
 
 ```{r}
 #reading in data 
 
 #floodplain habitat
-read_csv(here("data", "final_dfs", "fp_costs.csv"))
+floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>% 
+  rename("lower_subba_cost"="total_lower_cost")%>% 
+  rename("upper_subba_cost"="total_upper_cost")%>% 
+  rename("avg_subba_cost"="avg_cost") %>% 
+  select(-c("scenario", "subbasin_name", "pop", "subbasin_num", "perc_change"))
+floodplain$restoration_type<-"floodplain"
 #engineered log jams 
-read_csv(here("data", "final_dfs", "elj_costs.csv"))
+elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
+elj$restoration_type<-"elj"
 #riparian planting 
-read_csv(here("data", "final_dfs", "rp_costs.csv"))
-```
+rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg"))
+rp$restoration_type<-"rp"
 
-#LAND USE 
-```{r}
-######################## making shape files to streamline process #####################
 
-# creating a shape file of the unionized stillguamish basin so we don't have to redo this operation every time 
-
-# subs_stl_union <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% 
-#   clean_names() %>% 
-#   st_union() %>% 
-#   st_as_sf() %>% 
-#   st_write(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp"))
+#creating one large dataframe
+all_cost_benefit <- rbind(elj, rp)
+all_cost_benefit<-rbind(all_cost_benefit, floodplain)
 
 
 
-#creating a shape file of stilly land use so we dont have to read in all the stillaguamish and skagit data and then transform and filter it each time 
-
-# land_use_stilly <- land_use %>% 
-# st_intersection(subs_union) %>% 
-# st_write(here("data", "land_use", "land_use_stilly.shp"))
-
-#####################################################################################################
+#creating a column with pretty subbasin names
+all_cost_benefit$subbasin_name <- str_replace_all(all_cost_benefit$noaa_subba, "_", " ") 
+all_cost_benefit$subbasin_name <-str_replace_all(all_cost_benefit$subbasin_name, "Stillaguamish", "")
+all_cost_benefit$subbasin_name <-str_replace_all(all_cost_benefit$subbasin_name, "mainstem", "Mainstem")
 
 
-#reading in unionized stilly subasin shape file
-subs_union <- st_read(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp")) %>% 
-  st_transform("EPSG:26910")
 
-#reading in individual stilly subbasins shape file
-subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% 
-  clean_names() %>% 
-  select(noaa_subba, shape_area, geometry) %>% 
-  st_transform("EPSG:26910")
-
-#land use parcel data for snohomish and skagit county 
-land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>% 
-  clean_names()
-
-
+#needed for loops for maps later on
+unique_types <- unique(all_cost_benefit$restoration_type)
 ```
 
 
-#NEW PARCELS LAYER BY SUBBASIN
-```{r}
-#creating a new df with parcels by subbasin 
+```{r, fig.cap="Top 5 Subbasins for Riparian Planting"}
 
-#splitting parcels if they intersect w/ multiple subs
-land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>% 
-#joining attributes of noaa subbasin to parcel data
- st_join(subs_stl, largest = TRUE) %>% 
-  select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% 
-  mutate(parcel_area = st_area(.))
+# Create an empty list to store datasets
+top_subbasins_list <- list()
 
-
-summary <- land_use_subs %>% 
-  group_by(noaa_subba, master_cat) %>% 
-  summarise(perc_land_use = sum(parcel_area)/subba_area*100)
-```
-
-
-
-
-
-
-
-#MAPPING LAND USE
-
-```{r}
-ggplot() +
-  geom_sf(data = land_use_subs, aes(fill = master_cat)) 
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # cat("Top five subbasins for Restoration Type:", rest_type, "\n")
   
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  
+  # Get the top five subbasins
+  top_subbasins <- subset_data %>%
+    arrange(desc(cb_ratio)) %>%
+    head(5) %>% 
+    select(subbasin_name, lower_subba_cost, avg_subba_cost, upper_subba_cost, n_diff, cb_ratio) %>% st_drop_geometry()
+  
+  # Store the dataset in the list
+  top_subbasins_list[[rest_type]] <- top_subbasins
+  
+  cat("\n")
+}
+
+# # Apply kable to each dataset in the list
+# kable_output <- lapply(top_subbasins_list, function(dataset) {
+#   kable(dataset, format = "markdown")
+# })
+
+# # Print the kable output
+# print(kable_output)
+kable(top_subbasins_list[["rp"]], "html") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
 ```
 
+```{r, fig.cap="Top 5 Subbasins for Engineered Log Jams"}
+kable(top_subbasins_list[["elj"]], "html") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
 
-
+```{r, fig.cap="Top 5 Subbasins for Floodplain Restoration"}
+kable(top_subbasins_list[["floodplain"]], "html") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
 
 
 ```{r}
-ggplot(flow_stl, aes( x= fpw)) +
-  geom_histogram()
+###PLOT SHOWING THE AVERAGE COST OF RESTORATION IN EACH SUBBASIN
+
+# Filter out rows with NA values for avg_subba_cost
+all_cost_benefit_NA <- all_cost_benefit[!is.na(all_cost_benefit$avg_subba_cost), ]
+
+# Create ggplot
+p<-ggplot(all_cost_benefit_NA, aes(x = subbasin_name, y = avg_subba_cost/1000000, fill = restoration_type)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.7) +
+  geom_errorbar(
+    aes(ymin = lower_subba_cost/1000000, ymax = upper_subba_cost/1000000),
+    position = position_dodge(0.7),
+    width = 0.25
+  ) +
+  labs(x = "Subbasin",
+       y = "Cost (Millions of Dollars)",
+       fill = "Restoration Type") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
 ```
+
+
+```{r}
+####MAPPING COSTS
+# Create a list to store individual ggplot objects
+cost_plot_list <- list()
+
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  
+  # Create ggplot for the current restoration_type
+  plot <- ggplot() +
+    geom_sf(data = subs_stl, aes()) +
+    geom_sf(data = subset_data, aes(fill = avg_subba_cost/1000000)) +
+    scale_fill_gradient(low = "#90CE9F", high = "#0C4019") +  # Adjust colors as needed
+    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+    theme_minimal() +
+    labs(fill = "Average Cost\n(Millions of Dollars)") 
+  
+  # Append the plot to the list
+  cost_plot_list[[rest_type]] <- plot
+}
+
+# # Save the individual plots
+# for (rest_type in unique_types) {
+#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
+
+# Assuming you have already generated and stored the plots in the list 'plot_list'
+
+# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
+# print(cost_plot_list[["rp"]])
+# print(cost_plot_list[["floodplain"]])
+# print(cost_plot_list[["elj"]])
+```
+
+```{r}
+####MAPPING BENEFITS
+# Create a list to store individual ggplot objects
+benefit_plot_list <- list()
+
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  
+  # Create ggplot for the current restoration_type
+  plot <- ggplot() +
+    geom_sf(data = subs_stl, aes()) +
+    geom_sf(data = subset_data, aes(fill = n_diff)) +
+    scale_fill_gradient(low = "#C576D8", high = "#471054") +  # Adjust colors as needed
+    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+    theme_minimal() +
+    labs(fill = "Increase in Number\nof Spawners Resulting\nfrom Restoration") 
+  
+  # Append the plot to the list
+  benefit_plot_list[[rest_type]] <- plot
+}
+
+# # Save the individual plots
+# for (rest_type in unique_types) {
+#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
+
+# Assuming you have already generated and stored the plots in the list 'plot_list'
+
+# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
+# print(benefit_plot_list[["rp"]])
+# print(benefit_plot_list[["floodplain"]])
+# print(benefit_plot_list[["elj"]])
+```
+
+```{r}
+###MAPPING COST BENEFIT RATIO
+# Create a list to store individual ggplot objects
+cb_plot_list <- list()
+
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  
+  # Create ggplot for the current restoration_type
+  plot <- ggplot() +
+    geom_sf(data = subs_stl, aes()) +
+    geom_sf(data = subset_data, aes(fill = cb_ratio)) +
+    scale_fill_gradient(low = "#D2A076", high = "#663C18") +  # Adjust colors as needed
+    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+    theme_minimal() +
+    labs(fill = "Price per\nSpawners (Dollars)") 
+  
+  # Append the plot to the list
+  cb_plot_list[[rest_type]] <- plot
+}
+
+# # Save the individual plots
+# for (rest_type in unique_types) {
+#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
+
+# Assuming you have already generated and stored the plots in the list 'plot_list'
+
+# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
+# print(benefit_plot_list[["rp"]])
+# print(benefit_plot_list[["floodplain"]])
+# print(benefit_plot_list[["elj"]])
+```
+ 
+```{r}
+### PLOTTING COSTS BY SUBBASIN
+# Create a list to store individual ggplot objects
+cost_range_plot_list <- list()
+
+# Loop through each restoration_type
+for (rest_type in unique_types) {
+  # Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  
+  # Filter out rows with NA values for avg_subba_cost
+  subset_data <- subset_data[!is.na(subset_data$avg_subba_cost), ]
+  
+  # Order subbasin_name by avg_subba_cost in descending order
+  subset_data$subbasin_name <- factor(subset_data$subbasin_name, levels = subset_data$subbasin_name[order(-subset_data$avg_subba_cost)])
+  
+  # Create ggplot for the current restoration_type
+  plot <- ggplot(subset_data, aes(x = subbasin_name)) +
+    geom_errorbar(
+      aes(ymin = lower_subba_cost/1000000, ymax = upper_subba_cost/1000000),
+      position = "dodge",
+      width = 0.2
+    ) +
+    geom_point(aes(y = avg_subba_cost/1000000), position = "dodge", size = 3) +
+    labs(x = "Subbasin",
+         y = "Cost (Millions of Dollars)") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  
+  # Append the plot to the list
+  cost_range_plot_list[[rest_type]] <- plot
+}
+
+
+```
+
+ 
+### Riparian Planting
+```{r, fig.cap="Costs Implement Riparian Planting Restoration in the Stillaguamish"}
+print(cost_plot_list[["rp"]])
+```
+
+```{r, fig.cap="Benefits from Riparian Planting in the Stillaguamish"}
+print(benefit_plot_list[["rp"]])
+```
+
+```{r, fig.cap="Cost Benefit Ratio from Riparian Planting in the Stillaguamish"}
+print(cb_plot_list[["rp"]])
+```
+
+```{r, fig.cap="Cost Ranges by Subbasin to Implement Riparian Planting in the Stillaguamish"}
+print(cost_range_plot_list[["rp"]])
+```
+
+### Engineered Log Jams
+```{r, fig.cap="Costs Implement Engineered Log Jam Restoration in the Stillaguamish"}
+print(cost_plot_list[["elj"]])
+```
+
+```{r, fig.cap="Benefits from Engineered Log Jams in the Stillaguamish"}
+print(benefit_plot_list[["elj"]])
+```
+
+```{r, fig.cap="Cost Benefit Ratio from Engineered Log Jams in the Stillaguamish"}
+print(cb_plot_list[["elj"]])
+```
+
+```{r, fig.cap="Cost Ranges by Subbasin to Implement Engineered Log Jams in the Stillaguamish"}
+print(cost_range_plot_list[["elj"]])
+```
+
+### Floodplain Restoration
+```{r, fig.cap="Costs Implement Floodplain Restoration in the Stillaguamish"}
+print(cost_plot_list[["floodplain"]])
+```
+
+```{r, fig.cap="Benefits from Floodplain Restoration in the Stillaguamish"}
+print(benefit_plot_list[["floodplain"]])
+```
+
+```{r, fig.cap="Cost Benefit Ratio from Floodplain Restoration in the Stillaguamish"}
+print(cb_plot_list[["floodplain"]])
+```
+
+```{r, fig.cap="Cost Ranges by Subbasin to Implement Floodplain Restoration in the Stillaguamish"}
+print(cost_range_plot_list[["floodplain"]])
+```
+
+
+<!-- #LAND USE -->
+<!-- ```{r} -->
+<!-- ######################## making shape files to streamline process ##################### -->
+
+<!-- # creating a shape file of the unionized stillguamish basin so we don't have to redo this operation every time -->
+
+<!-- # subs_stl_union <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% -->
+<!-- #   clean_names() %>% -->
+<!-- #   st_union() %>% -->
+<!-- #   st_as_sf() %>% -->
+<!-- #   st_write(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp")) -->
+
+
+
+<!-- #creating a shape file of stilly land use so we dont have to read in all the stillaguamish and skagit data and then transform and filter it each time -->
+
+<!-- # land_use_stilly <- land_use %>% -->
+<!-- # st_intersection(subs_union) %>% -->
+<!-- # st_write(here("data", "land_use", "land_use_stilly.shp")) -->
+
+<!-- ##################################################################################################### -->
+
+
+<!-- #reading in unionized stilly subasin shape file -->
+<!-- subs_union <- st_read(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp")) %>% -->
+<!--   st_transform("EPSG:26910") -->
+
+<!-- #reading in individual stilly subbasins shape file -->
+<!-- subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% -->
+<!--   clean_names() %>% -->
+<!--   select(noaa_subba, shape_area, geometry) %>% -->
+<!--   st_transform("EPSG:26910") -->
+
+<!-- #land use parcel data for snohomish and skagit county -->
+<!-- land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>% -->
+<!--   clean_names() -->
+
+
+<!-- ``` -->
+
+
+<!-- #NEW PARCELS LAYER BY SUBBASIN -->
+<!-- ```{r} -->
+<!-- #creating a new df with parcels by subbasin -->
+
+<!-- #splitting parcels if they intersect w/ multiple subs -->
+<!-- land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>% -->
+<!-- #joining attributes of noaa subbasin to parcel data -->
+<!--  st_join(subs_stl, largest = TRUE) %>% -->
+<!--   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% -->
+<!--   mutate(parcel_area = st_area(.)) -->
+
+
+<!-- summary <- land_use_subs %>% -->
+<!--   group_by(noaa_subba, master_cat) %>% -->
+<!--   summarise(perc_land_use = sum(parcel_area)/subba_area*100) -->
+<!-- ``` -->
+
+
+
+
+
+
+
+<!-- #MAPPING LAND USE -->
+
+<!-- ```{r} -->
+<!-- ggplot() + -->
+<!--   geom_sf(data = land_use_subs, aes(fill = master_cat))  -->
+
+<!-- ``` -->
+
+
+
+
+
+<!-- ```{r} -->
+<!-- ggplot(flow_stl, aes( x= fpw)) + -->
+<!--   geom_histogram() -->
+<!-- ``` -->
 
 
 
