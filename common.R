@@ -49,7 +49,7 @@ stilly_bens <- read.csv(here("data", "HARP", "benefits", "ind_subbasin_rest_20s_
 # snoho_lu <- st_read(here("data", "Washington_data", "Snoho_Land_Use", "General_Land_Use_Final_Dataset.shp"))
 
 
-# roads_stl <- st_read(here("data", "Washington_data", "WA_roads_thin.gpkg"))
+# roads_stl <- st_read(here("data", "roads", "WA_roads_thin.gpkg"))
 
 
 
