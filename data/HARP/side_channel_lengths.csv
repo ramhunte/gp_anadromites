@@ -1,17 +1,17 @@
-﻿noaa_subba,hist_sc_km,curr_sc_kmperc_change,
-Lower Mainstem,61.51,4.21,-93
-NF Stillaguamish 1,23.96,12.31,-49
-NF Stillaguamish 2,14.43,10.23,-29
-NF Stillaguamish 3,14.46,10.68,-26
-NF Stillaguamish 4,3.86,0,-100
-Pilchuck Creek,3.89,2.33,-40
-Deer Creek,11.09,7.45,-33
-Boulder River,1.03,1.18,14
-Squire Creek,1.62,0,-100
-SF Stillaguamish 1,13.2,4.17,-68
-SF Stillaguamish 2,0,0,
-SF Stillaguamish 3,2.24,0.94,-58
-SF Stillaguamish 4,3.17,2.79,-12
-SF Stillaguamish 5,6.42,6.52,3
-Jim Creek,4.53,4.07,-10
-Canyon Creek,4.9,3.61,-26
+noaa_subba,hist_sc_km,curr_sc_kmperc_change,
+mainstem_Stillaguamish,61.51,4.21,-93
+mainstem_North_Fork_Stillaguamish_01,23.96,12.31,-49
+mainstem_North_Fork_Stillaguamish_02,14.43,10.23,-29
+mainstem_North_Fork_Stillaguamish_03,14.46,10.68,-26
+mainstem_North_Fork_Stillaguamish_04,3.86,0,-100
+Pilchuck_Creek,3.89,2.33,-40
+Deer_Creek,11.09,7.45,-33
+Boulder_River,1.03,1.18,14
+Squire_Creek,1.62,0,-100
+mainstem_South_Fork_Stillaguamish_01,13.2,4.17,-68
+mainstem_South_Fork_Stillaguamish_02,0,0,
+mainstem_South_Fork_Stillaguamish_03,2.24,0.94,-58
+mainstem_South_Fork_Stillaguamish_04,3.17,2.79,-12
+mainstem_South_Fork_Stillaguamish_05,6.42,6.52,3
+Jim_Creek,4.53,4.07,-10
+Canyon_Creek,4.9,3.61,-26
