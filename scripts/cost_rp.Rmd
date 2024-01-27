@@ -22,12 +22,16 @@ setwd(here())
 ### Data wrangling
 ```{r}
 # filtering data to just subbasins where there there are chinook benefits from shade
-
-#filter to just subbasins with benefits in shade for chinook
-stilly_bens_rp <- stilly_bens %>% 
-  filter(pop == "fall_chinook" &
+rp_subs <- filter(stilly_bens, pop %in% "fall_chinook" &
          perc_change > 0 &
-        scenario == "Shade") 
+        scenario == "Shade") %>% 
+  select(subbasin) %>% 
+  unique()
+                   
+#filter to just subbasins with benefits for chinook and shade for all populations
+stilly_bens_rp <- stilly_bens %>% 
+  filter(subbasin %in% rp_subs$subbasin,
+         scenario == "Shade")
 
 #filter flow_stl to just streams with beenfits for shade and chinook 
 flow_stl_rp <- flow_stl %>% 
@@ -136,8 +140,6 @@ bank_slope_cost_fun <- function(slope) {
 }
 
 
-
-
 #assigning a bank slope class w/ function
 flow_stl_rp <- flow_stl_rp %>%
   mutate(bank_slope_class = bank_slope_cost_fun(avg_bank_slope),
@@ -232,71 +234,9 @@ subba_rp_cost <- rp_cost_final %>%
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
-st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"), delete_layer = TRUE)
+st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"), append = FALSE)
 ```
 
-### Mapping 
-
-# MAP #1: Average Cost of RP Planting by Subbasin 
-```{r}
-#total cost
-ggplot() +
-  geom_sf(data = subba_rp_cost, aes(fill = avg_subba_cost)) +
-  # scale_color_viridis_c() +
-  scale_fill_viridis_b(breaks = c(10000000, 20000000, 30000000),
-                       labels = c("$20", "$40", "$60"), option = "E") +
-                       # direction=-1) +
-  
-  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
-  # scale_fill_continuous() +
-  theme_minimal()+
-  labs(title = "Average Cost of Riparian Planting by Subbasin") +
-  labs(fill="$ Millions")
-```
-
-#Supporting Cost Figure 
-```{r}
-ggplot(subba_rp_cost, aes(x = noaa_subba)) +
-  geom_errorbar(
-    aes(ymin = lower_subba_cost/1000000, ymax = upper_subba_cost/1000000),
-    position = "dodge",
-    width = 0.2
-  ) +
-  geom_point(aes(y = avg_subba_cost/1000000), position = "dodge", size = 3) +
-  labs(title = "FP Costs per Subbasin in the Stillaguamish",
-       x = "Subbasin",
-       y = "Cost (Millions of Dollars)") +
-  theme_minimal()+
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-```
-
-
-# MAP #2: Cost Benefit Ratio by Subbasin
-```{r}
-#total cost
-ggplot() +
-  geom_sf(data = subba_rp_cost, aes(fill = cb_ratio)) +
-  # scale_color_viridis_c() +
-  scale_fill_viridis_b(breaks = c(20000000, 40000000, 60000000),
-                       labels = c("$20", "$40", "$60"), option = "E") +
-                       # direction=-1) +
-  
-  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
-  # scale_fill_continuous() +
-  theme_minimal()+
-  labs(title = "Cost Benefit Ratio by Subbasin") +
-  labs(fill="$ Millions")
-```
-
-
-
-
-#### NEXT STEPS: 
-* CB ratio seems a bit wack. Shade only predicted to increase salmon by 0-15 per subbasin? refer to still_bens_rp
-* Problem: all intermediate costs are low b/c transportation is all "low" and energy is all "low" or "medium"
-* need to figure out how many acres along each stream need to be restored
-  - cost estimates are given in $/acre. Literature says at least 30m inland
-  - right now, I multiplied the area of the stream (length x bankfull width) by 2 and converted to acres. no idea if this is right
   
 ASSUMPTIONS
 * this assumes full restoration of all banks of every stream. what if we only want to restore partial riparian vegetation?
