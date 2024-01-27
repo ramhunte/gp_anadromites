@@ -183,12 +183,15 @@ elj_cost <- elj_cost %>%
   rowwise() %>%
   mutate(
     final_lower_cost = ifelse((relative_cost == 'low' && energy == 'low') || (relative_cost == 'medium' && energy == 'low') || (relative_cost == 'low' && energy == 'medium'),
-                                  lower_cost_estimate * length * 0.000621371 *0.5,
-                                  lower_cost_estimate*1),
+                                  lower_cost_estimate * length * 0.000621371 * 0.5,
+                                  lower_cost_estimate * length * ifelse(energy == 'low', 1/400, ifelse(energy == 'medium', 1/200, ifelse(energy == 'high', 1/100, 1)))
+                                  ),
     final_upper_cost = ifelse((relative_cost == 'low' && energy == 'low') || (relative_cost == 'medium' && energy == 'low') || (relative_cost == 'low' && energy == 'medium'),
-                                  upper_cost_estimate * length * 0.000621371 *0.5,
-                                  upper_cost_estimate*1)
+                                  upper_cost_estimate * length * 0.000621371 * 0.5,
+                                  upper_cost_estimate * length * ifelse(energy == 'low', 1/400, ifelse(energy == 'medium', 1/200, 1))
+                                  )
   )
+
 
 elj_cost$avg_cost<-(elj_cost$final_lower_cost+elj_cost$final_upper_cost)/2
 ```
