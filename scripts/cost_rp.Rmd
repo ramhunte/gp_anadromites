@@ -21,7 +21,7 @@ setwd(here())
 
 ### Data wrangling
 ```{r}
-# filtering flow_stl_rp to just areas there there aree chinook benefits from 
+# filtering data to just subbasins where there there are chinook benefits from shade
 
 #filter to just subbasins with benefits in shade for chinook
 stilly_bens_rp <- stilly_bens %>% 
@@ -43,12 +43,10 @@ flow_stl_rp <- flow_stl %>%
 
 ## 1.2) MATERIALS: STREAM ENERGY USED TO CALCULATE MATERIALS COSTS (STOLEN FROM ELJ)
 ```{r}
+# using energy function from function.R to assign energy 
 
-
-
-#----------------------------------------------------------------
 #assigning energy 
-flow_stl_rp <- assign_energy_width(flow_stl_rp, slope_degrees)
+flow_stl_rp <- assign_energy_width(flow_stl_rp)
 
 # check energy levels 
 unique(flow_stl_rp$energy) #only low and medium energy streams 
@@ -87,15 +85,14 @@ calculate_intermediate_cost <- function(input_df) {
 
 ### 2) COST OF RIPARIAN PLANTING PROJECTS ($/acre)
 
-```{r}
-## matrix with levels of site preparation ( average slope ) and output from materials/accessibility 
-# need to measure the average slope around a stream within 50m 
-```
+matrix with levels of site preparation ( average slope ) and output from materials/accessibility 
+
+need to measure the average slope around a stream within 50m 
 
 #### 2.1) LEVEL OF SITE PREPARATION 
 
 ```{r}
-#### creating a slope raster file of the stillaguamish, extractign average slope by surround stream reach buffer, and classifying it as low, medium, or high to estimate level of site preparation
+#### creating a slope raster file of the stillaguamish, extracting average slope by surround stream reach buffer, and classifying it as low, medium, or high to estimate level of site preparation
 ###---------------------------------------------------------------------------------------
 
 # importing multiple elevation raster data files (stored in "elevation" folder) from:
@@ -127,12 +124,19 @@ extract <- extract(crop_rast, flow_buff, fun = mean)
 flow_stl_rp <- flow_stl_rp %>% 
   mutate(avg_bank_slope = extract$slope)
 
+
+#-------------------------------------------------------------------
+
+
 #### create function to classify slope 
 bank_slope_cost_fun <- function(slope) {
-  bank_slope_class <- ifelse(slope > 0 & slope <= 10, "low",
+  bank_slope_class <- ifelse(slope >= 0 & slope <= 10, "low",
                 ifelse(slope > 10 & slope <= 20, "medium", "high"))
   return(bank_slope_class)
 }
+
+
+
 
 #assigning a bank slope class w/ function
 flow_stl_rp <- flow_stl_rp %>%
@@ -152,9 +156,6 @@ flow_stl_rp <- flow_stl_rp %>%
           can_ang_chg_perc < 5 ~ 0,
           
                                  ))
-
-
-
 
 ```
 

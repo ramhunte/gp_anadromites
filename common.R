@@ -23,8 +23,11 @@ transportation_stl <- read.csv(here("data", "HARP", "stl_transportation.csv")) %
 #join the flowline and the transportation column
 flow_stl<-full_join(flow_stl, transportation_stl)
 
-#create a slope percent and degrees for flow_stl 
+#create a slope degrees for flow_stl 
 flow_stl$slope_degrees <- atan(flow_stl$slope) * (180/pi)
+
+#create a slope gradient 
+flow_stl$slope_gradient <- flow_stl$slope*100
 
 #floodplain stillaguamish
 flood_stl <- st_read(here("data", "HARP", "Floodplain_STL", "Floodplain_STL_20220928.shp")) %>% 
