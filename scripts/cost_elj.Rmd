@@ -231,7 +231,7 @@ elj_cost_subbasin <- elj_cost %>%
   right_join(subs_stl[,1] ) %>% 
   #add subbasin salmon ppltn projected and current %>% 
   left_join(stilly_bens_wood %>% 
-              select(subbasin, n, n_curr, perc_change), by = c("noaa_subba" = "subbasin")) %>% 
+              select(subbasin, n, n_curr, perc_change, pop), by = c("noaa_subba" = "subbasin")) %>% 
   # finding increased increased fish from intervention
   mutate(n_diff = n - n_curr,
          #creating a cost benefit ratio by dividing avg cost by # new fish

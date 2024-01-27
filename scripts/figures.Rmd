@@ -33,13 +33,14 @@ floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>%
   rename("lower_subba_cost"="total_lower_cost")%>% 
   rename("upper_subba_cost"="total_upper_cost")%>% 
   rename("avg_subba_cost"="avg_cost") %>% 
-  select(-c("scenario", "subbasin_name", "pop", "subbasin_num", "perc_change"))
+  select(-c("scenario", "subbasin_name", "subbasin_num"))
 floodplain$restoration_type<-"floodplain"
 #engineered log jams 
 elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
 elj$restoration_type<-"elj"
 #riparian planting 
-rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg"))
+rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg")) %>% 
+  select(-scenario)
 rp$restoration_type<-"rp"
 
 
@@ -127,7 +128,7 @@ p<-ggplot(all_cost_benefit_NA, aes(x = subbasin_name, y = avg_subba_cost/1000000
        fill = "Restoration Type") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-
+p
 ```
 
 
@@ -140,6 +141,9 @@ cost_plot_list <- list()
 for (rest_type in unique_types) {
   # Subset the data for the current restoration_type
   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  # filter to remove subbasins with 0 costs
+  subset_data <- subset_data %>% filter(avg_subba_cost>0)
+  
   
   # Create ggplot for the current restoration_type
   plot <- ggplot() +
@@ -175,6 +179,8 @@ benefit_plot_list <- list()
 for (rest_type in unique_types) {
   # Subset the data for the current restoration_type
   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  # filter to remove subbasins with 0 benefits
+  subset_data <- subset_data %>% filter(n_diff>0)
   
   # Create ggplot for the current restoration_type
   plot <- ggplot() +
@@ -210,6 +216,8 @@ cb_plot_list <- list()
 for (rest_type in unique_types) {
   # Subset the data for the current restoration_type
   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  # filter to remove subbasins with 0 cb ratio
+  subset_data <- subset_data %>% filter(cb_ratio>0)
   
   # Create ggplot for the current restoration_type
   plot <- ggplot() +
