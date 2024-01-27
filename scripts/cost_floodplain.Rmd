@@ -362,8 +362,13 @@ test + theme(legend.position = "none")
 
 ## incorporating benefits
 ```{r}
-flood_bens<-stilly_bens %>% filter(pop=="fall_chinook") %>% filter(scenario=="Floodplain")
-flood_cost_ben <- full_join(stilly_subbasin_cost, flood_bens, by = c("noaa_subba" = "subbasin"))
+#include only subbasins that have a benefit to chinook, but retain rows for other pops
+stilly_bens_flood_subba <- stilly_bens %>% filter(scenario=="Floodplain" &pop == "fall_chinook" & perc_change > 0) %>% select(subbasin) %>% unique()
+#join this to stilly_bens and filter for wood sceario
+stilly_bens_flood<-left_join(stilly_bens_flood_subba, stilly_bens) %>% filter(scenario=="Floodplain") %>% drop_na()
+
+
+flood_cost_ben <- full_join(stilly_subbasin_cost, stilly_bens_flood, by = c("noaa_subba" = "subbasin"))
 flood_cost_ben<-flood_cost_ben %>%  mutate(n_diff = n - n_curr,
          #creating a cost ebenfit ratio by dividing avg cost by # new fish
          cb_ratio = avg_cost/n_diff) 
