@@ -19,14 +19,9 @@ setwd(here())
 ```
 
 
-### 1) IMPACT OF SITE ACCESSIBILITY AND MATERIALS ON COSTS
-
-## 1.1) SITE ACCESSABILITY: FIND THE NEAREST ROAD TO EACH STREAM REACH and ASSIGN LMH (STOLEN FROM ELJ)
-* in common R, the transportation (site accessibility) was added to the `flow_stl` data frame
-
-
-## 1.2) MATERIALS: STREAM ENERGY USED TO CALCULATE MATERIALS COSTS (STOLEN FROM ELJ)
+### Data wrangling
 ```{r}
+# filtering flow_stl_rp to just areas there there aree chinook benefits from 
 
 #filter to just subbasins with benefits in shade for chinook
 stilly_bens_rp <- stilly_bens %>% 
@@ -37,6 +32,19 @@ stilly_bens_rp <- stilly_bens %>%
 #filter flow_stl to just streams with beenfits for shade and chinook 
 flow_stl_rp <- flow_stl %>% 
   filter(noaa_subba %in% unique(stilly_bens_rp$subbasin))
+```
+
+
+### 1) IMPACT OF SITE ACCESSIBILITY AND MATERIALS ON COSTS
+
+## 1.1) SITE ACCESSABILITY: FIND THE NEAREST ROAD TO EACH STREAM REACH and ASSIGN LMH (STOLEN FROM ELJ)
+* in common R, the transportation (site accessibility) was added to the `flow_stl` data frame
+
+
+## 1.2) MATERIALS: STREAM ENERGY USED TO CALCULATE MATERIALS COSTS (STOLEN FROM ELJ)
+```{r}
+
+
 
 #----------------------------------------------------------------
 #assigning energy 
