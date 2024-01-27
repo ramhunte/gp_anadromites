@@ -193,8 +193,20 @@ flow_stl_rp <- flow_stl_rp %>%
          rip_acres = 60*length*0.000247105,
         #calculating % change in canopy open angle to estimate how much riparian restoration needs to be done in rip_acres
         #current angle - historical angle / current angle x 100 to get % change
-        can_ang_chng = ((can_ang - hist_ang)/hist_ang)
-         )
+        can_ang_chg_perc = ((can_ang - hist_ang)/hist_ang*100),
+        can_ang_bin = case_when(
+          #when greater than or equal to 1, then 100% rest needed
+          can_ang_chg_perc >= 95 ~ 1,
+          can_ang_chg_perc >= 66.66 ~ .75,
+          can_ang_chg_perc >= 33.33 ~ .5,
+          can_ang_chg_perc >= 5 ~ .25,
+          can_ang_chg_perc < 5 ~ 0,
+          
+                                 ))
+
+
+
+
 ```
 
 
@@ -209,7 +221,7 @@ rp_cost <- function(input_df) {
       #creating a column for low end of cost spectrum 
       #multiply the total number of acres by change in canopy cover fraction to estimate how much area needs to be restored of riparian area
       #multiply the total number of acres by the cost per acre
-      lower_cost = rip_acres*can_ang_chng*case_when(
+      lower_cost = rip_acres*can_ang_bin*case_when(
         intermediate_cost == "low" & bank_slope_class == "low" ~ 5000,
         intermediate_cost == "low" & bank_slope_class == "medium" ~ 20000,
         intermediate_cost == "low" & bank_slope_class == "high" ~ 60000,
@@ -224,7 +236,7 @@ rp_cost <- function(input_df) {
       ),
       #creating a column for high end of cost spectrum 
       #multiply the total number of acres by the cost per acre
-      upper_cost = rip_acres*can_ang_chng*case_when(
+      upper_cost = rip_acres*can_ang_bin*case_when(
        intermediate_cost == "low" & bank_slope_class == "low" ~ 25000,
         intermediate_cost == "low" & bank_slope_class == "medium" ~ 50000,
         intermediate_cost == "low" & bank_slope_class == "high" ~ 100000,
@@ -270,7 +282,7 @@ subba_rp_cost <- rp_cost_final %>%
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
-st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"))
+st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"), delete_layer = TRUE)
 ```
 
 ### Mapping 
