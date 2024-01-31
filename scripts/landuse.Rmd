@@ -1,0 +1,80 @@
+ #LAND USE 
+```{r} 
+######################## making shape files to streamline process ##################### 
+
+# creating a shape file of the unionized stillguamish basin so we don't have to redo this operation every time
+
+subs_stl_union <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>%
+  clean_names() %>%
+st_union() %>%
+  st_as_sf() %>%
+  st_write(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp"))
+
+
+
+#creating a shape file of stilly land use so we dont have to read in all the stillaguamish and skagit data and then transform and filter it each time -->
+
+land_use_stilly <- land_use %>%
+st_intersection(subs_union) %>%
+st_write(here("data", "land_use", "land_use_stilly.shp"))
+
+<!-- ##################################################################################################### -->
+
+
+<!-- #reading in unionized stilly subasin shape file -->
+<!-- subs_union <- st_read(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp")) %>% -->
+<!--   st_transform("EPSG:26910") -->
+
+<!-- #reading in individual stilly subbasins shape file -->
+<!-- subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>% -->
+<!--   clean_names() %>% -->
+<!--   select(noaa_subba, shape_area, geometry) %>% -->
+<!--   st_transform("EPSG:26910") -->
+
+<!-- #land use parcel data for snohomish and skagit county -->
+<!-- land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>% -->
+<!--   clean_names() -->
+
+
+ ```
+
+
+<!-- #NEW PARCELS LAYER BY SUBBASIN -->
+<!-- ```{r} -->
+<!-- #creating a new df with parcels by subbasin -->
+
+<!-- #splitting parcels if they intersect w/ multiple subs -->
+<!-- land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>% -->
+<!-- #joining attributes of noaa subbasin to parcel data -->
+<!--  st_join(subs_stl, largest = TRUE) %>% -->
+<!--   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% -->
+<!--   mutate(parcel_area = st_area(.)) -->
+
+
+<!-- summary <- land_use_subs %>% -->
+<!--   group_by(noaa_subba, master_cat) %>% -->
+<!--   summarise(perc_land_use = sum(parcel_area)/subba_area*100) -->
+<!-- ``` -->
+
+
+
+
+
+
+
+<!-- #MAPPING LAND USE -->
+
+<!-- ```{r} -->
+<!-- ggplot() + -->
+<!--   geom_sf(data = land_use_subs, aes(fill = master_cat))  -->
+
+<!-- ``` -->
+
+
+
+
+
+<!-- ```{r} -->
+<!-- ggplot(flow_stl, aes( x= fpw)) + -->
+<!--   geom_histogram() -->
+<!-- ``` -->
