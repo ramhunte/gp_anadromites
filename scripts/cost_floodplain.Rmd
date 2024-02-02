@@ -299,6 +299,7 @@ stilly_bens_flood<-left_join(stilly_bens_flood_subba, stilly_bens) %>% filter(sc
 
 flood_cost_ben <- full_join(stilly_subbasin_cost, stilly_bens_flood, by = c("noaa_subba" = "subbasin"))
 flood_cost_ben<-flood_cost_ben %>%  mutate(n_diff = n - n_curr,
+                                           avg_cost= (total_lower_cost+total_upper_cost)/2,
          #creating a cost ebenfit ratio by dividing avg cost by # new fish
          cb_ratio = avg_cost/n_diff) 
 # 
