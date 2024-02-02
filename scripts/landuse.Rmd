@@ -7,27 +7,8 @@ library(rmapshaper)
 library(ggplot2)
 ```
 
-### Floodplain
-## Creating shapefiles to correspond to the newly created floodplain habitat adjacent to the river
 
-```{r}
-#want to create a buffer around flow_stl
-bankfull_stl <- st_buffer(flow_stl, dist = flow_stl$bf_width)
-
-#want to create a buffer around the buffer 1/3 * bf_width
-floodplain_hab_stl<-st_buffer(bankfull_stl, dist = flow_stl$bf_width*(1/3))
-```
-
-#plot to see what this looks like (if it is working)
-```{r}
-# ggplot() +
-#   geom_sf(data = flow_stl, fill = "darkblue") +
-#   geom_sf(data = bankfull_stl, fill = "lightblue", color = "black") +
-#   geom_sf(data = floodplain_hab_stl, fill = "yellow", color = "yellow") +
-#   theme_minimal()
-```
-
-#LAND USE
+######################################## Land Use #####################################
 #Run this only once
 ```{r}
 ######################## making shape files to streamline process ##################### 
@@ -49,6 +30,7 @@ floodplain_hab_stl<-st_buffer(bankfull_stl, dist = flow_stl$bf_width*(1/3))
 # st_write(here("data", "land_use", "land_use_stilly.shp"))
 ```
 
+#READING IN THE ABOVE DATA
 ```{r}
 #reading in unionized stilly subasin shape file -->
 subs_union <- st_read(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp")) %>% 
@@ -65,8 +47,8 @@ land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>%
   clean_names()
 ```
 
-```{r}
 #NEW PARCELS LAYER BY SUBBASIN 
+```{r}
 #creating a new df with parcels by subbasin 
 
 #splitting parcels if they intersect w/ multiple subs 
@@ -94,5 +76,51 @@ ggplot(flow_stl, aes( x= fpw)) +
   geom_histogram()
 ```
 
+#################################### Floodplain ###################################
+## Creating shapefiles to correspond to the newly created floodplain habitat adjacent to the river
 
+```{r}
+#want to create a buffer around flow_stl
+bankfull_stl <- st_buffer(flow_stl, dist = flow_stl$bf_width)
 
+#want to create a buffer around the buffer 1/3 * bf_width
+floodplain_hab_stl_river<-st_buffer(bankfull_stl, dist = flow_stl$bf_width*(1/3))
+
+```
+
+#combine new floodplain shapefile with old floodplain shapefile
+```{r}
+#changing crs to match floodplain habitat crs
+subs_mod <- subs_stl %>% 
+  select(noaa_subba) %>% 
+  st_transform(26910) 
+
+#filter floodplain to only include historic
+hist_flood_stl <- st_intersection(subs_mod, filter(flood_stl, period %in% "Hist"))
+
+#also filter by floodplain habitat with benefit to chinook
+flood_ben<-stilly_bens %>% filter(scenario=="Floodplain" &pop == "fall_chinook" & perc_change > 0)
+
+#left join flood_ben to hist_flood_stl to only get fp with benefits to chinook
+hist_flood_stl<-left_join(flood_ben, hist_flood_stl, by=c("subbasin"="noaa_subba"))
+hist_flood_stl<-sf_object <- st_as_sf(hist_flood_stl)
+
+#join marsh/pond floodplain habitat with he habitat adjacent to the river
+floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
+```
+
+#overlap land use and floodplain shapefile
+```{r}
+#overlap the land use with the floodplain_hab_stl
+floodplain_land_use <- st_intersection(land_use_subs, floodplain_hab_stl)
+```
+
+#plot to see what this looks like (if it is working)
+```{r}
+ggplot() +
+  geom_sf(data = flow_stl, fill = "darkblue") +
+  #geom_sf(data = floodplain_land_use, fill = "yellow", color = "yellow") +
+  # geom_sf(data = bankfull_stl, fill = "lightblue", color = "black") +
+   geom_sf(data = floodplain_hab_stl, fill = "yellow", color = "yellow") +
+  theme_minimal()
+```
