@@ -125,27 +125,10 @@ pond_cost_inflation <- pond_cost_stl_inflated_custom %>%
   mutate(total_upper_cost=upper_cost*area_a)
 ```
 
-Check distribution of slopes and bf_width
-
-```{r}
-## Make histogram of slope
-hist(hist_flood_stl_var_mult$slope, main = "Histogram of Slope Column", xlab = "Slope Values")
-## Define values for low, medium and high based on histogram
-## Low <0.005
-## Medium >0.005 and <0.015
-## High >0.015
-## Make histogram of width
-hist(hist_flood_stl_var_mult$bf_width, main = "Histogram of Width Column", xlab = "Width Values")
-## Define values for low, medium and high based on histogram
-## Low <20
-## Medium >20 and <70
-## High >70
-```
-
 Create a function that takes different multiplier values and energies and creates a upper and lower cost range
 
 Currently using zero as a placeholder for when side channel multiplier values don't exist
-## PLACE THE NEW FLOODPLAIN HABITAT HERE
+
 ```{r}
 #new way of calculating earth moving with multiplier and stream size
 hist_flood_stl_var_mult <- hist_flood_stl_var_mult %>% 
@@ -197,7 +180,60 @@ calculate_marsh_cost <- function(input_df) {
 
 ```
 
-Need to define which energy levels are associated with each slope/width combo ---\> did this in the google doc
+
+```{r}
+#determining area of side channel habitat
+#making all positive percent change equal to NA bc no restoration needed
+side_channel_length$perc_change[side_channel_length$perc_change>0]<-NA
+
+#join hist_flood . .  with side channel length
+side_channel_flow<-flow_stl %>% left_join(side_channel_length, by="noaa_subba") %>% 
+  #assume side channels are 1/3 of the width of the river
+  mutate(sc_area=length*bf_width*0.3*(abs(perc_change)/100)) %>% 
+  #join with multiplier
+  full_join(side_channel_mult_stl, by=c("noaa_subba"="reach_name"))
+#replace 0 with NA for side channel multipliers
+side_channel_flow$multiplier[side_channel_flow$multiplier==NA]<-0
+
+side_channel_flow<-assign_energy_width(side_channel_flow)
+
+side_channel_flow <- side_channel_flow %>% 
+  mutate(earth_moving = case_when(
+    habitat == "SmStream" & multiplier < medium_multiplier_bound ~ "low",
+    habitat == "SmStream" & multiplier <= high_multiplier_bound ~ "medium",
+    habitat == "SmStream" & multiplier > high_multiplier_bound ~ "high",
+    habitat == "LgStream" & multiplier < medium_multiplier_bound ~ "medium",
+    habitat == "LgStream" & multiplier <= high_multiplier_bound ~ "high",
+    habitat == "LgStream" & multiplier > high_multiplier_bound ~ "high",
+    TRUE ~ "unknown"  # You can add a default case if needed
+  ))
+
+side_channel_flow<-calculate_marsh_cost(side_channel_flow)
+
+## account for inflation and get area in acres to get total cost
+side_channel_flow <- side_channel_flow %>% 
+  mutate(lower_cost=lower_cost* ppi) %>% 
+  mutate(upper_cost=upper_cost* ppi) %>% 
+  mutate(area_a=sc_area*0.000247105) %>% #meters squared to hectares
+  mutate(total_lower_cost=lower_cost*area_a) %>% 
+  mutate(total_upper_cost=upper_cost*area_a) 
+
+##get geometry of subbasin
+#calculating final cost riparian planting by subbasin 
+side_channel_flow <- side_channel_flow %>%
+  #dropping stream geometries
+  st_drop_geometry() %>% 
+  #grouping by subbasin
+  group_by(noaa_subba) %>% 
+  #adding up all lower cost ranges for reach costs by subbasin and multiplying by the producer price index 
+  summarize(total_lower_cost = sum(lower_cost),
+            total_upper_cost = sum(upper_cost)) %>% 
+  #joining with subs_stl to get the geometries of the subbasins
+  right_join(subs_stl[,1] )%>% 
+  mutate(hab_unit="side_channel") %>% 
+  st_as_sf()
+```
+
 
 ```{r}
 hist_flood_stl_var_mult$slope_gradient <- hist_flood_stl_var_mult$slope*100
@@ -207,8 +243,8 @@ marsh_cost <- calculate_marsh_cost(marsh_energy_stl)
 
 ## account for inflation and get area in acres to get total cost
 marsh_cost_inflation <- marsh_cost %>% 
-  mutate(lower_cost=lower_cost* 1.6728) %>% 
-  mutate(upper_cost=upper_cost* 1.6728) %>% 
+  mutate(lower_cost=lower_cost* ppi) %>% 
+  mutate(upper_cost=upper_cost* ppi) %>% 
   mutate(area_a=area_ha*2.47105) %>% 
   mutate(total_lower_cost=lower_cost*area_a) %>% 
   mutate(total_upper_cost=upper_cost*area_a)
@@ -218,97 +254,40 @@ marsh_cost_inflation <- marsh_cost %>%
 ```{r}
 #marsh costs
 marsh_cost_inflation_select<-marsh_cost_inflation %>% 
-  select(geometry, project_number, noaa_subba, hab_unit,total_lower_cost, total_upper_cost)
+  select(geometry, noaa_subba, hab_unit, total_lower_cost, total_upper_cost) 
 
 #pond costs
 pond_cost_inflation_select<-pond_cost_inflation %>% 
-  select(geometry, project_number, noaa_subba, hab_unit, total_lower_cost, total_upper_cost)
+  select(geometry, noaa_subba, hab_unit, total_lower_cost, total_upper_cost)
 
-#total costs 
-stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_select) %>% 
-  mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
+#side channel costs
+side_channel_inflation_select<-side_channel_flow %>% 
+  select(noaa_subba,total_lower_cost, total_upper_cost) %>% 
+  st_drop_geometry()
 
-#grouped total costs 
+#total cost
+stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_select)
 
+# %>% full_join(stilly_total_cost, side_channel_inflation_select) 
+
+#grouped total costs (pond and marsh only)
 stilly_subbasin_cost <- stilly_total_cost %>% 
   group_by(noaa_subba) %>% 
   summarise(total_lower_cost = sum(total_lower_cost), total_upper_cost = sum(total_upper_cost)) %>%
   st_drop_geometry()
 
+#adding side channel
+stilly_subbasin_cost<-full_join(stilly_subbasin_cost, side_channel_inflation_select) %>% st_drop_geometry() %>% group_by(noaa_subba) %>% summarize(total_lower_cost=sum(total_lower_cost), 
+    total_upper_cost=sum(total_upper_cost))%>% 
+  mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
 
 #need to join the subbasin geometries 
  
  stilly_subbasin_cost <- left_join(subs_stl, stilly_subbasin_cost, by = "noaa_subba") %>% 
-   select(noaa_subba, total_lower_cost, total_upper_cost, geometry) %>% 
-   mutate(avg_cost = (total_lower_cost + total_upper_cost)/2)
-  
-#final lower and upper cost estimates
- final_cost_range <- c(sum(stilly_subbasin_cost$total_lower_cost, na.rm = T), sum(stilly_subbasin_cost$total_upper_cost, na.rm = T))
- 
-
+   select(noaa_subba, total_lower_cost, total_upper_cost, geometry) 
 ```
 
 
-##MAP
-```{r}
- ggplot() +
-  geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = stilly_subbasin_cost, aes(fill = avg_cost)) +
-  scale_fill_viridis_b(breaks = c(5000000, 20000000, 100000000),
-                       labels = c("5 Million", "20 Million", "100 Million"), option = "E", 
-                       direction=-1) +
-  # scale_fill_stepsn(breaks = c(5000000, 20000000, 100000000), colors = c("green", "orange", "blue", "yellow")) +
-  
-  geom_sf(data = flow_stl, color = "blue", alpha = .3) +
-  # scale_fill_continuous() +
-  theme_minimal()+
-  labs(fill="Average Cost ($)")
-
-library(RColorBrewer)
-
-# ggplot() +
-#   geom_sf(data = subs_stl, aes()) +
-#   geom_sf(data = stilly_subbasin_cost, aes(fill = avg_cost)) +
-#   scale_fill_brewer_discrete(palette = "PuBu", breaks = c(5000000, 20000000, 100000000),
-#                     labels = c("5 Million", "20 Million", "100 Million")) +
-#   geom_sf(data = flow_stl, color = "blue", alpha = .3) +
-#   theme_minimal() +
-#   labs(fill = "Average Cost ($)")
-
-```
-
-##Figure showing cost per subbasin graphically
-```{r}
-#creating a column with pretty subbasin names
-stilly_subbasin_cost$subbasin_name <- str_replace_all(stilly_subbasin_cost$noaa_subba, "_", " ") 
-stilly_subbasin_cost$subbasin_name <-str_replace_all(stilly_subbasin_cost$subbasin_name, "Stillaguamish", "")
-stilly_subbasin_cost$subbasin_name <-str_replace_all(stilly_subbasin_cost$subbasin_name, "mainstem", "Mainstem")
-#figure itself
-ggplot(stilly_subbasin_cost, aes(x = subbasin_name)) +
-  geom_errorbar(
-    aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),
-    position = "dodge",
-    width = 0.2
-  ) +
-  geom_point(aes(y = avg_cost/1000000), position = "dodge", size = 3) +
-  labs(title = "FP Costs per Subbasin in the Stillaguamish",
-       x = "Subbasin",
-       y = "Cost (Millions of Dollars)") +
-  theme_minimal()+
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-```
-
-
-```{r}
-test <- ggplot() +
-  geom_sf(data = subs_stl) +
-  geom_sf(data = stilly_total_cost, aes(fill = noaa_subba)) +
-  theme_minimal() 
-test
-
-test + theme(legend.position = "none")
-  
-```
 
 ## incorporating benefits
 ```{r}
