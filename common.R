@@ -42,6 +42,10 @@ subs_stl <- st_zm(subs_stl, what = "ZM") #removing z
 ## side channel multiplier stillaguamish 
 side_channel_mult_stl<-read_csv(here("data", "HARP", "HARP_Side_Channel_Mult_STL.csv"))
 
+## side channel lengths (percent change side historical)
+side_channel_length<-read_csv(here("data", "HARP", "side_channel_lengths.csv")) %>% 
+  clean_names() %>% rename("curr_sc_km"="curr_sc_kmperc_change") %>% rename("perc_change"="x4")
+
                                 ################ HARP Benefits #################
 
 stilly_bens <- read.csv(here("data", "HARP", "benefits", "ind_subbasin_rest_20s_2023-09-21 - ind_subbasin_rest_20s_2023-09-21.csv"))
