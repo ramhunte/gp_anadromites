@@ -110,9 +110,12 @@ floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
 ```
 
 #overlap land use and floodplain shapefile
+CHECK THIS ON A MAP
 ```{r}
 #overlap the land use with the floodplain_hab_stl
-floodplain_land_use <- st_intersection(land_use_subs, floodplain_hab_stl)
+farm_stl<-land_use_subs %>% filter(master_cat=="Agricultural Area")
+floodplain_land_use <- st_join(farm_stl, floodplain_hab_stl, join = st_intersects)
+# floodplain_land_use <- st_intersection(farm_stl, floodplain_hab_stl)
 ```
 
 #plot to see what this looks like (if it is working)
@@ -121,6 +124,12 @@ ggplot() +
   geom_sf(data = flow_stl, fill = "darkblue") +
   #geom_sf(data = floodplain_land_use, fill = "yellow", color = "yellow") +
   # geom_sf(data = bankfull_stl, fill = "lightblue", color = "black") +
-   geom_sf(data = floodplain_hab_stl, fill = "yellow", color = "yellow") +
+   geom_sf(data = floodplain_land_use, fill = "yellow", color = "yellow") +
   theme_minimal()
 ```
+
+#filter to just include farmland and multiply by the cost of farmland
+```{r}
+
+```
+
