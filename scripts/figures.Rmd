@@ -30,14 +30,13 @@ source("../common.R")
 
 #floodplain habitat
 floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>% 
-  rename("lower_subba_cost"="total_lower_cost")%>% 
-  rename("upper_subba_cost"="total_upper_cost")%>% 
-  rename("avg_subba_cost"="avg_cost") %>% 
-  select(-c("scenario", "subbasin_name", "subbasin_num"))
+  select(-c("scenario", "subbasin_num"))
 floodplain$restoration_type<-"floodplain"
+
 #engineered log jams 
 elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
 elj$restoration_type<-"elj"
+
 #riparian planting 
 rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg")) %>% 
   select(-scenario)
@@ -78,7 +77,7 @@ for (rest_type in unique_types) {
   top_subbasins <- subset_data %>%
     arrange(desc(cb_ratio)) %>%
     head(5) %>% 
-    select(subbasin_name, lower_subba_cost, avg_subba_cost, upper_subba_cost, n_diff, cb_ratio) %>% st_drop_geometry()
+    select(subbasin_name, total_lower_cost, total_avg_cost, total_upper_cost, n_diff, cb_ratio) %>% st_drop_geometry()
   
   # Store the dataset in the list
   top_subbasins_list[[rest_type]] <- top_subbasins
@@ -112,14 +111,14 @@ kable(top_subbasins_list[["floodplain"]], "html") %>%
 ```{r}
 ###PLOT SHOWING THE AVERAGE COST OF RESTORATION IN EACH SUBBASIN
 
-# Filter out rows with NA values for avg_subba_cost
-all_cost_benefit_NA <- all_cost_benefit[!is.na(all_cost_benefit$avg_subba_cost), ]
+# Filter out rows with NA values for total_avg_cost
+all_cost_benefit_NA <- all_cost_benefit[!is.na(all_cost_benefit$total_avg_cost), ]
 
 # Create ggplot
-p<-ggplot(all_cost_benefit_NA, aes(x = subbasin_name, y = avg_subba_cost/1000000, fill = restoration_type)) +
+p<-ggplot(all_cost_benefit_NA, aes(x = subbasin_name, y = total_avg_cost/1000000, fill = restoration_type)) +
   geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.7) +
   geom_errorbar(
-    aes(ymin = lower_subba_cost/1000000, ymax = upper_subba_cost/1000000),
+    aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),
     position = position_dodge(0.7),
     width = 0.25
   ) +
@@ -142,13 +141,13 @@ for (rest_type in unique_types) {
   # Subset the data for the current restoration_type
   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
   # filter to remove subbasins with 0 costs
-  subset_data <- subset_data %>% filter(avg_subba_cost>0)
+  subset_data <- subset_data %>% filter(total_avg_cost>0)
   
   
   # Create ggplot for the current restoration_type
   plot <- ggplot() +
     geom_sf(data = subs_stl, aes()) +
-    geom_sf(data = subset_data, aes(fill = avg_subba_cost/1000000)) +
+    geom_sf(data = subset_data, aes(fill = total_avg_cost/1000000)) +
     scale_fill_gradient(low = "#90CE9F", high = "#0C4019") +  # Adjust colors as needed
     geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
     theme_minimal() +
@@ -254,20 +253,24 @@ for (rest_type in unique_types) {
   # Subset the data for the current restoration_type
   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
   
-  # Filter out rows with NA values for avg_subba_cost
-  subset_data <- subset_data[!is.na(subset_data$avg_subba_cost), ]
+  subset_data <- subset_data %>% 
+    filter(pop == "fall_chinook")
   
-  # Order subbasin_name by avg_subba_cost in descending order
-  subset_data$subbasin_name <- factor(subset_data$subbasin_name, levels = subset_data$subbasin_name[order(-subset_data$avg_subba_cost)])
+  # Filter out rows with NA values for total_avg_cost
+  subset_data <- subset_data[!is.na(subset_data$total_avg_cost), ]
+  
+  
+  # Order subbasin_name by total_avg_cost in descending order
+  subset_data$subbasin_name <- factor(subset_data$subbasin_name, levels = subset_data$subbasin_name[order(-subset_data$total_avg_cost)])
   
   # Create ggplot for the current restoration_type
   plot <- ggplot(subset_data, aes(x = subbasin_name)) +
     geom_errorbar(
-      aes(ymin = lower_subba_cost/1000000, ymax = upper_subba_cost/1000000),
+      aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),
       position = "dodge",
       width = 0.2
     ) +
-    geom_point(aes(y = avg_subba_cost/1000000), position = "dodge", size = 3) +
+    geom_point(aes(y = total_avg_cost/1000000), position = "dodge", size = 3) +
     labs(x = "Subbasin",
          y = "Cost (Millions of Dollars)") +
     theme_minimal() +

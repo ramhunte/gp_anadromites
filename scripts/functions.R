@@ -39,18 +39,12 @@ return(filtered_df)
 #Get ratio by dividing number of salmon per year by the cost per year
 
 
-ann_cost <- function(C, r) {
-  # #original final equation from andrew
-  # C=sum(t=0 to infinity) [a]/(1+r)^t
-  # 
-  # C = a/(1 + r)
-  # 
-  # # take out "t" b/c infinity and divide by just r?
-  # C=[a]/(r)
-  # 
-  # #rearrange to find "a"?
-  a = C*r
-  return(a)
+ann_cost_ben <- function(C, f) {
+  #no calculation for fish = 0 
+  # annual cost per fish 
+  # calculate annual cost (a) by total cost (C) x discount rate (0.03) divided by number of fish
+  a <- ifelse(f == 0, NA, (C*0.03)/f) 
+    return(a)
 }
 
 

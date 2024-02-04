@@ -219,9 +219,9 @@ subba_rp_cost <- rp_cost_final %>%
   #grouping by subbasin
   group_by(noaa_subba) %>% 
   #adding up all lower cost ranges for reach costs by subbasin and multiplying by the producer price index 
-  summarize(lower_subba_cost = sum(lower_cost)*ppi,
-            upper_subba_cost = sum(upper_cost)*ppi,
-            avg_subba_cost = (lower_subba_cost + upper_subba_cost)/2) %>% 
+  summarize(total_lower_cost = sum(lower_cost)*ppi,
+            total_upper_cost = sum(upper_cost)*ppi,
+            total_avg_cost = (total_lower_cost + total_upper_cost)/2) %>% 
   #joining with subs_stl to get the geometries of the subbasins
   right_join(subs_stl[,1] ) %>% 
   #add subbasin salmon ppltn projected and current %>% 
@@ -229,10 +229,14 @@ subba_rp_cost <- rp_cost_final %>%
               select(-subbasin_num, subbasin, pop, n, n_curr, perc_change), by = c("noaa_subba" = "subbasin")) %>% 
   # finding increased increased fish from intervention
   mutate(n_diff = n - n_curr,
-         #creatign a cost ebenfit ratio by dividing avg cost by # new fish
-         cb_ratio = avg_subba_cost/n_diff) %>% 
+         # total avg cost 
+         total_avg_cost= (total_lower_cost+total_upper_cost)/2,
+         #creating an annual cost benefit ratio 
+         cb_ratio = ann_cost_ben(C = total_avg_cost, f = n_diff)) %>% 
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
+
+
 
 st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"), append = FALSE)
 ```

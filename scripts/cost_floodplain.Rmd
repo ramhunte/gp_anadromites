@@ -298,11 +298,15 @@ stilly_bens_flood<-left_join(stilly_bens_flood_subba, stilly_bens) %>% filter(sc
 
 
 flood_cost_ben <- full_join(stilly_subbasin_cost, stilly_bens_flood, by = c("noaa_subba" = "subbasin"))
-flood_cost_ben<-flood_cost_ben %>%  mutate(n_diff = n - n_curr,
-                                           avg_cost= (total_lower_cost+total_upper_cost)/2,
-         #creating a cost ebenfit ratio by dividing avg cost by # new fish
-         cb_ratio = avg_cost/n_diff) 
-# 
+
+flood_cost_ben<-flood_cost_ben %>%  
+  mutate(n_diff = n - n_curr,
+         total_avg_cost= (total_lower_cost+total_upper_cost)/2,
+         #creating an annual cost benefit ratio 
+         cb_ratio = ann_cost_ben(C = total_avg_cost, f = n_diff)
+  ) 
+
+
 # ##need to manipulate values so that when n_diff=0 (zero fish are benefitted) the ratio is 0, also I need the value to be NA when avg_cost is NA
 # ##logically the value should never be NA (that means we didn't calculate a price for a basin with benefits)
 # flood_cost_ben <- flood_cost_ben %>%

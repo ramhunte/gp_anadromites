@@ -224,9 +224,9 @@ elj_cost_subbasin <- elj_cost %>%
   #grouping by subbasin
   group_by(noaa_subba) %>% 
   #adding up all lower cost ranges for reach costs by subbasin 
-  summarize(lower_subba_cost = sum(final_lower_cost),
-            upper_subba_cost = sum(final_upper_cost),
-            avg_subba_cost = (lower_subba_cost + upper_subba_cost)/2) %>% 
+  summarize(total_lower_cost = sum(final_lower_cost),
+            total_upper_cost = sum(final_upper_cost),
+            total_avg_cost = (total_lower_cost + total_upper_cost)/2) %>% 
   #joining with subs_stl to get the geometries of the subbasins
   right_join(subs_stl[,1] ) %>% 
   #add subbasin salmon ppltn projected and current %>% 
@@ -234,8 +234,8 @@ elj_cost_subbasin <- elj_cost %>%
               select(subbasin, n, n_curr, perc_change, pop), by = c("noaa_subba" = "subbasin")) %>% 
   # finding increased increased fish from intervention
   mutate(n_diff = n - n_curr,
-         #creating a cost benefit ratio by dividing avg cost by # new fish
-         cb_ratio = avg_subba_cost/n_diff) %>% 
+         #creating an annual cost benefit ratio 
+         cb_ratio = ann_cost_ben(C = total_avg_cost, f = n_diff)) %>% 
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
