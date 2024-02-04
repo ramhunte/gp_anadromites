@@ -63,13 +63,10 @@ hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
 hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))%>% 
   mutate(project_number = 1:n()) %>% 
   #some of the reaches dont have side channel multipliers b/c no significant fp habitat, so we are giving them a vlaue of 1.001 so NA values are not present 
-  mutate(multiplier = ifelse(is.na(multiplier), 1.001, multiplier))
-
-## Subtract one from multiplier column and do absolute value
-hist_flood_stl_var_mult$multiplier<-abs(hist_flood_stl_var_mult$multiplier-1)
+  mutate(multiplier = ifelse(is.na(multiplier), 0.001, multiplier))
 
 ## Histogram of Multiplier Values
-hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column", xlab = "Multiplier Values")
+hist(hist_flood_stl_var_mult$multiplier, main = "Histogram of Multiplier Column", xlab = "Multiplier Values", breaks=20)
 
 ## Define values for low, medium and high based on histogram
 ## Low <0.4
@@ -112,8 +109,8 @@ calculate_pond_cost_inflation_geometry_custom <- function(input_df, low_bound, m
 
 # Define the bounds for low, medium, and high multipliers
 low_multiplier_bound <- 0
-medium_multiplier_bound <- 0.4
-high_multiplier_bound <- 1
+medium_multiplier_bound <- 0.5
+high_multiplier_bound <- 1.5
 
 # Call the function with the provided dataframe and custom bounds
 pond_cost_stl_inflated_custom <- calculate_pond_cost_inflation_geometry_custom(
