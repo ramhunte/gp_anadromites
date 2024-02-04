@@ -39,22 +39,19 @@ return(filtered_df)
 #Get ratio by dividing number of salmon per year by the cost per year
 
 
-ann_cost <- function(a, C, r) {
-  
-  #original final equation from andrew
-  C=sum(t=0 to infinity) [a]/(1+r)^t
-  
-  # take out "t" b/c infinity and divide by just r?
-  C=[a]/(r)
-  
-  #rearrange to find "a"?
+ann_cost <- function(C, r) {
+  # #original final equation from andrew
+  # C=sum(t=0 to infinity) [a]/(1+r)^t
+  # 
+  # C = a/(1 + r)
+  # 
+  # # take out "t" b/c infinity and divide by just r?
+  # C=[a]/(r)
+  # 
+  # #rearrange to find "a"?
   a = C*r
-  
-  e
-  
   return(a)
 }
-
 
 
 
