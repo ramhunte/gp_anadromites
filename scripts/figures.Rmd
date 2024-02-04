@@ -33,7 +33,7 @@ floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>%
   rename("lower_subba_cost"="total_lower_cost")%>% 
   rename("upper_subba_cost"="total_upper_cost")%>% 
   rename("avg_subba_cost"="avg_cost") %>% 
-  select(-c("scenario", "subbasin_name", "subbasin_num"))
+  select(-c("scenario", "subbasin_num"))
 floodplain$restoration_type<-"floodplain"
 #engineered log jams 
 elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
