@@ -30,6 +30,12 @@ source("../common.R")
 
 #floodplain habitat
 floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>% 
+<<<<<<< HEAD
+=======
+  rename("lower_subba_cost"="total_lower_cost")%>% 
+  rename("upper_subba_cost"="total_upper_cost")%>% 
+  rename("avg_subba_cost"="avg_cost") %>% 
+>>>>>>> 4eb7a135064ec7402c863b0d1a4a76b00f0d403b
   select(-c("scenario", "subbasin_num"))
 floodplain$restoration_type<-"floodplain"
 

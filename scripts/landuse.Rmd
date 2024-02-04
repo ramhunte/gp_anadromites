@@ -96,13 +96,15 @@ subs_mod <- subs_stl %>%
   st_transform(26910) 
 
 #filter floodplain to only include historic
-hist_flood_stl <- st_intersection(subs_mod, filter(flood_stl, period %in% "Hist"))
+hist_flood_stl <- st_join(subs_mod, filter(flood_stl, period %in% "Hist"), join=st_intersects)
 
 #also filter by floodplain habitat with benefit to chinook
-flood_ben<-stilly_bens %>% filter(scenario=="Floodplain" &pop == "fall_chinook" & perc_change > 0)
+flood_ben<-stilly_bens %>% filter(scenario=="Floodplain" &pop == "fall_chinook" & perc_change > 0)  
 
-#left join flood_ben to hist_flood_stl to only get fp with benefits to chinook
-hist_flood_stl<-left_join(flood_ben, hist_flood_stl, by=c("subbasin"="noaa_subba"))
+#filter flood_ben to hist_flood_stl to only get fp with benefits to chinook
+hist_flood_stl<-hist_flood_stl %>% filter(noaa_subba %in% unique(flood_ben$subbasin))
+
+# hist_flood_stl<-left_join(flood_ben, hist_flood_stl, by=c("subbasin"="noaa_subba"))
 hist_flood_stl<-sf_object <- st_as_sf(hist_flood_stl)
 
 #join marsh/pond floodplain habitat with he habitat adjacent to the river
