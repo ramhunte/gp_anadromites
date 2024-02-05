@@ -19,6 +19,7 @@ library(here)
 library(janitor)
 library(ggplot2)
 library(kableExtra)
+library(magrittr)
 library(knitr)
 library(basemaps)
 
@@ -294,8 +295,53 @@ print(cost_range_plot_list[["floodplain"]])
 
 
 
+# cost dumb bell figures 
+
+```{r}
+# floodplain
+fp_dumb_bell <- cost_graph_fun(all_cost_benefit, "floodplain", "Floodplain")
+
+ggsave("../final_prods/figures/fp_dumb_bell.jpeg", plot = fp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+
+# elj
+elj_dumb_bell <- cost_graph_fun(all_cost_benefit, "elj", "Engineered Log Jam")
+ggsave("../final_prods/figures/elj_dumb_bell.jpeg", plot = elj_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+
+# rp
+rp_dumb_bell <- cost_graph_fun(all_cost_benefit, "rp", "Riparian Planting")
+
+ggsave("../final_prods/figures/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+```
 
 
+# table 
+```{r}
+
+summary_df <- all_cost_benefit %>% 
+  filter(pop == "fall_chinook") %>% 
+  transmute("Subbasin Name" = subbasin_name,
+            "Restoration Type" = restoration_type,
+            "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
+            # "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
+            "Upper Cost" = paste("$", format(round(total_upper_cost), big.mark = ",")),
+            "Average Cost" = paste("$", format(round(total_avg_cost), big.mark = ",")),
+            "Spawners" = round(n_diff, digits = 2),
+            "CB Ratio" = paste("$", format(round(cb_ratio, digits = 2), big.mark = ","))) %>% 
+  st_drop_geometry() %>% 
+  as.data.frame()
+
+
+  
+  
+ summary_kable <- kable(summary_df)  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))  
+  
+# htmlTable::htmlTable(summary_kable, rnames=FALSE) %>%  
+#    save_kable(file = "../final_prods/tables/summary_kable.png")
+
+summary_kable %>% 
+  save_kable(file = "../final_prods/tables/summary_kable.png", zoom = 4)
+```
 
 
 
