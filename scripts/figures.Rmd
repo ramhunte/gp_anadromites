@@ -58,6 +58,10 @@ all_cost_benefit$subbasin_name <-str_replace_all(all_cost_benefit$subbasin_name,
 
 #needed for loops for maps later on
 unique_types <- unique(all_cost_benefit$restoration_type)
+
+
+# test <- all_cost_benefit %>%
+#   filter(pop == "fall_chinook")
 ```
 
 
@@ -115,7 +119,7 @@ kable(top_subbasins_list[["floodplain"]], "html") %>%
 all_cost_benefit_NA <- all_cost_benefit[!is.na(all_cost_benefit$total_avg_cost), ]
 
 # Create ggplot
-p<-ggplot(all_cost_benefit_NA, aes(x = subbasin_name, y = total_avg_cost/1000000, fill = restoration_type)) +
+p<-ggplot(filter(all_cost_benefit_NA, restoration_type == "rp"), aes(x = subbasin_name, y = total_avg_cost/1000000)) +
   geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.7) +
   geom_errorbar(
     aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),

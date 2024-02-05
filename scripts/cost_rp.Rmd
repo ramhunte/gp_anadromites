@@ -236,6 +236,12 @@ subba_rp_cost <- rp_cost_final %>%
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
+bens_filter_rp <- subba_rp_cost %>% 
+  filter(pop == "fall_chinook" & n_diff >= 1)
+
+subba_rp_cost <- subba_rp_cost %>% 
+  filter(noaa_subba %in% bens_filter_rp$noaa_subba)
+
 
 
 st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"), append = FALSE)

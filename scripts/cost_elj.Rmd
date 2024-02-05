@@ -240,6 +240,13 @@ elj_cost_subbasin <- elj_cost %>%
   #reassigning it as sf b/c geometries became empty after le
   st_as_sf()
 
+bens_filter_elj <- elj_cost_subbasin %>% 
+  filter(pop == "fall_chinook" & n_diff >= 1)
+
+elj_cost_subbasin <- elj_cost_subbasin %>% 
+  filter(noaa_subba %in% bens_filter_elj$noaa_subba)
+
+
 st_write(elj_cost_subbasin , here("data", "final_dfs", "elj_costs.gpkg"), append = FALSE)
 ```
 

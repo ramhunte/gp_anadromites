@@ -316,8 +316,19 @@ flood_cost_ben<-flood_cost_ben %>%
 # # flood_cost_ben <- flood_cost_ben %>%
 # #   mutate(ratio_n_log = if_else(!is.na(ratio_n) & ratio_n != 0, log(ratio_n), NA_real_))
 
+
+bens_filter_fp <- flood_cost_ben %>% 
+  filter(pop == "fall_chinook" & n_diff >= 1)
+
+flood_cost_ben <- flood_cost_ben %>% 
+  filter(noaa_subba %in% bens_filter_fp$noaa_subba)
+
+
+
+
 st_write(flood_cost_ben, here("data", "final_dfs", "fp_costs.gpkg"), append=FALSE)
 ```
+
 
 
 
