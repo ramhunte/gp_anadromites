@@ -25,6 +25,7 @@ library(basemaps)
 
 #sourcing data
 source("../common.R")
+source("functions.R")
 ```
 
 ```{r}
@@ -198,9 +199,9 @@ make_cb_plot<-function(rest_type){
 make_cb_plot(elj)
 
 
-subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "elj", ]
+subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "rp", ]
 # filter to remove subbasins with 0 cb ratio
-subset_data <- subset_data %>% filter(cb_ratio>0) 
+subset_data <- subset_data %>% filter(cb_ratio>0) %>% filter(pop=="fall_chinook")
 center <- c(lon = -121, lat = 48.25)
 # Create a ggmap object with the topographic tiles
 topographic_map <- ggmap::get_map(location=c(lon = -121, lat = 48.25), zoom=11, maptype = 'terrain-background', source = 'stadia')
@@ -208,11 +209,11 @@ topographic_map <- ggmap::get_map(location=c(lon = -121, lat = 48.25), zoom=11, 
 # Create ggplot for the current restoration_type
 plot <- ggplot() +
   geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = subset_data, aes(fill = cb_ratio)) +
+  geom_sf(data = subset_data, aes(fill = cb_ratio/100000)) +
   scale_fill_gradient(low = "#DDBEE7", high = "#602173") +  # Adjust colors as needed
   geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
   theme_minimal() +
-  labs(fill = "Price per\nSpawners (Dollars)")
+  labs(fill = "Cost Effectiveness\nScore (Hundred Thousand\nDollars per Spawner)")
 plot+ggspatial::annotation_scale(height = unit(0.15, "cm"))+
   ggspatial::annotation_north_arrow(height = unit(1.0, "cm"),width = unit(0.75, "cm"), pad_x = unit(1.0, "cm"),pad_y = unit(1, "cm"))
 
@@ -316,8 +317,7 @@ ggsave("../final_prods/figures/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device =
 
 # table 
 ```{r}
-
-summary_df <- all_cost_benefit %>% 
+summary_df <- summary_df %>% 
   filter(pop == "fall_chinook") %>% 
   transmute("Subbasin Name" = subbasin_name,
             "Restoration Type" = restoration_type,
@@ -329,20 +329,46 @@ summary_df <- all_cost_benefit %>%
             "CB Ratio" = paste("$", format(round(cb_ratio, digits = 2), big.mark = ","))) %>% 
   st_drop_geometry() %>% 
   as.data.frame()
-
-
-  
   
  summary_kable <- kable(summary_df)  %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))  
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
+ summary_kable
+
   
 # htmlTable::htmlTable(summary_kable, rnames=FALSE) %>%  
 #    save_kable(file = "../final_prods/tables/summary_kable.png")
 
 summary_kable %>% 
   save_kable(file = "../final_prods/tables/summary_kable.png", zoom = 4)
+
+floodplain_table<-summary_table_builder("floodplain")
+elj_table<-summary_table_builder("elj") 
+rp_table<-summary_table_builder("rp")
+
+# save_kable(here("final_prods","tables","floodplain_kable.png"))
+floodplain_table %>% 
+  save_kable(here("final_prods","tables","floodplain_kable.html"))
+elj_table %>% 
+  save_kable(here("final_prods","tables","elj_kable.html"))
+rp_table %>% 
+  save_kable(here("final_prods","tables","rp_kable.html"))
+
+# webshot::webshot(here("final_prods","tables","floodplain_kable.html"), file=here("final_prods","tables","floodplain_kable.html"))
+save_kable(elj_table, here("final_prods","tables","elj_kable.png"), zoom = 4)
+save_kable(rp_table, here("final_prods","tables","rp_kable.png"), zoom = 4)
+
+
 ```
 
+```{r}
+#top five basins for each
+floodplain_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% 
+  filter(restoration_type=="floodplain") %>% arrange(desc(cb_ratio))
+elj_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% 
+  filter(restoration_type=="elj") %>% arrange(desc(cb_ratio))
+rp_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% 
+  filter(restoration_type=="rp") %>% arrange(desc(cb_ratio))
+```
 
 
 
