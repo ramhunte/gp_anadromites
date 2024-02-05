@@ -20,6 +20,7 @@ library(janitor)
 library(ggplot2)
 library(kableExtra)
 library(knitr)
+library(basemaps)
 
 #sourcing data
 source("../common.R")
@@ -136,81 +137,6 @@ p
 
 
 ```{r}
-####MAPPING COSTS
-# Create a list to store individual ggplot objects
-cost_plot_list <- list()
-
-# Loop through each restoration_type
-for (rest_type in unique_types) {
-  # Subset the data for the current restoration_type
-  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-  # filter to remove subbasins with 0 costs
-  subset_data <- subset_data %>% filter(total_avg_cost>0)
-  
-  
-  # Create ggplot for the current restoration_type
-  plot <- ggplot() +
-    geom_sf(data = subs_stl, aes()) +
-    geom_sf(data = subset_data, aes(fill = total_avg_cost/1000000)) +
-    scale_fill_gradient(low = "#90CE9F", high = "#0C4019") +  # Adjust colors as needed
-    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
-    theme_minimal() +
-    labs(fill = "Average Cost\n(Millions of Dollars)") 
-  
-  # Append the plot to the list
-  cost_plot_list[[rest_type]] <- plot
-}
-
-# # Save the individual plots
-# for (rest_type in unique_types) {
-#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
-
-# Assuming you have already generated and stored the plots in the list 'plot_list'
-
-# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
-# print(cost_plot_list[["rp"]])
-# print(cost_plot_list[["floodplain"]])
-# print(cost_plot_list[["elj"]])
-```
-
-```{r}
-####MAPPING BENEFITS
-# Create a list to store individual ggplot objects
-benefit_plot_list <- list()
-
-# Loop through each restoration_type
-for (rest_type in unique_types) {
-  # Subset the data for the current restoration_type
-  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-  # filter to remove subbasins with 0 benefits
-  subset_data <- subset_data %>% filter(n_diff>0)
-  
-  # Create ggplot for the current restoration_type
-  plot <- ggplot() +
-    geom_sf(data = subs_stl, aes()) +
-    geom_sf(data = subset_data, aes(fill = n_diff)) +
-    scale_fill_gradient(low = "#C576D8", high = "#471054") +  # Adjust colors as needed
-    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
-    theme_minimal() +
-    labs(fill = "Increase in Number\nof Spawners Resulting\nfrom Restoration") 
-  
-  # Append the plot to the list
-  benefit_plot_list[[rest_type]] <- plot
-}
-
-# # Save the individual plots
-# for (rest_type in unique_types) {
-#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
-
-# Assuming you have already generated and stored the plots in the list 'plot_list'
-
-# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
-# print(benefit_plot_list[["rp"]])
-# print(benefit_plot_list[["floodplain"]])
-# print(benefit_plot_list[["elj"]])
-```
-
-```{r}
 ###MAPPING COST BENEFIT RATIO
 # Create a list to store individual ggplot objects
 cb_plot_list <- list()
@@ -246,6 +172,51 @@ for (rest_type in unique_types) {
 # print(benefit_plot_list[["floodplain"]])
 # print(benefit_plot_list[["elj"]])
 ```
+ 
+```{r}
+make_cb_plot<-function(rest_type){
+
+# Subset the data for the current restoration_type
+  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+  # filter to remove subbasins with 0 cb ratio
+  subset_data <- subset_data %>% filter(cb_ratio>0)%>% filter(pop=="fall_chinook")
+
+  
+  # Create ggplot for the current restoration_type
+  plot <- ggplot() +
+    geom_sf(data = subs_stl, aes()) +
+    geom_sf(data = subset_data, aes(fill = cb_ratio)) +
+    scale_fill_gradient(low = "#CE8CE1", high = "#602173") +  # Adjust colors as needed
+    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+    theme_minimal() +
+    labs(fill = "Price per\nSpawners (Dollars)")
+  
+  return(plot)
+}
+
+make_cb_plot(elj)
+
+
+subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "elj", ]
+# filter to remove subbasins with 0 cb ratio
+subset_data <- subset_data %>% filter(cb_ratio>0) 
+center <- c(lon = -121, lat = 48.25)
+# Create a ggmap object with the topographic tiles
+topographic_map <- ggmap::get_map(location=c(lon = -121, lat = 48.25), zoom=11, maptype = 'terrain-background', source = 'stadia')
+  
+# Create ggplot for the current restoration_type
+plot <- ggplot() +
+  geom_sf(data = subs_stl, aes()) +
+  geom_sf(data = subset_data, aes(fill = cb_ratio)) +
+  scale_fill_gradient(low = "#DDBEE7", high = "#602173") +  # Adjust colors as needed
+  geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+  theme_minimal() +
+  labs(fill = "Price per\nSpawners (Dollars)")
+plot+ggspatial::annotation_scale(height = unit(0.15, "cm"))+
+  ggspatial::annotation_north_arrow(height = unit(1.0, "cm"),width = unit(0.75, "cm"), pad_x = unit(1.0, "cm"),pad_y = unit(1, "cm"))
+
+```
+
  
 ```{r}
 ### PLOTTING COSTS BY SUBBASIN
@@ -289,13 +260,6 @@ for (rest_type in unique_types) {
 
  
 ### Riparian Planting
-```{r, fig.cap="Costs Implement Riparian Planting Restoration in the Stillaguamish"}
-print(cost_plot_list[["rp"]])
-```
-
-```{r, fig.cap="Benefits from Riparian Planting in the Stillaguamish"}
-print(benefit_plot_list[["rp"]])
-```
 
 ```{r, fig.cap="Cost Benefit Ratio from Riparian Planting in the Stillaguamish"}
 print(cb_plot_list[["rp"]])
@@ -306,13 +270,6 @@ print(cost_range_plot_list[["rp"]])
 ```
 
 ### Engineered Log Jams
-```{r, fig.cap="Costs Implement Engineered Log Jam Restoration in the Stillaguamish"}
-print(cost_plot_list[["elj"]])
-```
-
-```{r, fig.cap="Benefits from Engineered Log Jams in the Stillaguamish"}
-print(benefit_plot_list[["elj"]])
-```
 
 ```{r, fig.cap="Cost Benefit Ratio from Engineered Log Jams in the Stillaguamish"}
 print(cb_plot_list[["elj"]])
@@ -323,13 +280,6 @@ print(cost_range_plot_list[["elj"]])
 ```
 
 ### Floodplain Restoration
-```{r, fig.cap="Costs Implement Floodplain Restoration in the Stillaguamish"}
-print(cost_plot_list[["floodplain"]])
-```
-
-```{r, fig.cap="Benefits from Floodplain Restoration in the Stillaguamish"}
-print(benefit_plot_list[["floodplain"]])
-```
 
 ```{r, fig.cap="Cost Benefit Ratio from Floodplain Restoration in the Stillaguamish"}
 print(cb_plot_list[["floodplain"]])
