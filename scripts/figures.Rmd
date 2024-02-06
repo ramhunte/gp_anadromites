@@ -370,7 +370,59 @@ rp_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>%
   filter(restoration_type=="rp") %>% arrange(desc(cb_ratio))
 ```
 
+### Showing benefits by restoration type 
+```{r}
+custom_colors <- c("elj" = "sienna1", 
+                   "floodplain" = "palegreen3",
+                   "rp" = "mediumpurple1")
 
+ggplot(all_cost_benefit, aes(x = subbasin_name, y = n_diff, fill = restoration_type)) +
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(fill = "Restoration Type", x="Subbasin Name", y="Increase in Chinook Spawners")+
+  scale_fill_manual(values = custom_colors)
+```
+
+```{r}
+fp_area_subbasin<-read_csv(here("data", "final_dfs", "fp_area_subbasin.csv"))
+#creating a column with pretty subbasin names
+fp_area_subbasin$subbasin_name <- str_replace_all(fp_area_subbasin$noaa_subba, "_", " ") 
+fp_area_subbasin$subbasin_name <-str_replace_all(fp_area_subbasin$subbasin_name, "Stillaguamish", "")
+fp_area_subbasin$subbasin_name <-str_replace_all(fp_area_subbasin$subbasin_name, "mainstem", "Mainstem")
+fp_area_subbasin$hab_unit<-str_replace_all(fp_area_subbasin$hab_unit, "side_channel", "Side Channel")
+
+custom_colors <- c("Marsh" = "sienna1", 
+                   "Pond" = "palegreen3",
+                   "Side Channel" = "mediumpurple1")
+
+ggplot(fp_area_subbasin, aes(x = subbasin_name, y = total_area_ha, fill = hab_unit)) +
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(fill = "Habitat Type", x="Subbasin Name", y="Increase in Chinook Spawners")+
+  scale_fill_manual(values = custom_colors)
+
+marsh_area<-fp_area_subbasin %>% filter(hab_unit=="Marsh") %>% arrange(desc(total_area_ha))%>%
+  mutate(subbasin_name = factor(subbasin_name, levels = subbasin_name))
+
+marsh_area<-ggplot(marsh_area, aes(x=subbasin_name, y = total_area_ha))+
+  geom_bar(stat = "identity", fill="royalblue4")+  theme_minimal()+
+  labs(x="Subbasin Name", y="Area (ha)")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave(here("final_prods", "figures", "marsh_area_subbasin.jpg"), marsh_area)
+
+
+sc_area<-fp_area_subbasin %>% filter(hab_unit=="Side Channel") %>% arrange(desc(total_area_ha))%>%
+  mutate(subbasin_name = factor(subbasin_name, levels = subbasin_name))
+
+sc_area<-ggplot(sc_area, aes(x=subbasin_name, y = total_area_ha))+
+  geom_bar(stat = "identity", fill="royalblue4")+  theme_minimal()+
+  labs(x="Subbasin Name", y="Area (ha)")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave(here("final_prods", "figures", "sidechannel_area_subbasin.jpg"), sc_area)
+```
 
 
 
