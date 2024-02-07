@@ -139,64 +139,27 @@ p
 
 
 ```{r}
-###MAPPING COST BENEFIT RATIO
-# Create a list to store individual ggplot objects
-cb_plot_list <- list()
-
-# Loop through each restoration_type
-for (rest_type in unique_types) {
-  # Subset the data for the current restoration_type
-  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-  # filter to remove subbasins with 0 cb ratio
-  subset_data <- subset_data %>% filter(cb_ratio>0)
-  
-  # Create ggplot for the current restoration_type
-  plot <- ggplot() +
-    geom_sf(data = subs_stl, aes()) +
-    geom_sf(data = subset_data, aes(fill = cb_ratio)) +
-    scale_fill_gradient(low = "#D2A076", high = "#663C18") +  # Adjust colors as needed
-    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
-    theme_minimal() +
-    labs(fill = "Price per\nSpawners (Dollars)") 
-  
-  # Append the plot to the list
-  cb_plot_list[[rest_type]] <- plot
-}
-
-# # Save the individual plots
-# for (rest_type in unique_types) {
-#   ggsave(paste0("plot_", rest_type, ".png"), cost_plot_list[[rest_type]])}
-
-# Assuming you have already generated and stored the plots in the list 'plot_list'
-
-# Display the plot for a specific restoration_type (replace 'RestorationTypeA' with the actual type)
-# print(benefit_plot_list[["rp"]])
-# print(benefit_plot_list[["floodplain"]])
-# print(benefit_plot_list[["elj"]])
-```
- 
-```{r}
-make_cb_plot<-function(rest_type){
-
-# Subset the data for the current restoration_type
-  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-  # filter to remove subbasins with 0 cb ratio
-  subset_data <- subset_data %>% filter(cb_ratio>0)%>% filter(pop=="fall_chinook")
-
-  
-  # Create ggplot for the current restoration_type
-  plot <- ggplot() +
-    geom_sf(data = subs_stl, aes()) +
-    geom_sf(data = subset_data, aes(fill = cb_ratio)) +
-    scale_fill_gradient(low = "#CE8CE1", high = "#602173") +  # Adjust colors as needed
-    geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
-    theme_minimal() +
-    labs(fill = "Price per\nSpawners (Dollars)")
-  
-  return(plot)
-}
-
-make_cb_plot(elj)
+# make_cb_plot<-function(rest_type){
+# 
+# # Subset the data for the current restoration_type
+#   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
+#   # filter to remove subbasins with 0 cb ratio
+#   subset_data <- subset_data %>% filter(cb_ratio>0)%>% filter(pop=="fall_chinook")
+# 
+#   
+#   # Create ggplot for the current restoration_type
+#   plot <- ggplot() +
+#     geom_sf(data = subs_stl, aes()) +
+#     geom_sf(data = subset_data, aes(fill = cb_ratio)) +
+#     scale_fill_gradient(low = "#CE8CE1", high = "#602173") +  # Adjust colors as needed
+#     geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
+#     theme_minimal() +
+#     labs(fill = "Price per\nSpawners (Dollars)")
+#   
+#   return(plot)
+# }
+# 
+# make_cb_plot(elj)
 
 
 subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "rp", ]
@@ -219,78 +182,9 @@ plot+ggspatial::annotation_scale(height = unit(0.15, "cm"))+
 
 ```
 
- 
-```{r}
-### PLOTTING COSTS BY SUBBASIN
-# Create a list to store individual ggplot objects
-cost_range_plot_list <- list()
 
-# Loop through each restoration_type
-for (rest_type in unique_types) {
-  # Subset the data for the current restoration_type
-  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-  
-  subset_data <- subset_data %>% 
-    filter(pop == "fall_chinook")
-  
-  # Filter out rows with NA values for total_avg_cost
-  subset_data <- subset_data[!is.na(subset_data$total_avg_cost), ]
-  
-  
-  # Order subbasin_name by total_avg_cost in descending order
-  subset_data$subbasin_name <- factor(subset_data$subbasin_name, levels = subset_data$subbasin_name[order(-subset_data$total_avg_cost)])
-  
-  # Create ggplot for the current restoration_type
-  plot <- ggplot(subset_data, aes(x = subbasin_name)) +
-    geom_errorbar(
-      aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),
-      position = "dodge",
-      width = 0.2
-    ) +
-    geom_point(aes(y = total_avg_cost/1000000), position = "dodge", size = 3) +
-    labs(x = "Subbasin",
-         y = "Cost (Millions of Dollars)") +
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-  
-  # Append the plot to the list
-  cost_range_plot_list[[rest_type]] <- plot
-}
-
-
-```
 
  
-### Riparian Planting
-
-```{r, fig.cap="Cost Benefit Ratio from Riparian Planting in the Stillaguamish"}
-print(cb_plot_list[["rp"]])
-```
-
-```{r, fig.cap="Cost Ranges by Subbasin to Implement Riparian Planting in the Stillaguamish"}
-print(cost_range_plot_list[["rp"]])
-```
-
-### Engineered Log Jams
-
-```{r, fig.cap="Cost Benefit Ratio from Engineered Log Jams in the Stillaguamish"}
-print(cb_plot_list[["elj"]])
-```
-
-```{r, fig.cap="Cost Ranges by Subbasin to Implement Engineered Log Jams in the Stillaguamish"}
-print(cost_range_plot_list[["elj"]])
-```
-
-### Floodplain Restoration
-
-```{r, fig.cap="Cost Benefit Ratio from Floodplain Restoration in the Stillaguamish"}
-print(cb_plot_list[["floodplain"]])
-```
-
-```{r, fig.cap="Cost Ranges by Subbasin to Implement Floodplain Restoration in the Stillaguamish"}
-print(cost_range_plot_list[["floodplain"]])
-```
-
 
 
 
@@ -410,7 +304,7 @@ marsh_area<-ggplot(marsh_area, aes(x=subbasin_name, y = total_area_ha))+
   geom_bar(stat = "identity", fill="royalblue4")+  theme_minimal()+
   labs(x="Subbasin Name", y="Area (ha)")+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(here("final_prods", "figures", "marsh_area_subbasin.jpg"), marsh_area)
+# ggsave(here("final_prods", "figures", "marsh_area_subbasin.jpg"), marsh_area)
 
 
 sc_area<-fp_area_subbasin %>% filter(hab_unit=="Side Channel") %>% arrange(desc(total_area_ha))%>%
@@ -421,7 +315,7 @@ sc_area<-ggplot(sc_area, aes(x=subbasin_name, y = total_area_ha))+
   labs(x="Subbasin Name", y="Area (ha)")+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-ggsave(here("final_prods", "figures", "sidechannel_area_subbasin.jpg"), sc_area)
+# ggsave(here("final_prods", "figures", "sidechannel_area_subbasin.jpg"), sc_area)
 ```
 
 
