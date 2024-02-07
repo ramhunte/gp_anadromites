@@ -167,7 +167,7 @@ subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "rp", ]
 subset_data <- subset_data %>% filter(cb_ratio>0) %>% filter(pop=="fall_chinook")
 center <- c(lon = -121, lat = 48.25)
 # Create a ggmap object with the topographic tiles
-topographic_map <- ggmap::get_map(location=c(lon = -121, lat = 48.25), zoom=11, maptype = 'terrain-background', source = 'stadia')
+# topographic_map <- ggmap::get_map(location=c(lon = -121, lat = 48.25), zoom=11, maptype = 'terrain-background', source = 'stadia')
   
 # Create ggplot for the current restoration_type
 plot <- ggplot() +
@@ -211,12 +211,11 @@ ggsave("../final_prods/figures/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device =
 
 # table 
 ```{r}
-<<<<<<< HEAD
 
-final_df <- all_cost_benefit %>% 
-=======
-summary_df <- summary_df %>% 
->>>>>>> 7ac755746a6392778ebf9a4816e507338e3a2bc2
+
+final_df <- all_cost_benefit %>%
+
+
   filter(pop == "fall_chinook") %>% 
   arrange(subbasin_name) 
 
