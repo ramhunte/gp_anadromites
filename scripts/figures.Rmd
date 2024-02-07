@@ -317,8 +317,11 @@ ggsave("../final_prods/figures/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device =
 # table 
 ```{r}
 
-summary_df <- all_cost_benefit %>% 
+final_df <- all_cost_benefit %>% 
   filter(pop == "fall_chinook") %>% 
+  arrange(subbasin_name) 
+
+summary_df <- final_df %>% 
   transmute("Subbasin Name" = subbasin_name,
             "Restoration Type" = restoration_type,
             "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
@@ -344,6 +347,24 @@ summary_kable %>%
 ```
 
 
+# cost effectiveness vs spawners
+```{r}
+all_cost_benefit %>% 
+  filter(pop == "fall_chinook") %>% 
+  ggplot(aes(x = n_diff, y = cb_ratio, color = restoration_type)) +
+  geom_point() +
+  ylim(ymin = 0, ymax = 500000)
+       )
+```
+
+```{r}
+final_df %>% 
+  arrange(cb_ratio) %>% 
+  head(20) %>% 
+  select(subbasin_name, restoration_type,  n_diff, cb_ratio, total_lower_cost, total_upper_cost, total_avg_cost) %>% 
+  view()
+           
+```
 
 
 
