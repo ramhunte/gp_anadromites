@@ -329,7 +329,22 @@ flood_cost_ben <- flood_cost_ben %>%
 st_write(flood_cost_ben, here("data", "final_dfs", "fp_costs.gpkg"), append=FALSE)
 ```
 
+#Creating a df with area by marsh, pond and side channel
+```{r}
+marsh_pond_area<-full_join(marsh_cost_inflation, pond_cost_inflation)
+side_channel_flow$area_ha<-st_area(side_channel_flow$geometry) / 10000  # Convert square meters to hectares
+side_channel_flow<-side_channel_flow %>% st_drop_geometry() %>% units::drop_units()
 
+fp_area_subbasin<-full_join(marsh_pond_area, side_channel_flow) %>% group_by(noaa_subba, hab_unit) %>%
+  summarise(total_area_ha = sum(area_ha)) %>% st_drop_geometry()
+
+# write.csv(fp_area_subbasin, here("data", "final_dfs", "fp_area_subbasin.csv"))
+
+#summary by restoration_type
+fp_area_sum<-full_join(marsh_pond_area, side_channel_flow) %>% 
+  group_by(hab_unit) %>% summarise(area_ha=sum(area_ha)) %>%  st_drop_geometry()
+
+```
 
 
 

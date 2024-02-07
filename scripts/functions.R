@@ -48,7 +48,6 @@ ann_cost_ben <- function(C, f) {
 }
 
 
-
 # -----------------------Figures ---------------------
 
 # making a function that makes figure of costs
@@ -82,3 +81,26 @@ cost_graph_fun <- function(df, rest_type, title) {
     theme_minimal() 
 }
 
+
+
+
+#Summary Table Builder
+summary_table_builder<-function(rest_type){
+  summary_df<-all_cost_benefit %>% filter(restoration_type==rest_type) %>% arrange(desc(total_avg_cost))
+  
+  summary_df <- summary_df %>% 
+    filter(pop == "fall_chinook") %>% 
+    transmute("Subbasin Name" = subbasin_name,
+              # "Restoration Type" = restoration_type,
+              "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
+              # "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
+              "Upper Cost" = paste("$", format(round(total_upper_cost), big.mark = ",")),
+              "Average Cost" = paste("$", format(round(total_avg_cost), big.mark = ",")),
+              "Spawners" = round(n_diff, digits = 2),
+              "CB Ratio" = paste("$", format(round(cb_ratio, digits = 2), big.mark = ","))) %>% 
+    st_drop_geometry() %>% 
+    as.data.frame()
+  summary_kable <- kable(summary_df)  %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
+  summary_kable
+}
