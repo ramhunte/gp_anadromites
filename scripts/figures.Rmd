@@ -26,142 +26,51 @@ library(basemaps)
 #sourcing data
 source("../common.R")
 source("functions.R")
+
+# color themes 
+custom_colors <- c("rp" = "#03045E",
+                     # "#1F271B",
+                   "elj" = "#19647E", 
+                   "floodplain" = "#28AFB0")
 ```
+
+
+# Data wrangling 
 
 ```{r}
 #reading in data 
 
 #floodplain habitat
 floodplain<-read_sf(here("data", "final_dfs", "fp_costs.gpkg")) %>% 
-  select(-c("scenario", "subbasin_num"))
-floodplain$restoration_type<-"floodplain"
+  select(-c("scenario", "subbasin_num")) %>% 
+  mutate(restoration_type = "floodplain")
 
 #engineered log jams 
-elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg"))
-elj$restoration_type<-"elj"
+elj<-read_sf(here("data", "final_dfs", "elj_costs.gpkg")) %>% 
+  mutate(restoration_type = "elj")
 
 #riparian planting 
 rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg")) %>% 
-  select(-scenario)
-rp$restoration_type<-"rp"
+  select(-scenario) %>% 
+  mutate(restoration_type = "rp")
 
 
-#creating one large dataframe
-all_cost_benefit <- rbind(elj, rp)
-all_cost_benefit<-rbind(all_cost_benefit, floodplain)
-
-
-
-#creating a column with pretty subbasin names
-all_cost_benefit$subbasin_name <- str_replace_all(all_cost_benefit$noaa_subba, "_", " ") 
-all_cost_benefit$subbasin_name <-str_replace_all(all_cost_benefit$subbasin_name, "Stillaguamish", "")
-all_cost_benefit$subbasin_name <-str_replace_all(all_cost_benefit$subbasin_name, "mainstem", "Mainstem")
-
-
-
-#needed for loops for maps later on
-unique_types <- unique(all_cost_benefit$restoration_type)
-
-
-# test <- all_cost_benefit %>%
-#   filter(pop == "fall_chinook")
-```
-
-
-```{r, fig.cap="Top 5 Subbasins for Riparian Planting"}
-
-# Create an empty list to store datasets
-top_subbasins_list <- list()
-
-# Loop through each restoration_type
-for (rest_type in unique_types) {
-  # cat("Top five subbasins for Restoration Type:", rest_type, "\n")
-  
-  # Subset the data for the current restoration_type
-  subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-  
-  # Get the top five subbasins
-  top_subbasins <- subset_data %>%
-    arrange(desc(cb_ratio)) %>%
-    head(5) %>% 
-    select(subbasin_name, total_lower_cost, total_avg_cost, total_upper_cost, n_diff, cb_ratio) %>% st_drop_geometry()
-  
-  # Store the dataset in the list
-  top_subbasins_list[[rest_type]] <- top_subbasins
-  
-  cat("\n")
-}
-
-# # Apply kable to each dataset in the list
-# kable_output <- lapply(top_subbasins_list, function(dataset) {
-#   kable(dataset, format = "markdown")
-# })
-
-# # Print the kable output
-# print(kable_output)
-kable(top_subbasins_list[["rp"]], "html") %>%
-  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+#creating a master df
+all_cost_benefit <- rbind(floodplain, elj)
+all_cost_benefit <- rbind(all_cost_benefit, rp) %>% 
+  #cleaning names
+  mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
+         subbasin_name = str_replace_all(subbasin_name, "Stillaguamish", ""),
+         subbasin_name = str_replace_all(subbasin_name, "mainstem", "Mainstem")
+) 
 
 ```
 
-```{r, fig.cap="Top 5 Subbasins for Engineered Log Jams"}
-kable(top_subbasins_list[["elj"]], "html") %>%
-  kable_styling(bootstrap_options = "striped", full_width = FALSE)
-```
 
-```{r, fig.cap="Top 5 Subbasins for Floodplain Restoration"}
-kable(top_subbasins_list[["floodplain"]], "html") %>%
-  kable_styling(bootstrap_options = "striped", full_width = FALSE)
-```
 
+# MAPS
 
 ```{r}
-###PLOT SHOWING THE AVERAGE COST OF RESTORATION IN EACH SUBBASIN
-
-# Filter out rows with NA values for total_avg_cost
-all_cost_benefit_NA <- all_cost_benefit[!is.na(all_cost_benefit$total_avg_cost), ]
-
-# Create ggplot
-p<-ggplot(filter(all_cost_benefit_NA, restoration_type == "rp"), aes(x = subbasin_name, y = total_avg_cost/1000000)) +
-  geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.7) +
-  geom_errorbar(
-    aes(ymin = total_lower_cost/1000000, ymax = total_upper_cost/1000000),
-    position = position_dodge(0.7),
-    width = 0.25
-  ) +
-  labs(x = "Subbasin",
-       y = "Cost (Millions of Dollars)",
-       fill = "Restoration Type") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-p
-```
-
-
-```{r}
-# make_cb_plot<-function(rest_type){
-# 
-# # Subset the data for the current restoration_type
-#   subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == rest_type, ]
-#   # filter to remove subbasins with 0 cb ratio
-#   subset_data <- subset_data %>% filter(cb_ratio>0)%>% filter(pop=="fall_chinook")
-# 
-#   
-#   # Create ggplot for the current restoration_type
-#   plot <- ggplot() +
-#     geom_sf(data = subs_stl, aes()) +
-#     geom_sf(data = subset_data, aes(fill = cb_ratio)) +
-#     scale_fill_gradient(low = "#CE8CE1", high = "#602173") +  # Adjust colors as needed
-#     geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
-#     theme_minimal() +
-#     labs(fill = "Price per\nSpawners (Dollars)")
-#   
-#   return(plot)
-# }
-# 
-# make_cb_plot(elj)
-
-
 subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "rp", ]
 # filter to remove subbasins with 0 cb ratio
 subset_data <- subset_data %>% filter(cb_ratio>0) %>% filter(pop=="fall_chinook")
@@ -185,12 +94,7 @@ plot+ggspatial::annotation_scale(height = unit(0.15, "cm"))+
 
 
  
-
-
-
-
-
-# cost dumb bell figures 
+# DUMB BELL CHARTS
 
 ```{r}
 # floodplain
@@ -209,81 +113,103 @@ ggsave("../final_prods/figures/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device =
 ```
 
 
-# table 
+# TABLES 
+
 ```{r}
+#---------------- creating tables 
+
+# fp table
+floodplain_table <- summary_table_builder("floodplain")
+
+#elj table 
+elj_table <- summary_table_builder("elj") %>% 
+   save_kable(file = here("final_prods","tables","elj_kable.html"), zoom = 4)
+
+# rp table
+rp_table <- summary_table_builder("rp") %>% 
+   save_kable(file = here("final_prods","tables","rp_kable.html"), zoom = 4)
 
 
-final_df <- all_cost_benefit %>%
+#------------------- saving tables 
 
-
-  filter(pop == "fall_chinook") %>% 
-  arrange(subbasin_name) 
-
-summary_df <- final_df %>% 
-  transmute("Subbasin Name" = subbasin_name,
-            "Restoration Type" = restoration_type,
-            "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
-            # "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
-            "Upper Cost" = paste("$", format(round(total_upper_cost), big.mark = ",")),
-            "Average Cost" = paste("$", format(round(total_avg_cost), big.mark = ",")),
-            "Spawners" = round(n_diff, digits = 2),
-            "CB Ratio" = paste("$", format(round(cb_ratio, digits = 2), big.mark = ","))) %>% 
-  st_drop_geometry() %>% 
-  as.data.frame()
-  
- summary_kable <- kable(summary_df)  %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
- summary_kable
-
-  
-# htmlTable::htmlTable(summary_kable, rnames=FALSE) %>%  
-#    save_kable(file = "../final_prods/tables/summary_kable.png")
-
-summary_kable %>% 
-  save_kable(file = "../final_prods/tables/summary_kable.png", zoom = 4)
-
-floodplain_table<-summary_table_builder("floodplain")
-elj_table<-summary_table_builder("elj") 
-rp_table<-summary_table_builder("rp")
-
-# save_kable(here("final_prods","tables","floodplain_kable.png"))
 floodplain_table %>% 
-  save_kable(here("final_prods","tables","floodplain_kable.html"))
+  save_kable(file = here("final_prods","tables","floodplain_kable.html"), zoom = 4)
+
 elj_table %>% 
-  save_kable(here("final_prods","tables","elj_kable.html"))
+   save_kable(file = here("final_prods","tables","elj_kable.html"), zoom = 4)
+
 rp_table %>% 
-  save_kable(here("final_prods","tables","rp_kable.html"))
-
-# webshot::webshot(here("final_prods","tables","floodplain_kable.html"), file=here("final_prods","tables","floodplain_kable.html"))
-save_kable(elj_table, here("final_prods","tables","elj_kable.png"), zoom = 4)
-save_kable(rp_table, here("final_prods","tables","rp_kable.png"), zoom = 4)
-
+   save_kable(file = here("final_prods","tables","rp_kable.html"), zoom = 4)
 
 ```
 
+
+### Spawner Bar Chart
 ```{r}
-#top five basins for each
-floodplain_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% 
-  filter(restoration_type=="floodplain") %>% arrange(desc(cb_ratio))
-elj_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% 
-  filter(restoration_type=="elj") %>% arrange(desc(cb_ratio))
-rp_top<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% 
-  filter(restoration_type=="rp") %>% arrange(desc(cb_ratio))
+
+#creating a bar chart with spawners by action and subbasin
+
+spawner_barchart <- all_cost_benefit %>% 
+  filter(pop == "fall_chinook") %>% 
+  mutate(subbasin_name = fct_reorder(subbasin_name, n_diff, .fun = sum),
+         restoration_type = factor(restoration_type,
+                                   levels = c( "rp", "elj", "floodplain"))) %>% 
+  group_by(subbasin_name) %>% 
+  # creating a column to identify where the labels of the n_diff will go on the bar chart for each restoration type in each subbasin
+  mutate(label_y = cumsum(n_diff) - .5 * n_diff) %>% 
+
+ggplot(aes(x = subbasin_name, 
+           y = n_diff, fill = restoration_type)) +
+  theme_minimal() +
+  geom_col() +
+  labs(fill = "Restoration Type", 
+       x = "", 
+       y = "# Chinook Spawners",
+       title = "Modeled Annual Chinook Spawner Increases",
+       subtitle = "by subbasin and restoration action",
+       caption = "Data Source: Beechie, T. J., Goodman, A., Stefankiv, O., Timpane-Padgham, B., & Lowe, M. (2023). \n Habitat Assessment and Restoration Planning (HARP) Model for the Snohomish and Stillaguamish \n River Basins (noaa:48860).") +
+  coord_flip() +
+  scale_fill_manual(values = custom_colors,
+                    labels = c("Riparian Planting",
+                               "Engineered Log Jam",
+                               "Floodplain"),
+                    guide = guide_legend(reverse = TRUE)) +
+  geom_text(aes(y = label_y, label = round(n_diff)), color = "white", alpha = 0.5) +
+  
+  # pushing y axis labels to edhe of data 
+  scale_y_continuous(expand = c(0,0)) +
+  
+ # scale_y_continuous(limits = c(0, 85)) +
+  theme(
+    #axes
+    axis.text = element_text(size = 10),
+    axis.title.x = element_text(margin = margin(t = 12, r = 0, b = 30, l = 20), size = 12),
+    #legend
+    legend.position = c(0.5, -0.175),
+    legend.direction = "horizontal",
+    legend.title = element_blank(),
+      # legend.box.background = element_rect(color = "grey"))
+    # titles
+    plot.title = element_text(hjust = 0, vjust = 1.8, size = 16),
+    plot.subtitle = element_text(hjust = 0, vjust = 2.2),
+    plot.caption = element_text(face = "italic", size = 6),
+    # gridlines
+    panel.grid.major.y  = element_blank(),
+    panel.grid.minor.x  = element_blank()
+    ) 
+
+spawner_barchart
+
+ggsave("../final_prods/figures/spawner_barchart.jpeg", plot = spawner_barchart, device = "jpeg", width = 8, height = 6, units = "in")
+
 ```
 
-### Showing benefits by restoration type 
-```{r}
-custom_colors <- c("elj" = "sienna1", 
-                   "floodplain" = "palegreen3",
-                   "rp" = "mediumpurple1")
 
-ggplot(all_cost_benefit, aes(x = subbasin_name, y = n_diff, fill = restoration_type)) +
-  geom_bar(stat = "identity")+
-  theme_minimal()+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
-  labs(fill = "Restoration Type", x="Subbasin Name", y="Increase in Chinook Spawners")+
-  scale_fill_manual(values = custom_colors)
-```
+
+
+
+
+
 
 ```{r}
 fp_area_subbasin<-read_csv(here("data", "final_dfs", "fp_area_subbasin.csv"))
@@ -333,17 +259,9 @@ all_cost_benefit %>%
   ggplot(aes(x = n_diff, y = cb_ratio, color = restoration_type)) +
   geom_point() +
   ylim(ymin = 0, ymax = 500000)
-       )
+       
 ```
 
-```{r}
-final_df %>% 
-  arrange(cb_ratio) %>% 
-  head(20) %>% 
-  select(subbasin_name, restoration_type,  n_diff, cb_ratio, total_lower_cost, total_upper_cost, total_avg_cost) %>% 
-  view()
-           
-```
 
 
 
