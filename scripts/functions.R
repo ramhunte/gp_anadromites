@@ -34,6 +34,7 @@ return(filtered_df)
 
 
 
+################################## Discounting ##########################
 
 # discounting function
 #Get ratio by dividing number of salmon per year by the cost per year
@@ -48,7 +49,9 @@ ann_cost_ben <- function(C, f) {
 }
 
 
-# -----------------------Figures ---------------------
+################################## FIGURES ##########################
+
+########### Dumb Bell
 
 # making a function that makes figure of costs
 # df is input dat frame
@@ -84,12 +87,15 @@ cost_graph_fun <- function(df, rest_type, title) {
 
 
 
-#Summary Table Builder
-summary_table_builder<-function(rest_type){
-  summary_df<-all_cost_benefit %>% filter(restoration_type==rest_type) %>% arrange(desc(total_avg_cost))
+########### Tables
+
+summary_table_builder<-function(rest_type) {
   
-  summary_df <- summary_df %>% 
-    filter(pop == "fall_chinook") %>% 
+  
+  all_cost_benefit %>% 
+    filter(pop == "fall_chinook",
+           restoration_type == rest_type) %>% 
+    arrange(desc(total_avg_cost)) %>% 
     transmute("Subbasin Name" = subbasin_name,
               # "Restoration Type" = restoration_type,
               "Lower Cost" = paste("$", format(round(total_lower_cost), big.mark = ",")),
@@ -99,8 +105,9 @@ summary_table_builder<-function(rest_type){
               "Spawners" = round(n_diff, digits = 2),
               "CB Ratio" = paste("$", format(round(cb_ratio, digits = 2), big.mark = ","))) %>% 
     st_drop_geometry() %>% 
-    as.data.frame()
-  summary_kable <- kable(summary_df)  %>%
+    as.data.frame() %>% 
+  kable() %>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
-  summary_kable
+ 
 }
+

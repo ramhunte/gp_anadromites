@@ -22,6 +22,9 @@ library(kableExtra)
 library(magrittr)
 library(knitr)
 library(basemaps)
+library(ggmap)
+library(patchwork)
+library(spData)
 
 #sourcing data
 source("../common.R")
@@ -71,26 +74,325 @@ all_cost_benefit <- rbind(all_cost_benefit, rp) %>%
 # MAPS
 
 ```{r}
-subset_data <- all_cost_benefit[all_cost_benefit$restoration_type == "rp", ]
-# filter to remove subbasins with 0 cb ratio
-subset_data <- subset_data %>% filter(cb_ratio>0) %>% filter(pop=="fall_chinook")
-center <- c(lon = -121, lat = 48.25)
-# Create a ggmap object with the topographic tiles
-# topographic_map <- ggmap::get_map(location=c(lon = -121, lat = 48.25), zoom=11, maptype = 'terrain-background', source = 'stadia')
-  
+
+########### basemap ##################
+
+# bbox
+stillaguamish_bbox <- c(left = -122.1, bottom = 48, right = -121.6, top = 48.3)
+
+
+####### google basemap ###########
+
+ggmap::register_google(key = "AIzaSyAMlAe4fbAxjFToWnpW-28exZtSUC6bXL8")
+api_key <- "AIzaSyAMlAe4fbAxjFToWnpW-28exZtSUC6bXL8"
+
+test <- subs_stl %>% 
+  st_transform(4326)
+
+basemap <- ggmap::get_googlemap(
+  center = c(lon = -121.9, lat = 48.25),
+  zoom = 9,
+  maptype = "satellite",
+  extent = "panel",
+  source = "google",
+  key = api_key)
+
+### Map #
+
+map_data <- all_cost_benefit %>% 
+  filter(pop == "fall_chinook",
+         cb_ratio > 0) %>% 
+  st_transform(crs = st_crs(test))
+
 # Create ggplot for the current restoration_type
-plot <- ggplot() +
-  geom_sf(data = subs_stl, aes()) +
-  geom_sf(data = subset_data, aes(fill = cb_ratio/100000)) +
-  scale_fill_gradient(low = "#DDBEE7", high = "#602173") +  # Adjust colors as needed
-  geom_sf(data = flow_stl, color = "#1619CD", alpha = .3) +
-  theme_minimal() +
-  labs(fill = "Cost Effectiveness\nScore (Hundred Thousand\nDollars per Spawner)")
-plot+ggspatial::annotation_scale(height = unit(0.15, "cm"))+
-  ggspatial::annotation_north_arrow(height = unit(1.0, "cm"),width = unit(0.75, "cm"), pad_x = unit(1.0, "cm"),pad_y = unit(1, "cm"))
+  rp_map <- ggmap::ggmap(basemap) +
+  #basin
+  geom_sf(data = test, color = "black",  
+          fill = "grey", alpha = .7, 
+          inherit.aes = FALSE) +
+  
+  # subbasins
+ geom_sf(data = filter(map_data, restoration_type == "rp"), 
+          aes(fill = cb_ratio/100000),
+          inherit.aes = FALSE) +
+  
+  # cost gradient
+  scale_fill_fermenter(palette = "YlGnBu",
+                       direction = 1,
+                       breaks = c(.5, 1, 1.5, 2, 2.5, 3),
+                       labels = c("$50,000",
+                                  "$100,000",
+                                  "$150,000",
+                                  "$200,000",
+                                  "$250,000",
+                                  "$300,000")) +
+                         
+  # scale_fill_viridis_b(option = "mako",
+  #                      breaks = c(1,2,3),
+  #                      direction = -1,
+  #                      labels = c("$100,000",
+  #                              "$200,000",
+  #                              "$300,000")) +  # Adjust colors as needed
+  
+  # river
+  geom_sf(data = st_transform(flow_stl, crs = st_crs(test)), 
+          color = "#19647E", linewidth = .4, alpha = .7, inherit.aes = FALSE) +
+  
+    
+  #axese 
+  scale_x_continuous(limits = c(-122.50, -121.3), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(47.9, 48.5), expand = c(0, 0)) +
+
+  # labs 
+labs(fill = "Annual \n$/Spawner",
+     x = "",
+     y = "",
+     title = "Stillaguamish River Basin Riparian Planting Costs",
+     subtitle = "annual cost per Chinook spawner") +
+  
+  
+# maps
+    
+      ggspatial::annotation_north_arrow(height = unit(1.4, "cm"), 
+                                    width = unit(1, "cm"), 
+                                    pad_x = unit(.55, "cm"), 
+                                    pad_y = unit(12, "cm"),
+                                    text_col = "white",
+                                    which_north = "true") +
+    
+    annotation_custom(grob = grid::rectGrob(
+    x = unit(2.85, "cm"),
+    y = unit(.35, "cm"),
+    width = unit(5.5, "cm"), 
+    height = unit(.4, "cm"),
+    gp = grid::gpar(fill = "white")
+    # gp = grid::gpar(col = NA)
+  )) +
+  ggspatial::annotation_scale(height = unit(0.2, "cm"),
+                              bar_cols = c("black", "white"),
+                              text_cex = .8
+                              ) +
+
+
+ 
+     theme_minimal() + 
+  
+  theme(
+    
+  legend.position = c(.89, .72),
+  legend.box.background = element_rect(color = "black", fill = "white")
+  )
+  
+# rp_map
+   
+
+ggsave("../final_prods/figures/rp_map.jpeg", plot = rp_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 ```
 
+
+
+# Puget Sound Basin map 
+```{r}
+#data link 
+
+# https://geo.wa.gov/datasets/de1373e9f5394e5284660c939c038689/explore?location=47.575830%2C-122.409706%2C9.34
+
+# --------------------------------------------------------------------------------
+all_basins <- st_read(here("data", "basins", "WBDHU08.shp")) %>% 
+  clean_names() %>% 
+  select(name,area_acres, huc8, geometry) %>%
+  filter(!name %in% c("Puget Sound")) %>% 
+  st_transform(crs = st_crs(test))
+
+#selecting basins for ps map
+ps_basins <- all_basins %>% 
+  filter(name %in% c("Nooksack", "Upper Skagit", "Lower Skagit", "Stillaguamish", "Snohomish", "Skykomish", "Snoqualmie", "Lake Washington", "Duwamish", "Puyallup", "Nisqually", "Deschutes", "Upper Chehalis", "Lower Chehalis", "Skokomish", "Hood Canal", "Dungeness-Elwha", "Ho-Quillayute", "Crescent-Hoko", "Sauk", "Upper Skagit"))
+ps_cents <- st_centroid(ps_basins)
+
+# --------------------------------------------------------------------------------
+
+# Adjust centroids for labeling the values that overlap in geom_sf_label
+ps_cents_adjusted <- ps_cents
+
+#lake washington centroid adjustment 
+ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Lake Washington"] <- 
+  ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Lake Washington"] + c(-0.1, .06) 
+
+#upper chehalis centroid adjustment 
+ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Upper Chehalis"] <- 
+  ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Upper Chehalis"] + c(0.01, .17) 
+
+#upper skagit centroid adjustment 
+ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Upper Skagit"] <- 
+  ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Upper Skagit"] + c(-.23, -0.1)
+
+#sauk centroid adjustment 
+ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Sauk"] <- 
+  ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Sauk"] + c(-0.15, 0)
+
+# --------------------------------------------------------------------------------
+
+
+# creating a base map of PS with google maps
+ps_basemap <- ggmap::get_googlemap(
+  center = c(lon = -123, lat = 47.85),
+  zoom = 8,
+  maptype = "satellite",
+  extent = "panel",
+  source = "google",
+  key = api_key)
+
+# creating an area map of PS with basins 
+ps_basin_map <- ggmap(ps_basemap) +
+  geom_sf(data = ps_basins,
+          fill = ifelse(ps_basins$name == "Stillaguamish", "cyan3", "white"),
+          alpha = ifelse(ps_basins$name == "Stillaguamish", 0.8, 0.4),
+          color = "black",
+          inherit.aes = FALSE) +
+  
+  geom_sf_label(data = ps_cents_adjusted, aes(label = name),
+                size = 2, label.padding = unit(0.2, "lines"),
+                inherit.aes = FALSE) +
+  
+  theme_minimal() +
+  labs(x = "",
+       y = "",
+       title = "Stillaguamish River Basin in the Puget Sound") +
+  
+   #axese 
+  scale_y_continuous(limits = c(46.8, 49), expand = c(0, 0)) +
+  
+  ggspatial::annotation_north_arrow(height = unit(1.3, "cm"), 
+                                    width = unit(.8, "cm"), 
+                                    pad_x = unit(.45, "cm"), 
+                                    pad_y = unit(1.1, "cm"),
+                                    text_col = "white",
+                                    which_north = "true") +
+  
+ annotation_custom(grob = grid::rectGrob(
+    x = unit(2.4, "cm"),
+    y = unit(.35, "cm"),
+    width = unit(4.7, "cm"), 
+    height = unit(.4, "cm"),
+    gp = grid::gpar(fill = "white")
+    # gp = grid::gpar(col = NA)
+  )) +
+  ggspatial::annotation_scale(height = unit(0.2, "cm"),
+                              bar_cols = c("black", "white"),
+                              text_cex = .8
+                              ) 
+
+
+
+
+ggsave("../final_prods/figures/ps_basin_map.jpeg", plot = ps_basin_map, device = "jpeg", width = 8, height = 6, units = "in")
+
+
+```
+
+
+# Inset map ggmap
+```{r}
+
+# PNW bounding box 
+# Create a data frame with the bounding box coordinates
+ps_bbox_coords <- st_polygon(list(
+                             matrix(
+  c(-124.7, 46.8, -124.7, 49, -121, 49, -121, 46.8, -124.7, 46.8),
+  ncol = 2, byrow = TRUE)))
+
+# making the box a simple features object 
+ps_bbox <- st_sfc(ps_bbox_coords, crs = 4326)
+
+
+# PNW world base map of PS with google maps
+pnw_basemap <- ggmap::get_googlemap(
+  center = c(lon = -123, lat = 47.85),
+  zoom = 5,
+  maptype = "terrain",
+  extent = "panel",
+  source = "google",
+  key = api_key)
+
+ggmap(pnw_basemap)
+
+
+
+
+
+
+# ----------------------------------------------------------------
+
+
+# Transform nc to EPSG 3857 (Pseudo-Mercator, what Google uses)
+ps_bbox_3857 <- st_transform(ps_bbox, 3857)
+
+# Define a function to fix the bbox to be in EPSG:3857
+ggmap_bbox <- function(map) {
+  if (!inherits(map, "ggmap")) stop("map must be a ggmap object")
+  # Extract the bounding box (in lat/lon) from the ggmap to a numeric vector, 
+  # and set the names to what sf::st_bbox expects:
+  map_bbox <- setNames(unlist(attr(map, "bb")), 
+                       c("ymin", "xmin", "ymax", "xmax"))
+
+  # Coonvert the bbox to an sf polygon, transform it to 3857, 
+  # and convert back to a bbox (convoluted, but it works)
+  bbox_3857 <- st_bbox(st_transform(st_as_sfc(st_bbox(map_bbox, crs = 4326)), 3857))
+
+  # Overwrite the bbox of the ggmap object with the transformed coordinates 
+  attr(map, "bb")$ll.lat <- bbox_3857["ymin"]
+  attr(map, "bb")$ll.lon <- bbox_3857["xmin"]
+  attr(map, "bb")$ur.lat <- bbox_3857["ymax"]
+  attr(map, "bb")$ur.lon <- bbox_3857["xmax"]
+  map
+}
+
+
+pnw_basemap_test <- ggmap_bbox(pnw_basemap)
+
+# -----------------------------------------------------------------------
+
+
+
+#making an inset map of texas with Houston filled in red  
+inset <- ggmap(pnw_basemap_test) +
+  coord_sf(crs = st_crs(3857)) + # force the ggplot2 map to be in 3857
+  geom_sf(data = ps_bbox_3857, 
+          fill = "red", alpha = 0.5,
+          inherit.aes = FALSE) +
+  labs(x = "",
+       y = "") +
+  theme_minimal() +
+   theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+  panel.grid.major = element_blank(),
+  panel.grid.minor = element_blank())
+
+inset
+
+
+```
+
+
+# Inset map us states 
+
+
+
+
+
+
+
+# combining 
+```{r}
+final_ps_map <- ps_basin_map +
+  patchwork::inset_element(inset, left = -0.4, bottom = .2, right = .65, top = .55)
+
+
+ggsave("../final_prods/figures/final_ps_map.jpeg", plot = final_ps_map, device = "jpeg", width = 8, height = 6, units = "in")
+
+
+```
 
 
  
