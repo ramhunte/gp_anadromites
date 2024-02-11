@@ -51,6 +51,100 @@ ann_cost_ben <- function(C, f) {
 
 ################################## FIGURES ##########################
 
+# -------------------------- CB MAP ------------------------------------------
+
+cb_map_fun <- function(rest_type, breaks, break_labs, title) {
+  
+ggmap::ggmap(basemap) +
+  #basin
+  geom_sf(data = subs_4326, color = "black",  
+          fill = "grey", alpha = .7, 
+          inherit.aes = FALSE) +
+  
+  # subbasins
+  geom_sf(data = filter(map_data, 
+                        restoration_type == paste(rest_type)), 
+          aes(fill = cb_ratio/100000),
+          inherit.aes = FALSE) +
+  
+  # cost gradient
+  scale_fill_fermenter(palette = "YlGnBu",
+                       direction = 1,
+                       breaks = breaks,
+                       labels = break_labs) +
+  
+  # river
+  geom_sf(data = st_transform(flow_stl, crs = st_crs(subs_4326)), 
+          color = "#19647E", linewidth = .4, alpha = .7, inherit.aes = FALSE) +
+  
+  #axes
+  scale_x_continuous(limits = c(-122.50, -121.3), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(47.9, 48.5), expand = c(0, 0)) +
+  
+  # labs 
+  labs(fill = "Annual \n$/Spawner",
+       x = "",
+       y = "",
+       title = paste("Stillaguamish River Basin ", title, "Costs"),
+       subtitle = "annual cost per Chinook spawner") +
+  
+  
+  # north arrow
+  ggspatial::annotation_north_arrow(height = unit(1.4, "cm"), 
+                                    width = unit(1, "cm"), 
+                                    pad_x = unit(.55, "cm"), 
+                                    pad_y = unit(10, "cm"),
+                                    text_col = "white",
+                                    which_north = "true") +
+  # white box behind scale   
+  annotation_custom(grob = grid::rectGrob(
+    x = unit(2.75, "cm"),
+    y = unit(.35, "cm"),
+    width = unit(5.3, "cm"), 
+    height = unit(.4, "cm"),
+    gp = grid::gpar(fill = "white")
+    # gp = grid::gpar(col = NA)
+  )) +
+  
+  # scale
+  ggspatial::annotation_scale(height = unit(0.2, "cm"),
+                              bar_cols = c("black", "white"),
+                              text_cex = .8
+  ) +
+  
+  theme_minimal() + 
+  
+  theme(
+    legend.position = c(.89, .72),
+    legend.box.background = element_rect(color = "black", fill = "white")
+  )
+
+
+}
+
+# -----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ########### Dumb Bell
 
 # making a function that makes figure of costs

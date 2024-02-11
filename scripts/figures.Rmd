@@ -32,7 +32,7 @@ source("functions.R")
 
 # color themes 
 custom_colors <- c("rp" = "#03045E",
-                     # "#1F271B",
+                   # "#1F271B",
                    "elj" = "#19647E", 
                    "floodplain" = "#28AFB0")
 ```
@@ -57,7 +57,6 @@ rp<-read_sf(here("data", "final_dfs", "rp_costs.gpkg")) %>%
   select(-scenario) %>% 
   mutate(restoration_type = "rp")
 
-
 #creating a master df
 all_cost_benefit <- rbind(floodplain, elj)
 all_cost_benefit <- rbind(all_cost_benefit, rp) %>% 
@@ -65,30 +64,23 @@ all_cost_benefit <- rbind(all_cost_benefit, rp) %>%
   mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
          subbasin_name = str_replace_all(subbasin_name, "Stillaguamish", ""),
          subbasin_name = str_replace_all(subbasin_name, "mainstem", "Mainstem")
-) 
+  ) 
 
 ```
 
 
 
-# MAPS
+# CB Maps
 
 ```{r}
 
-########### basemap ##################
-
-# bbox
-stillaguamish_bbox <- c(left = -122.1, bottom = 48, right = -121.6, top = 48.3)
-
-
 ####### google basemap ###########
 
+# api key
 ggmap::register_google(key = "AIzaSyAMlAe4fbAxjFToWnpW-28exZtSUC6bXL8")
 api_key <- "AIzaSyAMlAe4fbAxjFToWnpW-28exZtSUC6bXL8"
 
-test <- subs_stl %>% 
-  st_transform(4326)
-
+# making google map base map 
 basemap <- ggmap::get_googlemap(
   center = c(lon = -121.9, lat = 48.25),
   zoom = 9,
@@ -97,98 +89,69 @@ basemap <- ggmap::get_googlemap(
   source = "google",
   key = api_key)
 
-### Map #
+###------------ Making a map --------------------
 
+# Chaning crs to match basemap 
+subs_4326 <- subs_stl %>% 
+  st_transform(4326)
+
+# filtering map data 
 map_data <- all_cost_benefit %>% 
   filter(pop == "fall_chinook",
          cb_ratio > 0) %>% 
-  st_transform(crs = st_crs(test))
+  st_transform(crs = st_crs(subs_4326))
 
-# Create ggplot for the current restoration_type
-  rp_map <- ggmap::ggmap(basemap) +
-  #basin
-  geom_sf(data = test, color = "black",  
-          fill = "grey", alpha = .7, 
-          inherit.aes = FALSE) +
-  
-  # subbasins
- geom_sf(data = filter(map_data, restoration_type == "rp"), 
-          aes(fill = cb_ratio/100000),
-          inherit.aes = FALSE) +
-  
-  # cost gradient
-  scale_fill_fermenter(palette = "YlGnBu",
-                       direction = 1,
-                       breaks = c(.5, 1, 1.5, 2, 2.5, 3),
-                       labels = c("$50,000",
+
+# creating and saving CB maps 
+
+# Floodplain -------------------------------------------------
+fp_map <- cb_map_fun(rest_type = "floodplain",
+                   breaks = c(.3, .6, .9, 1.2, 1.5, 1.8), 
+                   break_labs = c("$30,000",
+                                  "$60,000",
+                                  "$90,000",
+                                  "$120,000",
+                                  "$150,000",
+                                  "$180,000"),
+                   title = "Floodplain"
+)
+
+# save  rp map 
+ggsave("../final_prods/figures/cb_maps/fp_map.jpeg", plot = fp_map, device = "jpeg", width = 8, height = 6, units = "in")
+
+# Engineered log jam -------------------------------------------------
+elj_map <- cb_map_fun(rest_type = "elj",  
+                   breaks = c(.15, .3, .45, .6, .75, .9), 
+                   break_labs = c("$15,000",
+                                  "$30,000",
+                                  "$45,000",
+                                  "$60,000",
+                                  "$75,000",
+                                  "$90,000"),
+                   title = "Engineered Log Jam"
+)
+
+# save  rp map 
+ggsave("../final_prods/figures/cb_maps/elj_map.jpeg", plot = elj_map, device = "jpeg", width = 8, height = 6, units = "in")
+
+# RP -------------------------------------------------
+rp_map <- cb_map_fun(rest_type = "rp", 
+                   breaks = c(.5, 1, 1.5, 2, 2.5, 3), 
+                   break_labs = c("$50,000",
                                   "$100,000",
                                   "$150,000",
                                   "$200,000",
                                   "$250,000",
-                                  "$300,000")) +
-                         
-  # scale_fill_viridis_b(option = "mako",
-  #                      breaks = c(1,2,3),
-  #                      direction = -1,
-  #                      labels = c("$100,000",
-  #                              "$200,000",
-  #                              "$300,000")) +  # Adjust colors as needed
-  
-  # river
-  geom_sf(data = st_transform(flow_stl, crs = st_crs(test)), 
-          color = "#19647E", linewidth = .4, alpha = .7, inherit.aes = FALSE) +
-  
-    
-  #axese 
-  scale_x_continuous(limits = c(-122.50, -121.3), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(47.9, 48.5), expand = c(0, 0)) +
+                                  "$300,000"),
+                   title = "Riparian Planting"
+)
 
-  # labs 
-labs(fill = "Annual \n$/Spawner",
-     x = "",
-     y = "",
-     title = "Stillaguamish River Basin Riparian Planting Costs",
-     subtitle = "annual cost per Chinook spawner") +
-  
-  
-# maps
-    
-      ggspatial::annotation_north_arrow(height = unit(1.4, "cm"), 
-                                    width = unit(1, "cm"), 
-                                    pad_x = unit(.55, "cm"), 
-                                    pad_y = unit(12, "cm"),
-                                    text_col = "white",
-                                    which_north = "true") +
-    
-    annotation_custom(grob = grid::rectGrob(
-    x = unit(2.85, "cm"),
-    y = unit(.35, "cm"),
-    width = unit(5.5, "cm"), 
-    height = unit(.4, "cm"),
-    gp = grid::gpar(fill = "white")
-    # gp = grid::gpar(col = NA)
-  )) +
-  ggspatial::annotation_scale(height = unit(0.2, "cm"),
-                              bar_cols = c("black", "white"),
-                              text_cex = .8
-                              ) +
-
-
- 
-     theme_minimal() + 
-  
-  theme(
-    
-  legend.position = c(.89, .72),
-  legend.box.background = element_rect(color = "black", fill = "white")
-  )
-  
-# rp_map
-   
-
-ggsave("../final_prods/figures/rp_map.jpeg", plot = rp_map, device = "jpeg", width = 8, height = 6, units = "in")
-
+# save  rp map 
+ggsave("../final_prods/figures/cb_maps/rp_map.jpeg", plot = rp_map, device = "jpeg", width = 8, height = 6, units = "in")
 ```
+
+
+
 
 
 
@@ -198,19 +161,21 @@ ggsave("../final_prods/figures/rp_map.jpeg", plot = rp_map, device = "jpeg", wid
 
 # https://geo.wa.gov/datasets/de1373e9f5394e5284660c939c038689/explore?location=47.575830%2C-122.409706%2C9.34
 
-# --------------------------------------------------------------------------------
+# --------------reading in basins data -----------------------------------------------
 all_basins <- st_read(here("data", "basins", "WBDHU08.shp")) %>% 
   clean_names() %>% 
   select(name,area_acres, huc8, geometry) %>%
   filter(!name %in% c("Puget Sound")) %>% 
-  st_transform(crs = st_crs(test))
+  st_transform(crs = st_crs(subs_4326))
 
 #selecting basins for ps map
 ps_basins <- all_basins %>% 
   filter(name %in% c("Nooksack", "Upper Skagit", "Lower Skagit", "Stillaguamish", "Snohomish", "Skykomish", "Snoqualmie", "Lake Washington", "Duwamish", "Puyallup", "Nisqually", "Deschutes", "Upper Chehalis", "Lower Chehalis", "Skokomish", "Hood Canal", "Dungeness-Elwha", "Ho-Quillayute", "Crescent-Hoko", "Sauk", "Upper Skagit"))
-ps_cents <- st_centroid(ps_basins)
 
-# --------------------------------------------------------------------------------
+# ---------------centroids for labeling------------------------------------------
+
+# making centroids
+ps_cents <- st_centroid(ps_basins)
 
 # Adjust centroids for labeling the values that overlap in geom_sf_label
 ps_cents_adjusted <- ps_cents
@@ -231,7 +196,7 @@ ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Upper Skagit"] <-
 ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Sauk"] <- 
   ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Sauk"] + c(-0.15, 0)
 
-# --------------------------------------------------------------------------------
+# ------------------ making a basemap ---------------------------------------------
 
 
 # creating a base map of PS with google maps
@@ -242,6 +207,7 @@ ps_basemap <- ggmap::get_googlemap(
   extent = "panel",
   source = "google",
   key = api_key)
+# ------------------ making a PS map ---------------------------------------------
 
 # creating an area map of PS with basins 
 ps_basin_map <- ggmap(ps_basemap) +
@@ -251,6 +217,7 @@ ps_basin_map <- ggmap(ps_basemap) +
           color = "black",
           inherit.aes = FALSE) +
   
+  # labeling centroids 
   geom_sf_label(data = ps_cents_adjusted, aes(label = name),
                 size = 2, label.padding = unit(0.2, "lines"),
                 inherit.aes = FALSE) +
@@ -260,17 +227,19 @@ ps_basin_map <- ggmap(ps_basemap) +
        y = "",
        title = "Stillaguamish River Basin in the Puget Sound") +
   
-   #axese 
+  #axes
   scale_y_continuous(limits = c(46.8, 49), expand = c(0, 0)) +
   
-  ggspatial::annotation_north_arrow(height = unit(1.3, "cm"), 
-                                    width = unit(.8, "cm"), 
+  # north arrow
+  ggspatial::annotation_north_arrow(height = unit(1.4, "cm"), 
+                                    width = unit(1, "cm"), 
                                     pad_x = unit(.45, "cm"), 
                                     pad_y = unit(1.1, "cm"),
                                     text_col = "white",
                                     which_north = "true") +
   
- annotation_custom(grob = grid::rectGrob(
+  # white rectangle behind scale
+  annotation_custom(grob = grid::rectGrob(
     x = unit(2.4, "cm"),
     y = unit(.35, "cm"),
     width = unit(4.7, "cm"), 
@@ -278,29 +247,27 @@ ps_basin_map <- ggmap(ps_basemap) +
     gp = grid::gpar(fill = "white")
     # gp = grid::gpar(col = NA)
   )) +
+  # scale 
   ggspatial::annotation_scale(height = unit(0.2, "cm"),
                               bar_cols = c("black", "white"),
                               text_cex = .8
-                              ) 
-
-
-
-
-ggsave("../final_prods/figures/ps_basin_map.jpeg", plot = ps_basin_map, device = "jpeg", width = 8, height = 6, units = "in")
+  ) 
+# saving figure 
+ggsave("../final_prods/figures/ps_maps/ps_basin_map.jpeg", plot = ps_basin_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 
 ```
 
 
-# Inset map ggmap
+# Inset map 
 ```{r}
 
 # PNW bounding box 
 # Create a data frame with the bounding box coordinates
 ps_bbox_coords <- st_polygon(list(
-                             matrix(
-  c(-124.7, 46.8, -124.7, 49, -121, 49, -121, 46.8, -124.7, 46.8),
-  ncol = 2, byrow = TRUE)))
+  matrix(
+    c(-124.7, 46.8, -124.7, 49, -121, 49, -121, 46.8, -124.7, 46.8),
+    ncol = 2, byrow = TRUE)))
 
 # making the box a simple features object 
 ps_bbox <- st_sfc(ps_bbox_coords, crs = 4326)
@@ -318,29 +285,27 @@ pnw_basemap <- ggmap::get_googlemap(
 ggmap(pnw_basemap)
 
 
-
-
-
-
-# ----------------------------------------------------------------
+# --------------aligning CRS with workaround -----------------------------------------
 
 
 # Transform nc to EPSG 3857 (Pseudo-Mercator, what Google uses)
 ps_bbox_3857 <- st_transform(ps_bbox, 3857)
 
 # Define a function to fix the bbox to be in EPSG:3857
+  # this is a bug in the ggmap packages and is a workaround 
 ggmap_bbox <- function(map) {
   if (!inherits(map, "ggmap")) stop("map must be a ggmap object")
   # Extract the bounding box (in lat/lon) from the ggmap to a numeric vector, 
   # and set the names to what sf::st_bbox expects:
   map_bbox <- setNames(unlist(attr(map, "bb")), 
                        c("ymin", "xmin", "ymax", "xmax"))
-
+  
   # Coonvert the bbox to an sf polygon, transform it to 3857, 
   # and convert back to a bbox (convoluted, but it works)
   bbox_3857 <- st_bbox(st_transform(st_as_sfc(st_bbox(map_bbox, crs = 4326)), 3857))
-
+  
   # Overwrite the bbox of the ggmap object with the transformed coordinates 
+
   attr(map, "bb")$ll.lat <- bbox_3857["ymin"]
   attr(map, "bb")$ll.lon <- bbox_3857["xmin"]
   attr(map, "bb")$ur.lat <- bbox_3857["ymax"]
@@ -355,7 +320,7 @@ pnw_basemap_test <- ggmap_bbox(pnw_basemap)
 
 
 
-#making an inset map of texas with Houston filled in red  
+#making an inset map of PNW with PS filled in red  
 inset <- ggmap(pnw_basemap_test) +
   coord_sf(crs = st_crs(3857)) + # force the ggplot2 map to be in 3857
   geom_sf(data = ps_bbox_3857, 
@@ -364,84 +329,77 @@ inset <- ggmap(pnw_basemap_test) +
   labs(x = "",
        y = "") +
   theme_minimal() +
-   theme(axis.text = element_blank(),
+  theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
-  panel.grid.major = element_blank(),
-  panel.grid.minor = element_blank())
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 
 inset
 
+#save item 
+ggsave("../final_prods/figures/ps_maps/inset.jpeg", plot = inset, device = "jpeg", width = 8, height = 6, units = "in")
 
 ```
 
 
-# Inset map us states 
-
-
-
-
-
-
-
-# combining 
+# Final PS Map 
 ```{r}
+# combine PS and Inset map 
 final_ps_map <- ps_basin_map +
   patchwork::inset_element(inset, left = -0.4, bottom = .2, right = .65, top = .55)
 
-
-ggsave("../final_prods/figures/final_ps_map.jpeg", plot = final_ps_map, device = "jpeg", width = 8, height = 6, units = "in")
+#save item 
+ggsave("../final_prods/figures/ps_maps/final_ps_map.jpeg", plot = final_ps_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 
 ```
 
 
- 
 # DUMB BELL CHARTS
 
 ```{r}
+#---------------- creating/saving dumbbell charts
+# function in "functions.R"
+
 # floodplain
 fp_dumb_bell <- cost_graph_fun(all_cost_benefit, "floodplain", "Floodplain")
 
-ggsave("../final_prods/figures/fp_dumb_bell.jpeg", plot = fp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+ggsave("../final_prods/figures/total_cost/fp_dumb_bell.jpeg", plot = fp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
 
 # elj
 elj_dumb_bell <- cost_graph_fun(all_cost_benefit, "elj", "Engineered Log Jam")
-ggsave("../final_prods/figures/elj_dumb_bell.jpeg", plot = elj_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+ggsave("../final_prods/figures/total_cost/elj_dumb_bell.jpeg", plot = elj_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
 
 # rp
 rp_dumb_bell <- cost_graph_fun(all_cost_benefit, "rp", "Riparian Planting")
 
-ggsave("../final_prods/figures/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+ggsave("../final_prods/figures/total_cost/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
 ```
 
 
 # TABLES 
 
 ```{r}
-#---------------- creating tables 
+#---------------- creating/saving tables 
+
 
 # fp table
 floodplain_table <- summary_table_builder("floodplain")
 
-#elj table 
-elj_table <- summary_table_builder("elj") %>% 
-   save_kable(file = here("final_prods","tables","elj_kable.html"), zoom = 4)
-
-# rp table
-rp_table <- summary_table_builder("rp") %>% 
-   save_kable(file = here("final_prods","tables","rp_kable.html"), zoom = 4)
-
-
-#------------------- saving tables 
-
 floodplain_table %>% 
   save_kable(file = here("final_prods","tables","floodplain_kable.html"), zoom = 4)
 
+#elj table 
+elj_table <- summary_table_builder("elj")
+
 elj_table %>% 
-   save_kable(file = here("final_prods","tables","elj_kable.html"), zoom = 4)
+  save_kable(file = here("final_prods","tables","elj_kable.html"), zoom = 4)
+
+# rp table
+rp_table <- summary_table_builder("rp")
 
 rp_table %>% 
-   save_kable(file = here("final_prods","tables","rp_kable.html"), zoom = 4)
+  save_kable(file = here("final_prods","tables","rp_kable.html"), zoom = 4)
 
 ```
 
@@ -459,9 +417,9 @@ spawner_barchart <- all_cost_benefit %>%
   group_by(subbasin_name) %>% 
   # creating a column to identify where the labels of the n_diff will go on the bar chart for each restoration type in each subbasin
   mutate(label_y = cumsum(n_diff) - .5 * n_diff) %>% 
-
-ggplot(aes(x = subbasin_name, 
-           y = n_diff, fill = restoration_type)) +
+  
+  ggplot(aes(x = subbasin_name, 
+             y = n_diff, fill = restoration_type)) +
   theme_minimal() +
   geom_col() +
   labs(fill = "Restoration Type", 
@@ -481,7 +439,7 @@ ggplot(aes(x = subbasin_name,
   # pushing y axis labels to edhe of data 
   scale_y_continuous(expand = c(0,0)) +
   
- # scale_y_continuous(limits = c(0, 85)) +
+  # scale_y_continuous(limits = c(0, 85)) +
   theme(
     #axes
     axis.text = element_text(size = 10),
@@ -490,7 +448,7 @@ ggplot(aes(x = subbasin_name,
     legend.position = c(0.5, -0.175),
     legend.direction = "horizontal",
     legend.title = element_blank(),
-      # legend.box.background = element_rect(color = "grey"))
+    # legend.box.background = element_rect(color = "grey"))
     # titles
     plot.title = element_text(hjust = 0, vjust = 1.8, size = 16),
     plot.subtitle = element_text(hjust = 0, vjust = 2.2),
@@ -498,7 +456,7 @@ ggplot(aes(x = subbasin_name,
     # gridlines
     panel.grid.major.y  = element_blank(),
     panel.grid.minor.x  = element_blank()
-    ) 
+  ) 
 
 spawner_barchart
 
@@ -512,22 +470,22 @@ ggsave("../final_prods/figures/spawner_barchart.jpeg", plot = spawner_barchart, 
 
 
 
-
+# Floodplain Breakdown 
 ```{r}
-fp_area_subbasin<-read_csv(here("data", "final_dfs", "fp_area_subbasin.csv"))
-#creating a column with pretty subbasin names
-fp_area_subbasin$subbasin_name <- str_replace_all(fp_area_subbasin$noaa_subba, "_", " ") 
-fp_area_subbasin$subbasin_name <-str_replace_all(fp_area_subbasin$subbasin_name, "Stillaguamish", "")
-fp_area_subbasin$subbasin_name <-str_replace_all(fp_area_subbasin$subbasin_name, "mainstem", "Mainstem")
-fp_area_subbasin$hab_unit<-str_replace_all(fp_area_subbasin$hab_unit, "side_channel", "Side Channel")
+# wrangling floodplain area data frame
+fp_area_subbasin <- read_csv(here("data", "final_dfs", "fp_area_subbasin.csv")) %>% 
+  #creating a column with pretty subbasin names
+mutate(subbasin_name = str_replace_all(fp_area_subbasin$noaa_subba, "_", " "),
+       subbasin_name = str_replace_all(fp_area_subbasin$subbasin_name, "Stillaguamish", ""),
+       subbasin_name = str_replace_all(fp_area_subbasin$subbasin_name, "mainstem", "Mainstem"), 
+       hab_unit = str_replace_all(fp_area_subbasin$hab_unit, "side_channel", "Side Channel"))
 
-custom_colors <- c("Marsh" = "sienna1", 
-                   "Pond" = "palegreen3",
-                   "Side Channel" = "mediumpurple1")
-
-ggplot(fp_area_subbasin, aes(x = subbasin_name, y = total_area_ha, fill = hab_unit)) +
-  geom_bar(stat = "identity")+
-  theme_minimal()+
+# plotting 
+ggplot(fp_area_subbasin, aes(x = subbasin_name, 
+                             y = total_area_ha, 
+                             fill = hab_unit)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(fill = "Habitat Type", x="Subbasin Name", y="Increase in Chinook Spawners")+
   scale_fill_manual(values = custom_colors)
@@ -561,7 +519,7 @@ all_cost_benefit %>%
   ggplot(aes(x = n_diff, y = cb_ratio, color = restoration_type)) +
   geom_point() +
   ylim(ymin = 0, ymax = 500000)
-       
+
 ```
 
 
