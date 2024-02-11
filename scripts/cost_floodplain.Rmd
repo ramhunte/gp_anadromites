@@ -334,7 +334,9 @@ st_write(flood_cost_ben, here("data", "final_dfs", "fp_costs.gpkg"), append=FALS
 
 #Creating a df with area by marsh, pond and side channel
 ```{r}
-marsh_pond_area<-full_join(marsh_cost_inflation, pond_cost_inflation) %>% st_drop_geometry()
+marsh_pond_area<-full_join(marsh_cost_inflation, pond_cost_inflation) %>% st_drop_geometry()%>% select(hab_unit, area_ha, noaa_subba)%>%
+  group_by(noaa_subba, hab_unit) %>%
+  summarise(total_area_ha = sum(area_ha))
 
 #pull in fp shapefiles for adjacent to river habitat
 side_channel_area<-st_read(here("data", "fp_shapefiles", "sidechannel_shapefiles.shp")) 
@@ -342,15 +344,20 @@ side_channel_area<-st_read(here("data", "fp_shapefiles", "sidechannel_shapefiles
 side_channel_area$area_ha<-st_area(side_channel_area)/10000
 #drop units
 side_channel_area$area_ha <- as.numeric(side_channel_area$area_ha)
+side_channel_area$hab_unit<-"side_channel"
+side_channel_area<-side_channel_area %>% select(hab_unit, area_ha, noa_sbb) %>% 
+  rename("noaa_subba"="noa_sbb")%>%
+  group_by(noaa_subba, hab_unit) %>%
+  summarise(total_area_ha = sum(area_ha)) %>% 
+  st_drop_geometry()
 
-fp_area_subbasin<-full_join(marsh_pond_area, side_channel_flow) %>% group_by(noaa_subba, hab_unit) %>%
-  summarise(total_area_ha = sum(area_ha))
+fp_area_subbasin<-rbind(marsh_pond_area, side_channel_area)
 
-# write.csv(fp_area_subbasin, here("data", "final_dfs", "fp_area_subbasin.csv"))
+write.csv(fp_area_subbasin, here("data", "final_dfs", "fp_area_subbasin.csv"))
 
 #summary by restoration_type
 fp_area_sum<-full_join(marsh_pond_area, side_channel_area) %>% 
-  group_by(hab_unit) %>% summarise(area_ha=sum(area_ha)) %>%  st_drop_geometry()
+  group_by(hab_unit) %>% summarise(area_ha=sum(total_area_ha)) 
 
 ```
 
