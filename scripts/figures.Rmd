@@ -565,6 +565,13 @@ all_cost_benefit %>%
 ```
 
 
+#checking the barriers map (not for final)
+```{r}
+ggplot()+
+  geom_sf(data=stl_barriers, aes(color=prcnt__))+
+  geom_sf(data=flow_stl)
+#currently they are in different crs so the map looks weird
+```
 
 
 
