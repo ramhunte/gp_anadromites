@@ -238,6 +238,9 @@ marsh_energy_stl<-assign_energy_width(hist_flood_stl_var_mult)
 
 marsh_cost <- calculate_marsh_cost(marsh_energy_stl)
 
+# #checking if any subbasins with assigned multipliers had habitat
+# result<-marsh_cost %>% filter(multiplier==0.001)
+
 ## account for inflation and get area in acres to get total cost
 marsh_cost_inflation <- marsh_cost %>% 
   mutate(lower_cost=lower_cost* ppi) %>% 
