@@ -72,3 +72,14 @@ ppi_2003<-145.200
 ppi_2023<-327.242
 ppi_perc<-((ppi_2023-ppi_2003)/ppi_2003)*100
 ppi<-1+(ppi_perc/100)
+
+                             ######################### Barriers #################################
+# all_barriers<-read_csv(here("data", "barriers", "WSDOT_-_Fish_Passage_Uncorrected_Barriers_Statewide.csv")) %>% 
+#   clean_names()
+# coordinates <- st_as_sf(all_barriers, coords = c("long_wgs84_meas", "lat_wgs84_meas"), crs = 4326)
+# st_write(coordinates, here("data", "barriers","all_barriers.shp"))
+# all_barriers <- st_read(here("data", "barriers", "all_barriers.shp"))
+# subs_stl_crs <- st_crs(subs_stl)
+# all_barriers <- st_transform(all_barriers, crs = subs_stl_crs) #change crs
+# stl_barriers <- st_intersection(all_barriers, subs_stl)
+# st_write(stl_barriers, here("data", "barriers","stl_barriers.shp"))
