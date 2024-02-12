@@ -383,23 +383,23 @@ ggsave("../final_prods/figures/total_cost/rp_dumb_bell.jpeg", plot = rp_dumb_bel
 #---------------- creating/saving tables 
 
 
-# fp table
-floodplain_table <- summary_table_builder("floodplain")
-
-floodplain_table %>% 
-  save_kable(file = here("final_prods","tables","floodplain_kable.png"), zoom = 4)
-
-#elj table 
-elj_table <- summary_table_builder("elj")
-
-elj_table %>% 
-  save_kable(file = here("final_prods","tables","elj_kable.png"), zoom = 4)
-
-# rp table
-rp_table <- summary_table_builder("rp")
-
-rp_table %>% 
-  save_kable(file = here("final_prods","tables","rp_kable.png"), zoom = 4)
+# # fp table
+# floodplain_table <- summary_table_builder("floodplain")
+# 
+# floodplain_table %>% 
+#   save_kable(file = here("final_prods","tables","floodplain_kable.png"), zoom = 4)
+# 
+# #elj table 
+# elj_table <- summary_table_builder("elj")
+# 
+# elj_table %>% 
+#   save_kable(file = here("final_prods","tables","elj_kable.png"), zoom = 4)
+# 
+# # rp table
+# rp_table <- summary_table_builder("rp")
+# 
+# rp_table %>% 
+#   save_kable(file = here("final_prods","tables","rp_kable.png"), zoom = 4)
 
 
 # Top 20 
@@ -510,9 +510,8 @@ mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
        hab_unit = str_replace_all(hab_unit, "side_channel", "Side Channel"),
        hab_unit = factor(hab_unit,
                          levels = c("Pond", "Marsh", "Side Channel"))) %>% 
-filter(subbasin_name %in% unique(all_cost_benefit$subbasin_name))
-
-
+  filter(subbasin_name %in% unique(all_cost_benefit$subbasin_name)) %>% 
+  group_by(subbasin_name) 
 
 # plotting side channel 
 fp_area_subbasin <- fp_area_subbasin %>% 
@@ -535,51 +534,18 @@ ggplot(aes(x = subbasin_name, y = total_area_ha, fill = hab_unit )) +
     # legend.direction = "horizontal",
     legend.title = element_blank(),
     legend.box.background = element_rect(color = "grey",
-                                         fill = "white")
+                                         fill = "white"),
+        panel.grid.major.y  = element_blank()
+    # panel.grid.minor.x  = element_blank()
     
   )
 
-sidechannel_area_subbasin
+fp_area_subbasin
 
 # saving plot
 ggsave(here("final_prods", "figures", "fp_area_subbasin.jpg"),
-       plot = sidechannel_area_subbasin, device = "jpeg", 
+       plot = fp_area_subbasin, device = "jpeg", 
        width = 8, height = 6, units = "in")
-```
-
-
-```{r}
-# plotting Marsh 
-fp_area_subbasin %>% 
-  filter(hab_unit == "Marsh") %>%
-ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
-                             y = total_area_ha)) +
-  geom_bar(stat = "identity",
-           fill = "#03045E") +
-  theme_minimal() +
-    theme(
-    axis.title.y = element_text(margin = margin(r = 10)),
-    axis.title.x = element_text(margin = margin(t = 10))
-  ) +
-  labs( x="Subbasin Name", y="Total Side Channel Area (HA)")+
-  coord_flip() 
-
-
-# plotting Pond 
-fp_area_subbasin %>% 
-  filter(hab_unit == "Pond") %>% 
-ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
-                             y = total_area_ha)) +
-  geom_bar(stat = "identity",
-           fill = "#03045E") +
-  theme_minimal() +
-    theme(
-    axis.title.y = element_text(margin = margin(r = 10)),
-    axis.title.x = element_text(margin = margin(t = 10))
-  ) +
-  labs( x="Subbasin Name", y="Total Side Channel Area (HA)")+
-  coord_flip() 
-  
 ```
 
 
