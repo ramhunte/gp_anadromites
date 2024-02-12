@@ -506,30 +506,52 @@ fp_area_subbasin <- read_csv(here("data", "final_dfs", "fp_area_subbasin.csv")) 
 mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
        subbasin_name = str_replace_all(subbasin_name, "Stillaguamish", ""),
        subbasin_name = str_replace_all(subbasin_name, "mainstem", "Mainstem"), 
-       hab_unit = str_replace_all(hab_unit, "side_channel", "Side Channel")) %>% 
+       subbasin_name = fct_reorder(subbasin_name, total_area_ha, .fun = sum),
+       hab_unit = str_replace_all(hab_unit, "side_channel", "Side Channel"),
+       hab_unit = factor(hab_unit,
+                         levels = c("Pond", "Marsh", "Side Channel"))) %>% 
 filter(subbasin_name %in% unique(all_cost_benefit$subbasin_name))
 
+
+
 # plotting side channel 
-fp_area_subbasin %>% 
-  filter(hab_unit == "Side Channel") %>% 
-ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
-                             y = total_area_ha)) +
-  geom_bar(stat = "identity",
-           fill = "#03045E") +
+fp_area_subbasin <- fp_area_subbasin %>% 
+  # filter(hab_unit == "Side Channel") %>%
+ggplot(aes(x = subbasin_name, y = total_area_ha, fill = hab_unit )) +
+  geom_bar(stat = "identity") +
   theme_minimal() +
   theme(
     axis.title.y = element_text(margin = margin(r = 10)),
     axis.title.x = element_text(margin = margin(t = 10))
   ) +
   
-  labs( x="Subbasin Name", y="Total Side Channel Area (HA)")+
-  coord_flip() 
+  labs( x="Subbasin Name", y="Total Side Channel Area (HA)") +
+  
+  coord_flip() +
+    scale_fill_manual(values = c("#28AFB0", "#19647E", "#03045E"),
+                      guide = guide_legend(reverse = TRUE)) +
+  theme(
+    legend.position = c(.705, .495),
+    # legend.direction = "horizontal",
+    legend.title = element_blank(),
+    legend.box.background = element_rect(color = "grey",
+                                         fill = "white")
+    
+  )
 
-# ggsave(here("final_prods", "figures", "sidechannel_area_subbasin.jpg"), sc_area)
+sidechannel_area_subbasin
 
+# saving plot
+ggsave(here("final_prods", "figures", "fp_area_subbasin.jpg"),
+       plot = sidechannel_area_subbasin, device = "jpeg", 
+       width = 8, height = 6, units = "in")
+```
+
+
+```{r}
 # plotting Marsh 
 fp_area_subbasin %>% 
-  filter(hab_unit == "Marsh") %>% 
+  filter(hab_unit == "Marsh") %>%
 ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
                              y = total_area_ha)) +
   geom_bar(stat = "identity",
