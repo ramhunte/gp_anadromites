@@ -125,26 +125,6 @@ ggmap::ggmap(basemap) +
 # -----------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ########### Dumb Bell
 
 # making a function that makes figure of costs
@@ -179,8 +159,6 @@ cost_graph_fun <- function(df, rest_type, title) {
 }
 
 
-
-
 ########### Tables
 
 summary_table_builder<-function(rest_type) {
@@ -204,4 +182,6 @@ summary_table_builder<-function(rest_type) {
     kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
  
 }
+
+
 

@@ -509,7 +509,7 @@ mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
        hab_unit = str_replace_all(hab_unit, "side_channel", "Side Channel")) %>% 
 filter(subbasin_name %in% unique(all_cost_benefit$subbasin_name))
 
-# plotting 
+# plotting side channel 
 fp_area_subbasin %>% 
   filter(hab_unit == "Side Channel") %>% 
 ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
@@ -517,13 +517,47 @@ ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha),
   geom_bar(stat = "identity",
            fill = "#03045E") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(
+    axis.title.y = element_text(margin = margin(r = 10)),
+    axis.title.x = element_text(margin = margin(t = 10))
+  ) +
+  
+  labs( x="Subbasin Name", y="Total Side Channel Area (HA)")+
+  coord_flip() 
+
+# ggsave(here("final_prods", "figures", "sidechannel_area_subbasin.jpg"), sc_area)
+
+# plotting Marsh 
+fp_area_subbasin %>% 
+  filter(hab_unit == "Marsh") %>% 
+ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
+                             y = total_area_ha)) +
+  geom_bar(stat = "identity",
+           fill = "#03045E") +
+  theme_minimal() +
+    theme(
+    axis.title.y = element_text(margin = margin(r = 10)),
+    axis.title.x = element_text(margin = margin(t = 10))
+  ) +
+  labs( x="Subbasin Name", y="Total Side Channel Area (HA)")+
+  coord_flip() 
+
+
+# plotting Pond 
+fp_area_subbasin %>% 
+  filter(hab_unit == "Pond") %>% 
+ggplot(aes(x = fct_reorder(subbasin_name, total_area_ha), 
+                             y = total_area_ha)) +
+  geom_bar(stat = "identity",
+           fill = "#03045E") +
+  theme_minimal() +
+    theme(
+    axis.title.y = element_text(margin = margin(r = 10)),
+    axis.title.x = element_text(margin = margin(t = 10))
+  ) +
   labs( x="Subbasin Name", y="Total Side Channel Area (HA)")+
   coord_flip() 
   
-
-
-# ggsave(here("final_prods", "figures", "sidechannel_area_subbasin.jpg"), sc_area)
 ```
 
 
