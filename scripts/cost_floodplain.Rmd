@@ -212,8 +212,8 @@ side_channel_flow <- side_channel_flow %>%
   mutate(lower_cost=lower_cost* ppi) %>% 
   mutate(upper_cost=upper_cost* ppi) %>% 
   mutate(area_a=sc_area*0.000247105) %>% #meters squared to hectares
-  mutate(total_lower_cost=lower_cost*area_a) %>% 
-  mutate(total_upper_cost=upper_cost*area_a) 
+  mutate(total_lower_cost=lower_cost*sc_area) %>% 
+  mutate(total_upper_cost=upper_cost*sc_area) 
 
 ##get geometry of subbasin
 #calculating final cost riparian planting by subbasin 
