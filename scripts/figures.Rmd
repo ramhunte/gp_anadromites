@@ -170,7 +170,8 @@ all_basins <- st_read(here("data", "basins", "WBDHU08.shp")) %>%
 
 #selecting basins for ps map
 ps_basins <- all_basins %>% 
-  filter(name %in% c("Nooksack", "Upper Skagit", "Lower Skagit", "Stillaguamish", "Snohomish", "Skykomish", "Snoqualmie", "Lake Washington", "Duwamish", "Puyallup", "Nisqually", "Deschutes", "Upper Chehalis", "Lower Chehalis", "Skokomish", "Hood Canal", "Dungeness-Elwha", "Ho-Quillayute", "Crescent-Hoko", "Sauk", "Upper Skagit"))
+  # filter(name %in% c("Nooksack", "Upper Skagit", "Lower Skagit", "Stillaguamish", "Snohomish", "Skykomish", "Snoqualmie", "Lake Washington", "Duwamish", "Puyallup", "Nisqually", "Deschutes", "Upper Chehalis", "Lower Chehalis", "Skokomish", "Hood Canal", "Dungeness-Elwha", "Ho-Quillayute", "Crescent-Hoko", "Sauk", "Upper Skagit"))
+  filter(name == "Stillaguamish")
 
 # ---------------centroids for labeling------------------------------------------
 
@@ -203,7 +204,7 @@ ps_cents_adjusted$geometry[ps_cents_adjusted$name == "Sauk"] <-
 ps_basemap <- ggmap::get_googlemap(
   center = c(lon = -123, lat = 47.85),
   zoom = 8,
-  maptype = "satellite",
+  maptype = "hybrid",
   extent = "panel",
   source = "google",
   key = api_key)
@@ -346,7 +347,7 @@ ggsave("../final_prods/figures/ps_maps/inset.jpeg", plot = inset, device = "jpeg
 ```{r}
 # combine PS and Inset map 
 final_ps_map <- ps_basin_map +
-  patchwork::inset_element(inset, left = -0.4, bottom = .2, right = .65, top = .55)
+  patchwork::inset_element(inset, left = -0.4, bottom = .65, right = .65, top = 1)
 
 #save item 
 ggsave("../final_prods/figures/ps_maps/final_ps_map.jpeg", plot = final_ps_map, device = "jpeg", width = 8, height = 6, units = "in")
