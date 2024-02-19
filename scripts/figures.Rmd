@@ -604,10 +604,13 @@ ggplot()+
 
 ### Coho Spawner Bar Chart
 ```{r}
+# create a key for which subbasins to keep (which have benefits to chinook)
+filtered_data <- all_cost_benefit %>% filter(pop == "fall_chinook" & n_diff > 0) %>% select(noaa_subba) %>% st_drop_geometry() %>% unique()
 
 #creating a bar chart with spawners by action and subbasin
 
 spawner_barchart <- all_cost_benefit %>% 
+  right_join(filtered_data) %>% 
   filter(pop == "coho") %>% 
   mutate(subbasin_name = fct_reorder(subbasin_name, n_diff, .fun = sum),
          restoration_type = factor(restoration_type,
@@ -667,10 +670,21 @@ ggsave("../final_prods/figures/coho_benefits_barchart.jpeg", plot = spawner_barc
 
 ### Steelhead Spawner Bar Chart
 ```{r}
+# create a key for which subbasins to keep (which have benefits to chinook)
+filtered_data <- all_cost_benefit %>% filter(pop == "fall_chinook" & n_diff > 0) %>% select(noaa_subba) %>% st_drop_geometry() %>% unique()
+
+# #spawner increase
+# 
+# increase<-all_cost_benefit %>% 
+#   right_join(filtered_data) %>% 
+#   filter(pop == "coho") %>% 
+#   filter(n_diff>0) %>%  #remove when there is no benefit
+#   mutate(n_diff=sum(n_diff))
 
 #creating a bar chart with spawners by action and subbasin
 
 spawner_barchart <- all_cost_benefit %>% 
+  right_join(filtered_data) %>% 
   filter(pop == "steelhead") %>% 
   mutate(subbasin_name = fct_reorder(subbasin_name, n_diff, .fun = sum),
          restoration_type = factor(restoration_type,
