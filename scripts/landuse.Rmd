@@ -45,6 +45,9 @@ subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_2022092
 #land use parcel data for snohomish and skagit county -->
 land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>% 
   clean_names() %>% select(master_cat, sub_cat, lu_code_id, shape_are, shape_len)
+
+#also read in the target subbasins (benefits to chinook)
+subbasins_key<-read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
 ```
 
 #NEW PARCELS LAYER BY SUBBASIN 
@@ -58,26 +61,99 @@ land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>%
   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% 
   mutate(parcel_area = st_area(.))
 
-##summary of percent land use in each subbasin
+##summary of percent land use in each subbasin (with all values)
 summary_land_use <- land_use_subs %>%
   group_by(noaa_subba, master_cat) %>%
   mutate(parcel_area=sum(parcel_area)) %>% 
   st_drop_geometry() %>% 
   select(-sub_cat) %>% 
   unique() %>%
-  group_by(noaa_subba, master_cat) %>%
-  # Sum the parcel area for each group
-  summarise(total_parcel_area = sum(parcel_area)) %>%
   # Ungroup the data
   ungroup() %>%
   # Group by 'noaa_subba' again
   group_by(noaa_subba) %>%
   # Calculate the relative percentage for each 'master_cat' within each 'noaa_subba'
-  mutate(perc_land_use = round(total_parcel_area / sum(total_parcel_area) * 100,2))
+  mutate(perc_land_use = round(parcel_area / sum(parcel_area) * 100,2)) %>%
+  mutate(perc_land_use = as.numeric(perc_land_use)) %>% 
+  mutate(parcel_area = as.numeric(parcel_area)) %>% 
+  right_join(subbasins_key)
+
+#summary of percent land use (with values under 1 percent aggregated to Other)
+summary_land_use <- land_use_subs %>%
+  group_by(noaa_subba, master_cat) %>%
+  mutate(parcel_area = sum(parcel_area)) %>% 
+  st_drop_geometry() %>% 
+  select(-sub_cat) %>% 
+  unique() %>%
+  ungroup() %>%
+  group_by(noaa_subba) %>%
+  mutate(parcel_area = as.numeric(parcel_area)) %>% 
+  mutate(perc_land_use = parcel_area / sum(parcel_area) * 100,  # Calculate perc_land_use
+         master_cat = case_when(
+           perc_land_use < 1 ~ "Other",
+           TRUE ~ as.character(master_cat)  # Keep the original master_cat otherwise
+         )) %>%
+  mutate(perc_land_use = round(perc_land_use, 2)) %>% 
+  group_by(noaa_subba, master_cat) %>%
+  mutate(parcel_area = sum(parcel_area)) %>% 
+  mutate(perc_land_use = round(sum(perc_land_use), 2)) %>% unique()%>% 
+  right_join(subbasins_key)
 ```
 
 ##Land Use Figure
+```{r}
+#preparing the data for the figure
+  #arrange in descending
+  #make factors
 
+
+#figure itself
+land_use_barchart<- summary_land_use %>% 
+  ggplot(aes(x = noaa_subba, 
+             y = parcel_area, fill = master_cat)) +
+  theme_minimal() +
+  geom_col() +
+  labs(fill = "Land Use Category", 
+       x = "", 
+       y = "Percent of Total Area",
+       title = "Primary Land Use Category",
+       subtitle = "by subbasin",
+       caption = "Data Source: ") +
+  coord_flip() +
+  # scale_fill_manual(values = custom_colors,
+  #                   labels = c("Riparian Planting",
+  #                              "Engineered Log Jam",
+  #                              "Floodplain"),
+  #                   guide = guide_legend(reverse = TRUE)) +
+  # geom_text(aes(y = label_y, label = round(n_diff)), color = "white", alpha = 0.5) +
+  
+  # pushing y axis labels to edhe of data 
+  scale_y_continuous(expand = c(0,0)) +
+  
+  # scale_y_continuous(limits = c(0, 85)) +
+  theme(
+    #axes
+    axis.text = element_text(size = 10),
+    axis.title.x = element_text(margin = margin(t = 12, r = 0, b = 30, l = 20), size = 12),
+    #legend
+    legend.position = c(0.5, -0.175),
+    legend.direction = "horizontal",
+    legend.title = element_blank(),
+    # legend.box.background = element_rect(color = "grey"))
+    # titles
+    plot.title = element_text(hjust = 0, vjust = 1.8, size = 16),
+    plot.subtitle = element_text(hjust = 0, vjust = 2.2),
+    plot.caption = element_text(face = "italic", size = 6),
+    # gridlines
+    panel.grid.major.y  = element_blank(),
+    panel.grid.minor.x  = element_blank()
+  ) 
+
+land_use_barchart
+
+ggsave("../final_prods/figures/landuse_barchart.jpeg", plot = land_use_barchart, device = "jpeg", width = 12, height = 7, units = "in")
+
+```
 
 
 ## Mapping land use

@@ -432,8 +432,6 @@ rp_dumb_bell <- cost_graph_fun(all_cost_benefit, "rp", "Riparian Planting")
 
 
 
-
-
 ### Spawner Bar Chart
 ```{r}
 
@@ -606,6 +604,9 @@ ggplot()+
 ```{r}
 # create a key for which subbasins to keep (which have benefits to chinook)
 filtered_data <- all_cost_benefit %>% filter(pop == "fall_chinook" & n_diff > 0) %>% select(noaa_subba) %>% st_drop_geometry() %>% unique()
+
+#save to use for land use plot
+write.csv(filtered_data, here("data", "land_use", "chinook_ben_subbasins.csv"))
 
 #creating a bar chart with spawners by action and subbasin
 
