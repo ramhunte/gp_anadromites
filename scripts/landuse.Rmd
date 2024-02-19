@@ -44,7 +44,7 @@ subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_2022092
 
 #land use parcel data for snohomish and skagit county -->
 land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>% 
-  clean_names()
+  clean_names() %>% select(master_cat, sub_cat, lu_code_id, shape_are, shape_len)
 ```
 
 #NEW PARCELS LAYER BY SUBBASIN 
@@ -58,11 +58,27 @@ land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>%
   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% 
   mutate(parcel_area = st_area(.))
 
-###THIS DOES NOT RUN
-# summary <- land_use_subs %>% 
-#   group_by(noaa_subba, master_cat) %>% 
-#   summarise(perc_land_use = sum(parcel_area)/subba_area*100)
+##summary of percent land use in each subbasin
+summary_land_use <- land_use_subs %>%
+  group_by(noaa_subba, master_cat) %>%
+  mutate(parcel_area=sum(parcel_area)) %>% 
+  st_drop_geometry() %>% 
+  select(-sub_cat) %>% 
+  unique() %>%
+  group_by(noaa_subba, master_cat) %>%
+  # Sum the parcel area for each group
+  summarise(total_parcel_area = sum(parcel_area)) %>%
+  # Ungroup the data
+  ungroup() %>%
+  # Group by 'noaa_subba' again
+  group_by(noaa_subba) %>%
+  # Calculate the relative percentage for each 'master_cat' within each 'noaa_subba'
+  mutate(perc_land_use = round(total_parcel_area / sum(total_parcel_area) * 100,2))
 ```
+
+##Land Use Figure
+
+
 
 ## Mapping land use
 ```{r}
