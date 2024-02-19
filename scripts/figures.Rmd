@@ -117,7 +117,7 @@ fp_map <- cb_map_fun(rest_type = "floodplain",
 )
 
 # save  rp map 
-ggsave("../final_prods/figures/cb_maps/fp_map.jpeg", plot = fp_map, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/cb_maps/fp_map.jpeg", plot = fp_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 # Engineered log jam -------------------------------------------------
 elj_map <- cb_map_fun(rest_type = "elj",  
@@ -132,7 +132,7 @@ elj_map <- cb_map_fun(rest_type = "elj",
 )
 
 # save  rp map 
-ggsave("../final_prods/figures/cb_maps/elj_map.jpeg", plot = elj_map, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/cb_maps/elj_map.jpeg", plot = elj_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 # RP -------------------------------------------------
 rp_map <- cb_map_fun(rest_type = "rp", 
@@ -147,7 +147,7 @@ rp_map <- cb_map_fun(rest_type = "rp",
 )
 
 # save  rp map 
-ggsave("../final_prods/figures/cb_maps/rp_map.jpeg", plot = rp_map, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/cb_maps/rp_map.jpeg", plot = rp_map, device = "jpeg", width = 8, height = 6, units = "in")
 ```
 
 
@@ -254,7 +254,7 @@ ps_basin_map <- ggmap(ps_basemap) +
                               text_cex = .8
   ) 
 # saving figure 
-ggsave("../final_prods/figures/ps_maps/ps_basin_map.jpeg", plot = ps_basin_map, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/ps_maps/ps_basin_map.jpeg", plot = ps_basin_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 
 ```
@@ -338,7 +338,7 @@ inset <- ggmap(pnw_basemap_test) +
 inset
 
 #save item 
-ggsave("../final_prods/figures/ps_maps/inset.jpeg", plot = inset, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/ps_maps/inset.jpeg", plot = inset, device = "jpeg", width = 8, height = 6, units = "in")
 
 ```
 
@@ -350,7 +350,7 @@ final_ps_map <- ps_basin_map +
   patchwork::inset_element(inset, left = -0.4, bottom = .65, right = .65, top = 1)
 
 #save item 
-ggsave("../final_prods/figures/ps_maps/final_ps_map.jpeg", plot = final_ps_map, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/ps_maps/final_ps_map.jpeg", plot = final_ps_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 
 ```
@@ -365,16 +365,17 @@ ggsave("../final_prods/figures/ps_maps/final_ps_map.jpeg", plot = final_ps_map, 
 # floodplain
 fp_dumb_bell <- cost_graph_fun(all_cost_benefit, "floodplain", "Floodplain")
 
-ggsave("../final_prods/figures/total_cost/fp_dumb_bell.jpeg", plot = fp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/total_cost/fp_dumb_bell.jpeg", plot = fp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
 
 # elj
 elj_dumb_bell <- cost_graph_fun(all_cost_benefit, "elj", "Engineered Log Jam")
-ggsave("../final_prods/figures/total_cost/elj_dumb_bell.jpeg", plot = elj_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+
+# ggsave("../final_prods/figures/total_cost/elj_dumb_bell.jpeg", plot = elj_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
 
 # rp
 rp_dumb_bell <- cost_graph_fun(all_cost_benefit, "rp", "Riparian Planting")
 
-ggsave("../final_prods/figures/total_cost/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/total_cost/rp_dumb_bell.jpeg", plot = rp_dumb_bell, device = "jpeg", width = 8, height = 6, units = "in")
 ```
 
 
@@ -422,8 +423,8 @@ ggsave("../final_prods/figures/total_cost/rp_dumb_bell.jpeg", plot = rp_dumb_bel
     kable() %>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
   
-  top20 %>% 
-  save_kable(file = here("final_prods","tables","top20.png"), zoom = 4)
+  # top20 %>% 
+  # save_kable(file = here("final_prods","tables","top20.png"), zoom = 4)
 
 ```
 
@@ -489,13 +490,9 @@ spawner_barchart <- all_cost_benefit %>%
 
 spawner_barchart
 
-ggsave("../final_prods/figures/spawner_barchart.jpeg", plot = spawner_barchart, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/spawner_barchart.jpeg", plot = spawner_barchart, device = "jpeg", width = 8, height = 6, units = "in")
 
 ```
-
-
-
-
 
 
 
@@ -544,9 +541,9 @@ ggplot(aes(x = subbasin_name, y = total_area_ha, fill = hab_unit )) +
 fp_area_subbasin
 
 # saving plot
-ggsave(here("final_prods", "figures", "fp_area_subbasin.jpg"),
-       plot = fp_area_subbasin, device = "jpeg", 
-       width = 8, height = 6, units = "in")
+# ggsave(here("final_prods", "figures", "fp_area_subbasin.jpg"),
+#        plot = fp_area_subbasin, device = "jpeg", 
+#        width = 8, height = 6, units = "in")
 ```
 
 
@@ -590,7 +587,7 @@ cb_spawner_scatter <- all_cost_benefit %>%
   guides(size = "none", color = "legend")
 
 
-ggsave("../final_prods/figures/cb_spawner_scatter.jpeg", plot = cb_spawner_scatter, device = "jpeg", width = 8, height = 6, units = "in")
+# ggsave("../final_prods/figures/cb_spawner_scatter.jpeg", plot = cb_spawner_scatter, device = "jpeg", width = 8, height = 6, units = "in")
 ```
 
 
@@ -605,9 +602,129 @@ ggplot()+
 
 
 
+### Coho Spawner Bar Chart
+```{r}
+
+#creating a bar chart with spawners by action and subbasin
+
+spawner_barchart <- all_cost_benefit %>% 
+  filter(pop == "coho") %>% 
+  mutate(subbasin_name = fct_reorder(subbasin_name, n_diff, .fun = sum),
+         restoration_type = factor(restoration_type,
+                                   levels = c( "rp", "elj", "floodplain"))) %>% 
+  group_by(subbasin_name) %>% 
+  # creating a column to identify where the labels of the n_diff will go on the bar chart for each restoration type in each subbasin
+  mutate(label_y = cumsum(n_diff) - .5 * n_diff) %>%
+  filter(n_diff>0) %>% #remove when there is no benefit
+  
+  ggplot(aes(x = subbasin_name, 
+             y = n_diff, fill = restoration_type)) +
+  theme_minimal() +
+  geom_col() +
+  labs(fill = "Restoration Type", 
+       x = "", 
+       y = "# Annual Coho Spawners",
+       title = "Modeled Annual Coho Spawner Increases",
+       subtitle = "by subbasin and restoration action",
+       caption = "Data Source: Beechie, T. J., Goodman, A., Stefankiv, O., Timpane-Padgham, B., & Lowe, M. (2023). \n Habitat Assessment and Restoration Planning (HARP) Model for the Snohomish and Stillaguamish \n River Basins (noaa:48860).") +
+  coord_flip() +
+  scale_fill_manual(values = custom_colors,
+                    labels = c("Riparian Planting",
+                               "Engineered Log Jam",
+                               "Floodplain"),
+                    guide = guide_legend(reverse = TRUE)) +
+  # geom_text(aes(y = label_y, label = round(n_diff)), color = "white", alpha = 0.5) +
+  
+  # pushing y axis labels to edhe of data 
+  scale_y_continuous(expand = c(0,0)) +
+  
+  # scale_y_continuous(limits = c(0, 85)) +
+  theme(
+    #axes
+    axis.text = element_text(size = 10),
+    axis.title.x = element_text(margin = margin(t = 12, r = 0, b = 30, l = 20), size = 12),
+    #legend
+    legend.position = c(0.5, -0.175),
+    legend.direction = "horizontal",
+    legend.title = element_blank(),
+    # legend.box.background = element_rect(color = "grey"))
+    # titles
+    plot.title = element_text(hjust = 0, vjust = 1.8, size = 16),
+    plot.subtitle = element_text(hjust = 0, vjust = 2.2),
+    plot.caption = element_text(face = "italic", size = 6),
+    # gridlines
+    panel.grid.major.y  = element_blank(),
+    panel.grid.minor.x  = element_blank()
+  ) 
+
+spawner_barchart
+
+ggsave("../final_prods/figures/coho_benefits_barchart.jpeg", plot = spawner_barchart, device = "jpeg", width = 8, height = 6, units = "in")
+
+```
 
 
 
+### Steelhead Spawner Bar Chart
+```{r}
+
+#creating a bar chart with spawners by action and subbasin
+
+spawner_barchart <- all_cost_benefit %>% 
+  filter(pop == "steelhead") %>% 
+  mutate(subbasin_name = fct_reorder(subbasin_name, n_diff, .fun = sum),
+         restoration_type = factor(restoration_type,
+                                   levels = c( "rp", "elj", "floodplain"))) %>% 
+  group_by(subbasin_name) %>% 
+  # creating a column to identify where the labels of the n_diff will go on the bar chart for each restoration type in each subbasin
+  mutate(label_y = cumsum(n_diff) - .5 * n_diff) %>%
+  filter(n_diff>0) %>% #remove when there is no benefit
+  
+  ggplot(aes(x = subbasin_name, 
+             y = n_diff, fill = restoration_type)) +
+  theme_minimal() +
+  geom_col() +
+  labs(fill = "Restoration Type", 
+       x = "", 
+       y = "# Annual Steelhead Spawners",
+       title = "Modeled Annual Steelhead Spawner Increases",
+       subtitle = "by subbasin and restoration action",
+       caption = "Data Source: Beechie, T. J., Goodman, A., Stefankiv, O., Timpane-Padgham, B., & Lowe, M. (2023). \n Habitat Assessment and Restoration Planning (HARP) Model for the Snohomish and Stillaguamish \n River Basins (noaa:48860).") +
+  coord_flip() +
+  scale_fill_manual(values = custom_colors,
+                    labels = c("Riparian Planting",
+                               "Engineered Log Jam",
+                               "Floodplain"),
+                    guide = guide_legend(reverse = TRUE)) +
+  # geom_text(aes(y = label_y, label = round(n_diff)), color = "white", alpha = 0.5) +
+  
+  # pushing y axis labels to edhe of data 
+  scale_y_continuous(expand = c(0,0)) +
+  
+  # scale_y_continuous(limits = c(0, 85)) +
+  theme(
+    #axes
+    axis.text = element_text(size = 10),
+    axis.title.x = element_text(margin = margin(t = 12, r = 0, b = 30, l = 20), size = 12),
+    #legend
+    legend.position = c(0.5, -0.175),
+    legend.direction = "horizontal",
+    legend.title = element_blank(),
+    # legend.box.background = element_rect(color = "grey"))
+    # titles
+    plot.title = element_text(hjust = 0, vjust = 1.8, size = 16),
+    plot.subtitle = element_text(hjust = 0, vjust = 2.2),
+    plot.caption = element_text(face = "italic", size = 6),
+    # gridlines
+    panel.grid.major.y  = element_blank(),
+    panel.grid.minor.x  = element_blank()
+  ) 
+
+spawner_barchart
+
+ggsave("../final_prods/figures/steelhead_benefits_barchart.jpeg", plot = spawner_barchart, device = "jpeg", width = 8, height = 6, units = "in")
+
+```
 
 
 
