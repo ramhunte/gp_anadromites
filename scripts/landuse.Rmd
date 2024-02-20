@@ -48,6 +48,7 @@ land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>%
 
 #also read in the target subbasins (benefits to chinook)
 subbasins_key<-read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
+
 ```
 
 #NEW PARCELS LAYER BY SUBBASIN 
@@ -59,12 +60,12 @@ land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>%
   #joining attributes of noaa subbasin to parcel data 
   st_join(subs_stl, largest = TRUE) %>% 
   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% 
-  mutate(parcel_area = st_area(.))
+  mutate(parcel_area_ha = st_area(.)/10000)
 
 ##summary of percent land use in each subbasin (with all values)
 summary_land_use <- land_use_subs %>%
   group_by(noaa_subba, master_cat) %>%
-  mutate(parcel_area=sum(parcel_area)) %>% 
+  mutate(parcel_area_ha=sum(parcel_area_ha)) %>% 
   st_drop_geometry() %>% 
   select(-sub_cat) %>% 
   unique() %>%
@@ -73,29 +74,29 @@ summary_land_use <- land_use_subs %>%
   # Group by 'noaa_subba' again
   group_by(noaa_subba) %>%
   # Calculate the relative percentage for each 'master_cat' within each 'noaa_subba'
-  mutate(perc_land_use = round(parcel_area / sum(parcel_area) * 100,2)) %>%
+  mutate(perc_land_use = round(parcel_area_ha / sum(parcel_area_ha) * 100,2)) %>%
   mutate(perc_land_use = as.numeric(perc_land_use)) %>% 
-  mutate(parcel_area = as.numeric(parcel_area)) %>% 
+  mutate(parcel_area_ha = as.numeric(parcel_area_ha)) %>% 
   right_join(subbasins_key)
 
 #summary of percent land use (with values under 1 percent aggregated to Other)
 summary_land_use <- land_use_subs %>%
   group_by(noaa_subba, master_cat) %>%
-  mutate(parcel_area = sum(parcel_area)) %>% 
+  mutate(parcel_area_ha = sum(parcel_area_ha)) %>% 
   st_drop_geometry() %>% 
   select(-sub_cat) %>% 
   unique() %>%
   ungroup() %>%
   group_by(noaa_subba) %>%
-  mutate(parcel_area = as.numeric(parcel_area)) %>% 
-  mutate(perc_land_use = parcel_area / sum(parcel_area) * 100,  # Calculate perc_land_use
+  mutate(parcel_area_ha = as.numeric(parcel_area_ha)) %>% 
+  mutate(perc_land_use = parcel_area_ha / sum(parcel_area_ha) * 100,  # Calculate perc_land_use
          master_cat = case_when(
            perc_land_use < 1 ~ "Other",
            TRUE ~ as.character(master_cat)  # Keep the original master_cat otherwise
          )) %>%
   mutate(perc_land_use = round(perc_land_use, 2)) %>% 
   group_by(noaa_subba, master_cat) %>%
-  mutate(parcel_area = sum(parcel_area)) %>% 
+  mutate(parcel_area_ha = sum(parcel_area_ha)) %>% 
   mutate(perc_land_use = round(sum(perc_land_use), 2)) %>% unique()%>% 
   right_join(subbasins_key)
 ```
@@ -105,32 +106,55 @@ summary_land_use <- land_use_subs %>%
 #preparing the data for the figure
   #arrange in descending
   #make factors
+summary_land_use<-summary_land_use %>% 
+  mutate(noaa_subba = fct_reorder(noaa_subba, parcel_area_ha, .fun = sum),
+         master_cat = factor(master_cat,
+                                   levels = c("Forest Lands", 
+                                              "Agricultural Area",
+                                              "Rural Character Residential",
+                                              "Mineral Resource Area",
+                                              "Water",
+                                              "ROW",
+                                              "Public",
+                                              "Intensive Urban",
+                                              "Other"))) %>% 
+  #cleaning names
+  mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
+         subbasin_name = str_replace_all(subbasin_name, "Stillaguamish", ""),
+         subbasin_name = str_replace_all(subbasin_name, "mainstem", "Mainstem")
+  ) 
 
+#define custom colors
+# color themes 
+custom_colors <- c("Agricultural Area" = "#5e4fa2",
+                   "Forest Lands" = "#66c2a5", 
+                   "Mineral Resource Area" = "#fee08b",
+                   "Other" = "#e6f598",
+                   "Public" = "#d53e4f",
+                   "ROW" = "#9e0142",
+                   "Rural Character Residential" = "#abdda4",
+                   "Intensive Urban" = "#f46d43",
+                   "Water" = "#3288bd"
+                   )
 
 #figure itself
 land_use_barchart<- summary_land_use %>% 
-  ggplot(aes(x = noaa_subba, 
-             y = parcel_area, fill = master_cat)) +
+  ggplot(aes(
+    # x = noaa_subba, 
+             x = reorder(subbasin_name, subba_area),
+             y = parcel_area_ha/1000, fill = master_cat)) +
   theme_minimal() +
   geom_col() +
   labs(fill = "Land Use Category", 
        x = "", 
-       y = "Percent of Total Area",
-       title = "Primary Land Use Category",
+       y = "Area (Thousand Hectares)",
+       title = "Land Use Category",
        subtitle = "by subbasin",
        caption = "Data Source: ") +
-  coord_flip() +
-  # scale_fill_manual(values = custom_colors,
-  #                   labels = c("Riparian Planting",
-  #                              "Engineered Log Jam",
-  #                              "Floodplain"),
-  #                   guide = guide_legend(reverse = TRUE)) +
-  # geom_text(aes(y = label_y, label = round(n_diff)), color = "white", alpha = 0.5) +
-  
+  coord_flip() + 
+  scale_fill_manual(values = custom_colors) +
   # pushing y axis labels to edhe of data 
   scale_y_continuous(expand = c(0,0)) +
-  
-  # scale_y_continuous(limits = c(0, 85)) +
   theme(
     #axes
     axis.text = element_text(size = 10),
