@@ -224,8 +224,11 @@ hist_flood_stl<-hist_flood_stl %>% filter(noaa_subba %in% unique(flood_ben$subba
 # hist_flood_stl<-left_join(flood_ben, hist_flood_stl, by=c("subbasin"="noaa_subba"))
 hist_flood_stl<-sf_object <- st_as_sf(hist_flood_stl)
 
+##THIS IS THE SLOWDOWN
 #join marsh/pond floodplain habitat with he habitat adjacent to the river
 floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
+
+# st_write(floodplain_hab_stl, here("data", "fp_shapefiles", "floodplain_shapefiles.shp"), append = FALSE)
 ```
 
 #overlap land use and floodplain shapefile
