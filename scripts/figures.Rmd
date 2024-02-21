@@ -453,7 +453,7 @@ spawner_barchart <- all_cost_benefit %>%
   geom_col() +
   labs(fill = "Restoration Type", 
        x = "", 
-       y = "# Chinook Spawners",
+       y = "# Annual Chinook Spawners",
        title = "Modeled Annual Chinook Spawner Increases",
        subtitle = "by subbasin and restoration action",
        caption = "Data Source: Beechie, T. J., Goodman, A., Stefankiv, O., Timpane-Padgham, B., & Lowe, M. (2023). \n Habitat Assessment and Restoration Planning (HARP) Model for the Snohomish and Stillaguamish \n River Basins (noaa:48860).") +

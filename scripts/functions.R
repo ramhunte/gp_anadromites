@@ -144,14 +144,16 @@ cost_graph_fun <- function(df, rest_type, title) {
   geom_segment(aes(x = total_lower_cost, xend = total_upper_cost,
                    y = fct_reorder(subbasin_name, total_avg_cost), 
                    yend = subbasin_name),
-               color = "grey"
+               color = "grey",
+               size = 1.5
   ) + # reorder occupation by avg_salary here
     geom_point(aes(x = total_lower_cost, y = subbasin_name, 
-                   color = restoration_type, group = restoration_type), size = 2.5, color = "grey") +
+                   color = restoration_type, group = restoration_type), size = 3, color = "#28AFB0") +
     geom_point(aes(x = total_upper_cost, y = subbasin_name,
-                   color = restoration_type, group = restoration_type), size = 2.5, color = "cyan3") +
+                   color = restoration_type, group = restoration_type), size = 3, color = "#03045E") +
     # axis breaks & $ labels ----
   scale_x_continuous(labels = scales::label_dollar(scale = 0.000001, suffix = "M")) +
+    # pushing y axis labels to edhe of data 
     labs(x = "Total Cost ($ million)",
          y = "",
          title = paste(title, "Habitat Restoration Costs")) +
