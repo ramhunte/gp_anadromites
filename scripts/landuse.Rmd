@@ -5,6 +5,7 @@ source("../common.R")
 library(sf)
 library(rmapshaper)
 library(ggplot2)
+library(mapview)
 ```
 
 
@@ -47,11 +48,11 @@ land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>%
   clean_names() %>% select(master_cat, sub_cat, lu_code_id, shape_are, shape_len)
 
 #also read in the target subbasins (benefits to chinook)
-subbasins_key<-read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
+subbasins_key <- read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
 
 ```
 
-#NEW PARCELS LAYER BY SUBBASIN 
+# NEW PARCELS LAYER BY SUBBASIN 
 ```{r}
 #creating a new df with parcels by subbasin 
 
@@ -61,6 +62,8 @@ land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>%
   st_join(subs_stl, largest = TRUE) %>% 
   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% 
   mutate(parcel_area_ha = st_area(.)/10000)
+
+
 
 ##summary of percent land use in each subbasin (with all values)
 summary_land_use <- land_use_subs %>%
@@ -106,7 +109,7 @@ summary_land_use <- land_use_subs %>%
 #preparing the data for the figure
   #arrange in descending
   #make factors
-summary_land_use<-summary_land_use %>% 
+summary_land_use <- summary_land_use %>% 
   mutate(noaa_subba = fct_reorder(noaa_subba, parcel_area_ha, .fun = sum),
          master_cat = factor(master_cat,
                                    levels = c("Forest Lands", 
@@ -186,12 +189,6 @@ ggplot() +
   geom_sf(data = land_use_subs, aes(fill = master_cat))
 ```
 
-#histogram of ???
-```{r}
-ggplot(flow_stl, aes( x= fpw)) +
-  geom_histogram()
-```
-
 #################################### Floodplain ###################################
 ## Creating shapefiles to correspond to the newly created floodplain habitat adjacent to the river
 
@@ -250,8 +247,60 @@ ggplot() +
   theme_minimal()
 ```
 
-#filter to just include farmland and multiply by the cost of farmland
+
+
+### Rays Attempt 
 ```{r}
+# historical floodplain (ponds and marshes)
+flood_hist <- flood_stl %>% 
+  filter(period == "Hist") %>% 
+  select(hab_unit, geometry)
+
+# side channel habitat
+flood_sc <- floodplain_hab_stl_river %>% 
+  # select(hab_unit, geometry) %>% 
+  st_union() %>% 
+  st_sf() %>% 
+  # naming it side channel
+   mutate(hab_unit = "side_channel") 
+
+# combine the two habitats into 1 df
+comb_flood <- rbind(flood_hist, flood_sc) 
+
+#finding just the ag land from the land class
+ag_land <- land_use_subs %>% 
+  filter(master_cat == "Agricultural Area") %>% 
+  # unionize parcels
+  st_union()
+
+# finding floodplain area on ag land
+flood_ag <-  st_intersection(comb_flood, ag_land) 
+
+# finding floodplain ag land within each subbasin
+flood_ag_subba <- st_intersection(flood_ag, subs_stl) %>%
+  select(-shape_area) %>%
+  # finding area in m2, HA, and acres
+  mutate(area_m2 = units::drop_units(st_area(.)),
+         area_ha = area_m2*0.0001,
+         area_acre = area_m2*0.000247105)
+
+# viewing on map 
+mapview(ag_land) +
+mapview(flood_ag_subba, zcol = "hab_unit")
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
