@@ -34,8 +34,7 @@ library(mapview)
 #READING IN THE ABOVE DATA
 ```{r}
 #reading in unionized stilly subasin shape file -->
-subs_union <- st_read(here("data", "HARP", "Subbasins_STL", "unionized_basin.shp")) %>% 
-  st_transform("EPSG:26910")
+subs_union <- st_read(here("data", "HARP", "Subbasins_STL","unionized_basin.shp")) %>% st_transform("EPSG:26910")
 
 #reading in individual stilly subbasins shape file -->
 subs_stl <- st_read(here("data", "HARP", "Subbasins_STL", "Subbasins_STL_20220928.shp")) %>%
@@ -113,8 +112,8 @@ summary_land_use <- summary_land_use %>%
   mutate(noaa_subba = fct_reorder(noaa_subba, parcel_area_ha, .fun = sum),
          master_cat = factor(master_cat,
                                    levels = c("Forest Lands", 
-                                              "Agricultural Area",
                                               "Rural Character Residential",
+                                              "Agricultural Area",
                                               "Mineral Resource Area",
                                               "Water",
                                               "ROW",
@@ -129,15 +128,15 @@ summary_land_use <- summary_land_use %>%
 
 #define custom colors
 # color themes 
-custom_colors <- c("Agricultural Area" = "#5e4fa2",
-                   "Forest Lands" = "#66c2a5", 
-                   "Mineral Resource Area" = "#fee08b",
-                   "Other" = "#e6f598",
-                   "Public" = "#d53e4f",
-                   "ROW" = "#9e0142",
-                   "Rural Character Residential" = "#abdda4",
-                   "Intensive Urban" = "#f46d43",
-                   "Water" = "#3288bd"
+custom_colors <- c("Agricultural Area" = "#066b6b",
+                   "Forest Lands" = "#03045E", 
+                   "Mineral Resource Area" = "#b5dee8",
+                   "Other" = "#71a1bd",
+                   "Public" = "#599e94",
+                   "ROW" = "#144040",
+                   "Rural Character Residential" = "#28AFB0",
+                   "Intensive Urban" = "#a3c2c2",
+                   "Water" = "#1d538a" 
                    )
 
 #figure itself
@@ -153,7 +152,8 @@ land_use_barchart<- summary_land_use %>%
        y = "Area (Thousand Hectares)",
        title = "Land Use Category",
        subtitle = "by subbasin",
-       caption = "Data Source: ") +
+       caption = "Data Source: 
+United States. (2024) U.S. Census of Agriculture.") +  ##CHANGE THIS
   coord_flip() + 
   scale_fill_manual(values = custom_colors) +
   # pushing y axis labels to edhe of data 
@@ -178,7 +178,7 @@ land_use_barchart<- summary_land_use %>%
 
 land_use_barchart
 
-ggsave("../final_prods/figures/landuse_barchart.jpeg", plot = land_use_barchart, device = "jpeg", width = 12, height = 7, units = "in")
+ggsave("../final_prods/figures/landuse_barchart.jpeg", plot = land_use_barchart, device = "jpeg", width = 10, height = 7, units = "in")
 
 ```
 
@@ -223,7 +223,7 @@ hist_flood_stl<-sf_object <- st_as_sf(hist_flood_stl)
 
 ##THIS IS THE SLOWDOWN
 #join marsh/pond floodplain habitat with he habitat adjacent to the river
-floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
+# floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
 
 # st_write(floodplain_hab_stl, here("data", "fp_shapefiles", "floodplain_shapefiles.shp"), append = FALSE)
 ```
@@ -231,25 +231,14 @@ floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
 #overlap land use and floodplain shapefile
 CHECK THIS ON A MAP
 ```{r}
-#overlap the land use with the floodplain_hab_stl
-farm_stl<-land_use_subs %>% filter(master_cat=="Agricultural Area")
-floodplain_land_use <- st_join(farm_stl, floodplain_hab_stl, join = st_intersects)
-# floodplain_land_use <- st_intersection(farm_stl, floodplain_hab_stl)
-```
-
-#plot to see what this looks like (if it is working)
-```{r}
-ggplot() +
-  geom_sf(data = flow_stl, fill = "darkblue") +
-  #geom_sf(data = floodplain_land_use, fill = "yellow", color = "yellow") +
-  # geom_sf(data = bankfull_stl, fill = "lightblue", color = "black") +
-   geom_sf(data = floodplain_land_use, fill = "yellow", color = "yellow") +
-  theme_minimal()
+# #overlap the land use with the floodplain_hab_stl
+# farm_stl<-land_use_subs %>% filter(master_cat=="Agricultural Area")
+# floodplain_land_use <- st_join(farm_stl, floodplain_hab_stl, join = st_intersects)
+# # floodplain_land_use <- st_intersection(farm_stl, floodplain_hab_stl)
 ```
 
 
-
-### Rays Attempt 
+### Getting a cost per subbasin value
 ```{r}
 # historical floodplain (ponds and marshes)
 flood_hist <- flood_stl %>% 
@@ -282,18 +271,91 @@ flood_ag_subba <- st_intersection(flood_ag, subs_stl) %>%
   # finding area in m2, HA, and acres
   mutate(area_m2 = units::drop_units(st_area(.)),
          area_ha = area_m2*0.0001,
-         area_acre = area_m2*0.000247105)
+         area_acre = area_m2*0.000247105, 
+         cost = area_acre*22374) %>%
+  inner_join(subbasins_key) #only keeping subbasins that have benefits to chinook
 
 # viewing on map 
 mapview(ag_land) +
 mapview(flood_ag_subba, zcol = "hab_unit")
 
+#making a summarized table with the values
+flood_ag_subba_sum<-flood_ag_subba %>% group_by(noaa_subba, hab_unit) %>% mutate(total_subba_cost=sum(cost), total_subba_area_acres=sum(area_acre)) %>% st_drop_geometry() %>% 
+  select(noaa_subba, total_subba_area_acres, total_subba_cost, hab_unit) %>% unique()
+
+
 ```
 
 
+##making a figure showing the costs per subbasin
+
+
+```{r}
+#preparing the data for the figure
+  #arrange in descending
+  #make factors
+flood_ag_subba_sum <- flood_ag_subba_sum %>% 
+  mutate(noaa_subba = fct_reorder(noaa_subba, total_subba_cost, .fun = sum),
+         master_cat = factor(hab_unit,
+                                   levels = c("side_channel","Marsh","Pond"))) %>% 
+  #cleaning names
+  mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
+         subbasin_name = str_replace_all(subbasin_name, "Stillaguamish", ""),
+         subbasin_name = str_replace_all(subbasin_name, "mainstem", "Mainstem"),
+         hab_unit = str_replace_all(hab_unit, "side_channel", "Side Channel")
+  ) 
+
+#define custom colors
+# color themes 
+custom_colors <- c("Pond" = "#19647E",
+                   # "#1F271B",
+                   "Marsh" = "#03045E", 
+                   "Side Channel" = "#28AFB0"
+                   )
 
 
 
+#figure itself
+ag_land_price_barchart<- flood_ag_subba_sum %>% 
+  ggplot(aes(
+    # x = noaa_subba, 
+             x = reorder(subbasin_name, total_subba_cost),
+             y = total_subba_cost/1000000, fill = hab_unit)) +
+  theme_minimal() +
+  geom_col() +
+  labs(fill = "Habitat Type", 
+       x = "", 
+       y = "Cost (Million $)",
+       title = "Price of Agricultural Floodplain Habitat",
+       subtitle = "by subbasin",
+       caption = "Data Source: 
+United States. (2024) U.S. Census of Agriculture.") +  ##CHANGE THIS
+  coord_flip() + 
+  scale_fill_manual(values = custom_colors) +
+  # pushing y axis labels to edhe of data 
+  scale_y_continuous(expand = c(0,0)) +
+  theme(
+    #axes
+    axis.text = element_text(size = 10),
+    axis.title.x = element_text(margin = margin(t = 12, r = 0, b = 30, l = 20), size = 12),
+    #legend
+    legend.position = c(0.5, -0.175),
+    legend.direction = "horizontal",
+    legend.title = element_blank(),
+    # legend.box.background = element_rect(color = "grey"))
+    # titles
+    plot.title = element_text(hjust = 0, vjust = 1.8, size = 16),
+    plot.subtitle = element_text(hjust = 0, vjust = 2.2),
+    plot.caption = element_text(face = "italic", size = 6),
+    # gridlines
+    panel.grid.major.y  = element_blank(),
+    panel.grid.minor.x  = element_blank()
+  ) 
+
+ag_land_price_barchart
+
+ggsave("../final_prods/figures/ag_land_price_barchart.jpeg", plot = ag_land_price_barchart, device = "jpeg", width = 10, height = 7, units = "in")
+```
 
 
 
