@@ -283,6 +283,9 @@ mapview(flood_ag_subba, zcol = "hab_unit")
 flood_ag_subba_sum<-flood_ag_subba %>% group_by(noaa_subba, hab_unit) %>% mutate(total_subba_cost=sum(cost), total_subba_area_acres=sum(area_acre)) %>% st_drop_geometry() %>% 
   select(noaa_subba, total_subba_area_acres, total_subba_cost, hab_unit) %>% unique()
 
+# #by subbasin alone
+# flood_ag_subba_sum<-flood_ag_subba %>% group_by(noaa_subba) %>% mutate(total_subba_cost=sum(cost), total_subba_area_acres=sum(area_acre)) %>% st_drop_geometry() %>% 
+#   select(noaa_subba, total_subba_area_acres, total_subba_cost) %>% unique()
 
 ```
 
