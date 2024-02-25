@@ -1,0 +1,30 @@
+```{r}
+#sourcing data
+source("../common.R")
+
+library(sf)
+library(rmapshaper)
+library(ggplot2)
+library(mapview)
+```
+
+```{r}
+## Read in census data
+
+POC <- st_read(here("data", "POC_WA", "POC_WA","People_of_Color.shp")) %>% st_transform("EPSG:26910")
+
+POC_stilly <- st_intersection(POC, subs_stl) %>% 
+  right_join(subbasins_key)%>% #keep only application subbasins
+  group_by(noaa_subba) %>% 
+  mutate(Total_Pop=sum(Total_Popu),
+         POC=sum(People_of_), 
+         Percent_POC=POC/Total_Pop) %>% 
+  select(noaa_subba, Total_Pop, POC, Percent_POC) %>% unique() 
+
+POC_stilly<-POC_stilly %>% group_by(noaa_subba) %>% st_union()
+  
+
+# viewing on map 
+mapview(POC_stilly, zcol = "Percent_Pe")
+```
+
