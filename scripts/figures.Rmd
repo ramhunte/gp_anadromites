@@ -742,6 +742,38 @@ ggsave("../final_prods/figures/steelhead_benefits_barchart.jpeg", plot = spawner
 ```
 
 
+#exploration of costs with area standardized
+```{r}
+df_filtered <- all_cost_benefit %>% 
+  filter(pop == "fall_chinook",
+         restoration_type == "rp") %>% 
+  mutate(area = units::drop_units(st_area(.)), 
+         upp_no_area=total_upper_cost/area,
+         low_no_area=total_lower_cost/area)
 
+# initialize plot (we'll map our aesthetics locally for each geom, below) ----
+plot<-ggplot(data = df_filtered, aes(group = restoration_type
+)) +
+  # create dumbbells ----
+geom_segment(aes(x = low_no_area, xend = upp_no_area,
+                 y = fct_reorder(subbasin_name, total_avg_cost), 
+                 yend = subbasin_name),
+             color = "grey",
+             size = 1.5
+) + # reorder occupation by avg_salary here
+  geom_point(aes(x = low_no_area, y = subbasin_name, 
+                 color = restoration_type, group = restoration_type), size = 3, color = "#28AFB0") +
+  geom_point(aes(x = upp_no_area, y = subbasin_name,
+                 color = restoration_type, group = restoration_type), size = 3, color = "#03045E") +
+  # axis breaks & $ labels ----
+# scale_x_continuous(labels = scales::label_dollar(scale = 0.000001, suffix = "M")) +
+  # pushing y axis labels to edhe of data 
+  labs(x = "Total Cost ($ million)",
+       y = "",
+       title = "Habitat Restoration Costs") +
+  theme_minimal() 
+
+plot
+```
 
 
