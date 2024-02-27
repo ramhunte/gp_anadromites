@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <origin/>
+                <pubdate>20220823</pubdate>
+                <title>Unemployed (%)</title>
+                <geoform>vector digital data</geoform>
+                <othercit>Washington Tracking Network, Washington State Department of Health. Web. "Population Unemployed". Data obtained from US Census American Community Survey, 2019. Published on WTN: 14 Dec 2019.</othercit>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>This layer represents the population of people 16 years and older that are in the labor force and registered as unemployed. This measure was derived from the following ACS Table &amp;quot;Employment Status&amp;quot; (DP03) columns HC02_VC05, HC01_VC07.  A detailed description is available here: https://fortress.wa.gov/doh/wtn/WTNPortal#!q0=627</abstract>
+            <purpose>Display Washington Tracking Network (WTN) version 2.0 ranking of Census tracts by percentage of unemployment.</purpose>
+        </descript>
+        <timeperd>
+            <timeinfo>
+                <sngdate>
+                    <caldate>20191214</caldate>
+                </sngdate>
+            </timeinfo>
+            <current>Data is from 2019</current>
+        </timeperd>
+        <status>
+            <progress>In work</progress>
+            <update>Biannually</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-125.0</westbc>
+                <eastbc>-116.0</eastbc>
+                <northbc>49.1</northbc>
+                <southbc>45.0</southbc>
+            </bounding>
+        </spdom>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>Unemployment</themekey>
+                <themekey>Jobs</themekey>
+                <themekey>Employment</themekey>
+            </theme>
+            <theme>
+                <themekt>ISO 19115 Topic Categories</themekt>
+                <themekey>environment</themekey>
+                <themekey>health</themekey>
+                <themekey>society</themekey>
+            </theme>
+            <place>
+                <placekt>None</placekt>
+                <placekey>WA</placekey>
+                <placekey>USA</placekey>
+            </place>
+            <temporal>
+                <tempkt>None</tempkt>
+                <tempkey>2019</tempkey>
+            </temporal>
+        </keywords>
+        <accconst>Other Constraints</accconst>
+        <useconst>Neither the Washington State Department of Health (WADOH), nor any agency, officer, or employee of the WADOH warrants the accuracy, reliability or timeliness of any information published by this system, nor endorses any content, viewpoints, products, or services linked from this system, and shall not be held liable for any losses caused by reliance on the accuracy, reliability, or timeliness of such information. Portions of such information may be incorrect or not current. Any person or entity who relies on any information obtained from this system does so at their own risk. </useconst>
+        <ptcontac>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Washington State Department of Health</cntorg>
+                    <cntper>Lauren Freelander</cntper>
+                </cntorgp>
+                <cntpos>Spatial Epidemiologist &amp; Radon Director</cntpos>
+                <cntaddr>
+                    <addrtype>mailing</addrtype>
+                    <address>PO Box 47846</address>
+                    <city>Olympia</city>
+                    <state>WA</state>
+                    <postal>98504-7846</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>(360) 236-3246</cntvoice>
+                <cntemail>lauren.freelander@doh.wa.gov</cntemail>
+            </cntinfo>
+        </ptcontac>
+        <datacred>Census, WA DOH</datacred>
+        <native>Version 6.2 (Build 9200) ; Esri ArcGIS 10.8.1.14362</native>
+    </idinfo>
+    <dataqual>
+        <logic>Unknown</logic>
+        <complete>Unknown</complete>
+        <lineage>
+            <procstep>
+                <procdesc>Rankings were joined to the 2010 Census tracts using ArcMap.</procdesc>
+                <procdate>20210216</procdate>
+            </procstep>
+        </lineage>
+    </dataqual>
+    <spdoinfo>
+        <direct>Vector</direct>
+        <ptvctinf>
+            <sdtsterm>
+                <sdtstype>GT-polygon composed of chains</sdtstype>
+                <ptvctcnt>1458</ptvctcnt>
+            </sdtsterm>
+        </ptvctinf>
+    </spdoinfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>Population_Unemployed</enttypl>
+                <enttypd>ArcGIS Feature Class</enttypd>
+                <enttypds>ESRI</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>OBJECTID</attrlabl>
+                <attrdef>Internal feature number.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <udom>Sequential unique whole numbers that are automatically generated.</udom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Census_Tract</attrlabl>
+                <attrdef>2010 Census tract ID containing the state and county FIPS code prefixes.</attrdef>
+                <attrdefs>US Census Bureau</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <udom>Unique Census Tract ID</udom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>IBL_Rank</attrlabl>
+                <attrdef>Numeric rank for this layer</attrdef>
+                <attrdefs>WTN</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <rdom>
+                                                						
+                        
+                        <rdommin>1</rdommin>
+                                                						
+                        
+                        <rdommax>10</rdommax>
+                                                					
+                    
+                    </rdom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape</attrlabl>
+                <attrdef>Feature geometry.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <udom>Coordinates defining the features.</udom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>EHD_Rank</attrlabl>
+                <attrdef>Environmental Health Disparities Rank</attrdef>
+                <attrdefs>WTN</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <rdom>
+                                                						
+                        
+                        <rdommin>1</rdommin>
+                                                						
+                        
+                        <rdommax>10</rdommax>
+                                                					
+                    
+                    </rdom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Env_SEF_Rank</attrlabl>
+                <attrdef>Socioeconomic Factors Rank</attrdef>
+                <attrdefs>DOH</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <rdom>
+                                                						
+                        
+                        <rdommin>1</rdommin>
+                                                						
+                        
+                        <rdommax>10</rdommax>
+                                                					
+                    
+                    </rdom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Num_Unemployed</attrlabl>
+                <attrdef>Population unemployed</attrdef>
+                <attrdefs>Census</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Employable_Population_Over15</attrlabl>
+                <attrdef>Employable population over age 16.</attrdef>
+                <attrdefs>Census</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Percent_Unemployed</attrlabl>
+                <attrdef>Percent Unemployed</attrdef>
+                <attrdefs>DOH</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Lower_ME</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Upper_ME</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Shape_Length</attrlabl>
+                <attrdef>Length of feature in internal units.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <udom>Positive real numbers that are automatically generated.</udom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape_Area</attrlabl>
+                <attrdef>Area of feature in internal units squared.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                                        					
+                    
+                    <udom>Positive real numbers that are automatically generated.</udom>
+                                        				
+                
+                </attrdomv>
+            </attr>
+        </detailed>
+    </eainfo>
+    <metainfo>
+        <metd>20220203</metd>
+        <metc>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Washington State Department of Health</cntorg>
+                    <cntper>Lauren Freelander</cntper>
+                </cntorgp>
+                <cntpos>Spatial Epidemiologist &amp; Radon Director</cntpos>
+                <cntaddr>
+                    <addrtype>mailing</addrtype>
+                    <address>PO Box 47846</address>
+                    <city>Olympia</city>
+                    <state>WA</state>
+                    <postal>98504-7846</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>(360) 236-3246</cntvoice>
+                <cntemail>lauren.freelander@doh.wa.gov</cntemail>
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>

@@ -11,9 +11,13 @@ library(mapview)
 ```{r}
 ## Read in census data
 
-POC <- st_read(here("data", "POC_WA", "POC_WA","People_of_Color.shp")) %>% st_transform("EPSG:26910")
+POC <- st_read(here("data", "POC_WA", "POC_WA","People_of_Color.shp")) 
 
-POC_stilly <- st_intersection(POC, subs_stl) %>% 
+POC <- st_transform(POC, crs = st_crs(subs_stl)$proj4string)
+
+subbasins_key <- read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
+
+POC_stilly <- st_intersection(POC, subs_stl) %>% #overlaying onto subbasins
   right_join(subbasins_key)%>% #keep only application subbasins
   group_by(noaa_subba) %>% 
   mutate(Total_Pop=sum(Total_Popu),
@@ -21,10 +25,80 @@ POC_stilly <- st_intersection(POC, subs_stl) %>%
          Percent_POC=POC/Total_Pop) %>% 
   select(noaa_subba, Total_Pop, POC, Percent_POC) %>% unique() 
 
-POC_stilly<-POC_stilly %>% group_by(noaa_subba) %>% st_union()
+# POC_stilly<-POC_stilly %>% group_by(noaa_subba) %>% st_union()
   
 
 # viewing on map 
-mapview(POC_stilly, zcol = "Percent_Pe")
+mapview(POC_stilly, zcol = "Percent_POC")
+
+
+```
+
+```{r}
+Poverty <- st_read(here("data", "Poverty_WA", "Poverty_WA","Population_Living_in_Poverty.shp")) 
+
+Poverty <- st_transform(Poverty, crs = st_crs(subs_stl)$proj4string)
+
+Poverty_stilly <- st_intersection(Poverty, subs_stl) %>% #overlaying onto subbasins
+  right_join(subbasins_key)%>% #keep only application subbasins
+  group_by(noaa_subba) %>% 
+  mutate(Total_Pop=sum(Total_Popu),
+         Pov=sum(Num_Living), 
+         Percent_Poverty=Pov/Total_Pop) %>% 
+  select(noaa_subba, Total_Pop, Pov, Percent_Poverty) %>% unique() 
+
+mapview(Poverty_stilly, zcol = "Percent_Poverty")
+```
+
+```{r}
+Unemployment <- st_read(here("data", "Unemployment_WA", "Unemployment_WA","Population_Unemployed.shp")) 
+
+Unemployment <- st_transform(Unemployment, crs = st_crs(subs_stl)$proj4string)
+
+Unemployment_stilly <- st_intersection(Unemployment, subs_stl) %>% #overlaying onto subbasins
+  right_join(subbasins_key)%>% #keep only application subbasins
+  group_by(noaa_subba) %>% 
+  mutate(Employed=sum(Employable),
+         Unemployed=sum(Num_Unempl), 
+         Percent_Unemployed=Unemployed/Employed) %>% 
+  select(noaa_subba, Employed, Unemployed, Percent_Unemployed) %>% unique() 
+
+mapview(Unemployment_stilly, zcol = "Percent_Unemployed")
+```
+
+```{r}
+tribal_jurisdiction <- st_read(here("data", "Tribal_Jurisdiction_Sno", "Tribal_Jurisdiction_Sno","Tribal_Jurisdiction.shp")) 
+
+tribal_jurisdiction <- st_transform(tribal_jurisdiction, crs = st_crs(subs_stl)$proj4string)
+
+tribal_jurisdiction_stilly <- st_intersection(tribal_jurisdiction, subs_stl) %>% right_join(subbasins_key) %>% mutate(tribal_lands="yes") %>% select(noaa_subba, tribal_lands) 
+
+mapview(tribal_jurisdiction_stilly)
+```
+
+#join the layers
+```{r}
+POC_stilly_filtered<-POC_stilly %>% select(Percent_POC)
+Poverty_stilly_filtered<-Poverty_stilly %>% select(Percent_Poverty)
+Unemployment_stilly_filtered<-Unemployment_stilly %>% select(Percent_Unemployed)
+
+demo_layer<-st_join(POC_stilly_filtered, Poverty_stilly_filtered)
+demo_layer<-st_join(demo_layer, Unemployment_stilly_filtered)
+demo_layer<-st_join(demo_layer, tribal_jurisdiction_stilly)
+
+#replace values with NA tribal land with no
+demo_layer$tribal_lands <- replace(demo_layer$tribal_lands, is.na(demo_layer$tribal_lands), "no")
+
+#putting in cutoffs
+demo_layer_filtered <- demo_layer %>%
+  mutate(POC_score = ifelse(Percent_POC > 0.125, 1, 0),
+         Poverty_score = ifelse(Percent_Poverty > 0.16, 1, 0),
+         Unemployed_score = ifelse(Percent_Unemployed > 0.042, 1, 0),
+         Tribal_score= ifelse(Percent_Unemployed %in% "yes", 1, 0),
+         Total_score=POC_score+Poverty_score+Unemployed_score+Tribal_score
+         )
+
+mapview(demo_layer_filtered, zcol = "Total_score")
+
 ```
 
