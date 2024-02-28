@@ -206,7 +206,26 @@ rp_cost <- function(input_df) {
   return(input_df)
 }
 
-rp_cost_final <- rp_cost(flow_stl_rp)
+rp_cost_final <- rp_cost(flow_stl_rp) %>% 
+  # average of lower cost per acre 
+ mutate(lower_cost_acre_ppi =  lower_cost/rip_acres*ppi,
+        upper_cost_acre_ppi =  upper_cost/rip_acres*ppi)
+```
+
+# finding the cost per acre summary by subbasin
+# make into a box plot 
+```{r}
+rp_cost_acre_summary <- rp_cost_final %>% 
+  mutate(lower_cost_acre_ppi = 
+           ifelse(lower_cost_acre_ppi == 0, NA, lower_cost_acre_ppi),
+         upper_cost_acre_ppi = 
+           ifelse(upper_cost_acre_ppi == 0, NA, upper_cost_acre_ppi)) %>%  
+  st_drop_geometry() 
+  group_by(noaa_subba) %>% 
+  summarise(lower_avg = mean(lower_cost_acre_ppi, na.rm = TRUE),
+            upper_avge = mean(upper_cost_acre_ppi, na.rm = TRUE))
+
+rp_cost_acre_summary
 ```
 
 

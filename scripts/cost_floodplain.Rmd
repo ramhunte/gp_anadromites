@@ -211,9 +211,14 @@ side_channel_flow<-calculate_marsh_cost(side_channel_flow)
 side_channel_flow <- side_channel_flow %>% 
   mutate(lower_cost=lower_cost* ppi) %>% 
   mutate(upper_cost=upper_cost* ppi) %>% 
-  mutate(area_a=sc_area*0.000247105) %>% #meters squared to hectares
-  mutate(total_lower_cost=lower_cost*sc_area) %>% 
-  mutate(total_upper_cost=upper_cost*sc_area) 
+  mutate(area_a=sc_area*0.000247105) %>% #meters squared to actres
+  mutate(total_lower_cost=lower_cost*area_a) %>% 
+  mutate(total_upper_cost=upper_cost*area_a) 
+
+test <- side_channel_flow %>% 
+filter(noaa_subba == "mainstem_Stillaguamish") %>% 
+  summarize(lower = sum(total_lower_cost),
+            upper = sum(total_upper_cost))
 
 ##get geometry of subbasin
 #calculating final cost riparian planting by subbasin 
@@ -221,10 +226,10 @@ side_channel_flow <- side_channel_flow %>%
   #dropping stream geometries
   st_drop_geometry() %>% 
   #grouping by subbasin
-  group_by(noaa_subba) %>% 
+  group_by(noaa_subba)  %>% 
   #adding up all lower cost ranges for reach costs by subbasin and multiplying by the producer price index 
-  summarize(total_lower_cost = sum(lower_cost),
-            total_upper_cost = sum(upper_cost)) %>% 
+  summarize(total_lower_cost = sum(total_lower_cost),
+            total_upper_cost = sum(total_upper_cost)) %>% 
   #joining with subs_stl to get the geometries of the subbasins
   right_join(subs_stl[,1] )%>% 
   mutate(hab_unit="side_channel") %>% 
@@ -253,7 +258,8 @@ marsh_cost_inflation <- marsh_cost %>%
 #combining the marsh costs and the pond costs
 ```{r}
 #marsh costs
-marsh_cost_inflation_select<-marsh_cost_inflation %>% 
+marsh_cost_inflation_select <-
+  marsh_cost_inflation %>% 
   select(geometry, noaa_subba, hab_unit, total_lower_cost, total_upper_cost) 
 
 #pond costs
@@ -273,11 +279,15 @@ stilly_total_cost<-full_join(marsh_cost_inflation_select, pond_cost_inflation_se
 #grouped total costs (pond and marsh only)
 stilly_subbasin_cost <- stilly_total_cost %>% 
   group_by(noaa_subba) %>% 
-  summarise(total_lower_cost = sum(total_lower_cost), total_upper_cost = sum(total_upper_cost)) %>%
+  summarise(total_lower_cost = sum(total_lower_cost), 
+            total_upper_cost = sum(total_upper_cost)) %>%
   st_drop_geometry()
 
 #adding side channel
-stilly_subbasin_cost<-full_join(stilly_subbasin_cost, side_channel_inflation_select) %>% st_drop_geometry() %>% group_by(noaa_subba) %>% summarize(total_lower_cost=sum(total_lower_cost), 
+stilly_subbasin_cost<-full_join(stilly_subbasin_cost, side_channel_inflation_select) %>% 
+  st_drop_geometry() %>% 
+  group_by(noaa_subba) %>% 
+  summarize(total_lower_cost=sum(total_lower_cost), 
     total_upper_cost=sum(total_upper_cost))%>% 
   mutate(average_cost=(total_upper_cost+total_lower_cost)/2)
 
