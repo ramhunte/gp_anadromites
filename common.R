@@ -83,3 +83,19 @@ ppi<-1+(ppi_perc/100)
 # all_barriers <- st_transform(all_barriers, crs = subs_stl_crs) #change crs
 # stl_barriers <- st_intersection(all_barriers, subs_stl)
 # st_write(stl_barriers, here("data", "barriers","stl_barriers.shp"))
+
+
+####### google basemap ###########
+
+# api key
+ggmap::register_google(key = "AIzaSyAMlAe4fbAxjFToWnpW-28exZtSUC6bXL8")
+api_key <- "AIzaSyAMlAe4fbAxjFToWnpW-28exZtSUC6bXL8"
+
+# making google map base map 
+basemap <- ggmap::get_googlemap(
+  center = c(lon = -121.9, lat = 48.25),
+  zoom = 9,
+  maptype = "satellite",
+  extent = "panel",
+  source = "google",
+  key = api_key)
