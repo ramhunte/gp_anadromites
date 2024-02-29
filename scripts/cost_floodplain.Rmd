@@ -46,8 +46,11 @@ subs_mod <- subs_stl %>%
 
 
 ## finding the sub basins that each fp habitat lies in. If it lies in multiple sub basins, it was split up into multiple polygons by the sub basin (performed by st_intersection)
-hist_flood_stl <- st_intersection(subs_mod, filter(flood_stl, period %in% "Hist")) 
-  # filter(period=="Hist")
+hist_flood_stl <- filter(flood_stl, period %in% "Hist") %>% 
+  st_join(subs_mod, largest = TRUE)  
+
+# mapview::mapview(test, zcol = "noaa_subba")
+
 
 ## filtering for specific columns to make the join cleaner
 slope_width_stl<-flow_stl %>% 
@@ -60,8 +63,10 @@ hist_flood_stl_var<- left_join(hist_flood_stl, slope_width_stl, by = "noaaid")
 
 #need to fix because not all reach names have noaa_subba matches
 ## Join the variables with the side channel multipliers
-hist_flood_stl_var_mult<-left_join(hist_flood_stl_var, side_channel_mult_stl, by = c("noaa_subba"= "reach_name"))%>% 
+hist_flood_stl_var_mult <- left_join(hist_flood_stl_var, side_channel_mult_stl, 
+                                     by = c("noaa_subba"= "reach_name")) %>% 
   mutate(project_number = 1:n()) %>% 
+  
   #some of the reaches dont have side channel multipliers b/c no significant fp habitat, so we are giving them a vlaue of 1.001 so NA values are not present 
   mutate(multiplier = ifelse(is.na(multiplier), 0.001, multiplier))
 
@@ -119,7 +124,12 @@ pond_cost_stl_inflated_custom <- calculate_pond_cost_inflation_geometry_custom(
 pond_cost_inflation <- pond_cost_stl_inflated_custom %>% 
   mutate(area_a=area_ha*2.47105) %>% 
   mutate(total_lower_cost=lower_cost*area_a) %>% 
-  mutate(total_upper_cost=upper_cost*area_a)
+  mutate(total_upper_cost=upper_cost*area_a) 
+
+pond_avg_costs <- pond_cost_inflation %>% 
+  group_by(noaa_subba, hab_unit) %>% 
+  summarize(lower_avg_cost = mean(lower_cost),
+            upper_avg_cost = mean(upper_cost))
 ```
 
 Create a function that takes different multiplier values and energies and creates a upper and lower cost range
@@ -213,16 +223,25 @@ side_channel_flow <- side_channel_flow %>%
   mutate(upper_cost=upper_cost* ppi) %>% 
   mutate(area_a=sc_area*0.000247105) %>% #meters squared to actres
   mutate(total_lower_cost=lower_cost*area_a) %>% 
-  mutate(total_upper_cost=upper_cost*area_a) 
+  mutate(total_upper_cost=upper_cost*area_a)
+```
 
-test <- side_channel_flow %>% 
-filter(noaa_subba == "mainstem_Stillaguamish") %>% 
-  summarize(lower = sum(total_lower_cost),
-            upper = sum(total_upper_cost))
+# get side channel avg cost/acre
+```{r}
+sc_avg_costs <- side_channel_flow %>% 
+  st_drop_geometry() %>% 
+  group_by(noaa_subba) %>% 
+  summarise(lower_avg_cost = mean(total_lower_cost, na.rm = TRUE),
+            upper_avg_cost = mean(total_upper_cost, na.rm = TRUE)) %>% 
+  mutate(hab_unit="side_channel") %>% 
+  na.omit()
+```
 
+
+```{r}
 ##get geometry of subbasin
 #calculating final cost riparian planting by subbasin 
-side_channel_flow <- side_channel_flow %>%
+side_channel_costs<- side_channel_flow %>%
   #dropping stream geometries
   st_drop_geometry() %>% 
   #grouping by subbasin
@@ -233,7 +252,7 @@ side_channel_flow <- side_channel_flow %>%
   #joining with subs_stl to get the geometries of the subbasins
   right_join(subs_stl[,1] )%>% 
   mutate(hab_unit="side_channel") %>% 
-  st_as_sf()
+  st_as_sf() 
 ```
 
 
@@ -241,7 +260,8 @@ side_channel_flow <- side_channel_flow %>%
 hist_flood_stl_var_mult$slope_gradient <- hist_flood_stl_var_mult$slope*100
 marsh_energy_stl<-assign_energy_width(hist_flood_stl_var_mult)
 
-marsh_cost <- calculate_marsh_cost(marsh_energy_stl)
+marsh_cost <- calculate_marsh_cost(filter(marsh_energy_stl,
+                                          hab_unit == "Marsh"))
 
 # #checking if any subbasins with assigned multipliers had habitat
 # result<-marsh_cost %>% filter(multiplier==0.001)
@@ -255,8 +275,22 @@ marsh_cost_inflation <- marsh_cost %>%
   mutate(total_upper_cost=upper_cost*area_a)
 ```
 
+# avg cost/ acre marsh and ponds
+```{r}
+# get side channel avg cost/acre
+marsh_avg_costs <- marsh_cost_inflation %>% 
+  st_drop_geometry() %>% 
+  group_by(noaa_subba, hab_unit) %>% 
+  summarise(lower_avg_cost = sum(lower_cost)/sum(area_a),
+            upper_avg_cost = sum(upper_cost)/sum(area_a))
+
+```
+
+
+
 #combining the marsh costs and the pond costs
 ```{r}
+
 #marsh costs
 marsh_cost_inflation_select <-
   marsh_cost_inflation %>% 
@@ -295,6 +329,15 @@ stilly_subbasin_cost<-full_join(stilly_subbasin_cost, side_channel_inflation_sel
  
  stilly_subbasin_cost <- left_join(subs_stl, stilly_subbasin_cost, by = "noaa_subba") %>% 
    select(noaa_subba, total_lower_cost, total_upper_cost, geometry) 
+```
+
+# avg costs 
+```{r}
+avg_fp_costs <- rbind(pond_avg_costs, 
+      marsh_avg_costs,
+      sc_avg_costs)
+
+write.csv(avg_fp_costs, "../final_prods/tables/average_fp_costs.csv")
 ```
 
 
@@ -355,7 +398,8 @@ side_channel_area$area_ha<-st_area(side_channel_area)/10000
 #drop units
 side_channel_area$area_ha <- as.numeric(side_channel_area$area_ha)
 side_channel_area$hab_unit<-"side_channel"
-side_channel_area<-side_channel_area %>% select(hab_unit, area_ha, noa_sbb) %>% 
+side_channel_area<-side_channel_area %>% 
+  select(hab_unit, area_ha, noa_sbb) %>% 
   rename("noaa_subba"="noa_sbb")%>%
   group_by(noaa_subba, hab_unit) %>%
   summarise(total_area_ha = sum(area_ha)) %>% 

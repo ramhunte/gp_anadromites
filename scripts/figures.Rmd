@@ -92,18 +92,18 @@ map_data <- all_cost_benefit %>%
 
 # Floodplain -------------------------------------------------
 fp_map <- cb_map_fun(rest_type = "floodplain",
-                   breaks = c(.3, .6, .9, 1.2, 1.5, 1.8), 
-                   break_labs = c("$30,000",
-                                  "$60,000",
-                                  "$90,000",
-                                  "$120,000",
-                                  "$150,000",
-                                  "$180,000"),
+                   breaks = c(.05, .1, .2, .5, .75, 1.8), 
+                   break_labs = c("$5,000",
+                                  "$10,000",
+                                  "$15,000",
+                                  "$25,000",
+                                  "$50,000",
+                                  "$75,000"),
                    title = "Floodplain"
 )
 
 # save  rp map 
-# ggsave("../final_prods/figures/cb_maps/fp_map.jpeg", plot = fp_map, device = "jpeg", width = 8, height = 6, units = "in")
+ggsave("../final_prods/figures/cb_maps/fp_map.jpeg", plot = fp_map, device = "jpeg", width = 8, height = 6, units = "in")
 
 # Engineered log jam -------------------------------------------------
 elj_map <- cb_map_fun(rest_type = "elj",  
@@ -482,6 +482,11 @@ spawner_barchart
 
 # Floodplain Breakdown 
 ```{r}
+
+subs_with_fp_bens <- all_cost_benefit %>% 
+  filter(restoration_type == "floodplain") %>% 
+  select(subbasin_name) 
+
 # wrangling floodplain area data frame
 fp_area_subbasin <- read_csv(here("data", "final_dfs", "fp_area_subbasin.csv")) %>% 
   #creating a column with pretty subbasin names
@@ -492,8 +497,8 @@ mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
        hab_unit = str_replace_all(hab_unit, "side_channel", "Side Channel"),
        hab_unit = factor(hab_unit,
                          levels = c("Pond", "Marsh", "Side Channel"))) %>% 
-  filter(subbasin_name %in% unique(all_cost_benefit$subbasin_name)) %>% 
-  group_by(subbasin_name) 
+  filter(subbasin_name %in% subs_with_fp_bens$subbasin_name)
+ 
 
 # plotting side channel 
 fp_area_subbasin <- fp_area_subbasin %>% 
@@ -525,9 +530,9 @@ ggplot(aes(x = subbasin_name, y = total_area_ha, fill = hab_unit )) +
 fp_area_subbasin
 
 # saving plot
-# ggsave(here("final_prods", "figures", "fp_area_subbasin.jpg"),
-#        plot = fp_area_subbasin, device = "jpeg", 
-#        width = 8, height = 6, units = "in")
+ggsave(here("final_prods", "figures", "fp_area_subbasin.jpg"),
+       plot = fp_area_subbasin, device = "jpeg",
+       width = 8, height = 6, units = "in")
 ```
 
 
@@ -571,7 +576,7 @@ cb_spawner_scatter <- all_cost_benefit %>%
   guides(size = "none", color = "legend")
 
 
-# ggsave("../final_prods/figures/cb_spawner_scatter.jpeg", plot = cb_spawner_scatter, device = "jpeg", width = 8, height = 6, units = "in")
+ggsave("../final_prods/figures/cb_spawner_scatter.jpeg", plot = cb_spawner_scatter, device = "jpeg", width = 8, height = 6, units = "in")
 ```
 
 
