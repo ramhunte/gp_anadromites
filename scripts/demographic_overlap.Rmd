@@ -9,15 +9,29 @@ library(mapview)
 library(janitor)
 ```
 
-
-#POC
+#POC and getting relative area key
 ```{r}
 POC <- st_read(here("data", "POC_WA", "POC_WA","People_of_Color.shp")) %>% clean_names()
 
 POC <- st_transform(POC, crs = st_crs(subs_stl)$proj4string)
 
-subbasins_key <- read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
 
+#finding the relative area of each subbasin
+tract_relative_area<-st_intersection(POC, subs_stl) %>% select(census_tra, noaa_subba)
+
+# Calculate area of census tracts
+tract_relative_area$area_m2 <- units::drop_units(st_area(tract_relative_area))
+
+tract_relative_area<-tract_relative_area %>% group_by(noaa_subba) %>% 
+  mutate(subba_area=sum(area_m2), 
+         census_tra=census_tra, 
+         noaa_subba=noaa_subba) %>% 
+  ungroup() %>% 
+  mutate(percent=area_m2/subba_area) %>% select(census_tra, noaa_subba, percent) %>% st_drop_geometry() %>% unique()
+
+
+#back to POC
+subbasins_key <- read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
 
 POC_stilly <- st_join(POC, subs_stl, join = st_intersects)%>% #overlaying onto subbasins
   right_join(subbasins_key) %>% unique() %>% select(census_tra, percent_pe, noaa_subba) %>% rename("percent_POC"="percent_pe")
@@ -61,36 +75,51 @@ tribal_jurisdiction_stilly <- st_intersection(tribal_jurisdiction, subs_stl) %>%
 mapview(tribal_jurisdiction_stilly)
 ```
 
+
 #Joining Layers and implementing cutoffs
 ```{r}
-demo_layer<-st_join(POC_stilly, Poverty_stilly)
-demo_layer<-st_join(demo_layer, Unemployment_stilly)
-demo_layer<-st_join(demo_layer, tribal_jurisdiction_stilly) 
-demo_layer<-demo_layer %>% select(census_tra.x, noaa_subba.x, percent_POC, percent_pov, percent_unemp, tribal_lands) %>% rename("census_tract"="census_tra.x") %>% 
-  rename("noaa_subba"="noaa_subba.x")
+POC_stilly<-POC_stilly %>% st_drop_geometry()
+Poverty_stilly<-Poverty_stilly %>% st_drop_geometry()
+Unemployment_stilly<-Unemployment_stilly %>% st_drop_geometry()
+tribal_jurisdiction_stilly<-tribal_jurisdiction_stilly %>% st_drop_geometry()
+
+
+demo_layer<-full_join(POC_stilly, Poverty_stilly, by = c("census_tra" = "census_tra",  "noaa_subba" = "noaa_subba"))
+demo_layer<-full_join(demo_layer, Unemployment_stilly, by = c("census_tra" = "census_tra",  "noaa_subba" = "noaa_subba"))
+demo_layer<-full_join(demo_layer, tribal_jurisdiction_stilly, by = c("noaa_subba" = "noaa_subba")) %>% unique()
+demo_layer<-demo_layer %>% select(census_tra, noaa_subba, percent_POC, percent_pov, percent_unemp, tribal_lands) %>% rename("census_tract"="census_tra") %>% 
+  rename("noaa_subba"="noaa_subba")
 
 #replace values with NA tribal land with no
 demo_layer$tribal_lands <- replace(demo_layer$tribal_lands, is.na(demo_layer$tribal_lands), 0)
 
 #putting in cutoffs
 demo_layer_filtered <- demo_layer %>%
-  mutate(POC_score = ifelse(percent_POC > 0.125, 1, 0),
-         Poverty_score = ifelse(percent_pov > 0.16, 1, 0),
-         Unemployed_score = ifelse(percent_unemp > 0.042, 1, 0),
+  mutate(POC_score = ifelse(percent_POC > 12.5, 1, 0),
+         Poverty_score = ifelse(percent_pov > 10, 1, 0),
+         Unemployed_score = ifelse(percent_unemp > 4.2, 1, 0),
          Tribal_score= ifelse(tribal_lands %in% 1, 1, 0),
          Total_score=POC_score+Poverty_score+Unemployed_score+Tribal_score
          ) %>%
   st_drop_geometry() %>% 
+  inner_join(tract_relative_area, by = c("census_tract" = "census_tra",  "noaa_subba" = "noaa_subba"))%>%
+  mutate(POC_inter=POC_score * percent, 
+         Poverty_inter=Poverty_score * percent,
+         Unemployed_inter=Unemployed_score * percent, 
+         Tribal_inter=Tribal_score * percent, 
+         Total_inter=Total_score * percent) %>% 
+  unique() %>% 
   group_by(noaa_subba) %>% 
-  mutate(Subba_POC_score=mean(POC_score),
-         Subba_Poverty_score=mean(Poverty_score),
-         Subba_Unemployed_score=mean(Unemployed_score),
-         Subba_Tribal_Score=mean(Tribal_score),
-         Subba_Total_Score=mean(Total_score)) %>% 
+  mutate(Subba_POC_score=round(sum(POC_inter),2),
+         Subba_Poverty_score=round(sum(Poverty_inter),2),
+         Subba_Unemployed_score=round(sum(Unemployed_inter),2),
+         Subba_Tribal_Score=round(sum(Tribal_inter),2),
+         Subba_Total_Score=round(sum(Total_inter),2)) %>% 
   select(noaa_subba, Subba_POC_score, Subba_Poverty_score, Subba_Unemployed_score, Subba_Tribal_Score, Subba_Total_Score) %>% 
   unique() %>% 
   right_join(subs_stl) %>% 
   select(noaa_subba, Subba_POC_score, Subba_Poverty_score, Subba_Unemployed_score, Subba_Tribal_Score, Subba_Total_Score, geometry) %>% 
+  right_join(subbasins_key) %>% 
   st_as_sf()
 
 mapview(demo_layer_filtered, zcol = "Subba_Total_Score")
@@ -99,49 +128,41 @@ mapview(demo_layer_filtered, zcol = "Subba_Total_Score")
 #Create a map showing the score of the regions
 #use the Total_score column in the 
 ```{r}
-ggmap::ggmap(basemap) +
-    # subbasins with score info
-  geom_sf(data = filter(demo_layer_filtered), 
-          aes(fill = Total_score),
-          inherit.aes = FALSE) +
-  # #basin
-  # geom_sf(data = subs_4326, color = "black",  
-  #         fill = "grey", alpha = .7, 
-  #         inherit.aes = FALSE) +
+# ggmap::ggmap(basemap) +
   
-  # # subbasins
-  # geom_sf(data = filter(map_data, 
-  #                       restoration_type == paste(rest_type)), 
-  #         aes(fill = cb_ratio/100000),
-  #         inherit.aes = FALSE) +
+demo_plot<- ggplot()+    # subbasins with score info
+  geom_sf(data = demo_layer_filtered, 
+          aes(fill = Subba_Total_Score),
+           inherit.aes = FALSE)+
   
-  # # cost gradient
-  # scale_fill_fermenter(palette = "YlGnBu",
-  #                      direction = 1,
-  #                      breaks = breaks,
-  #                      labels = break_labs) +
+  # cost gradient
+  scale_fill_fermenter(palette = "YlGnBu",
+                       direction = 1
+                       # breaks = breaks,
+                       # labels = break_labs
+                       ) +
   
   # river
-  geom_sf(data = st_transform(flow_stl, crs = st_crs(subs_4326)), 
+  geom_sf(data = st_transform(flow_stl, crs = st_crs(demo_layer_filtered)), 
           color = "#19647E", linewidth = .4, alpha = .7, inherit.aes = FALSE) +
+
+  # #axes
+  # scale_x_continuous(limits = c(-122.50, -121.3), expand = c(0, 0))
+  # scale_y_continuous(limits = c(47.9, 48.5), expand = c(0, 0)) 
   
-  #axes
-  scale_x_continuous(limits = c(-122.50, -121.3), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(47.9, 48.5), expand = c(0, 0)) +
-  
-  # # labs 
-  # labs(fill = "Annual \n$/Spawner",
-  #      x = "",
-  #      y = "",
-  #      title = paste("Stillaguamish River Basin ", title, "Costs"),
-  #      subtitle = "annual cost per Chinook spawner") +
-  
+  # labs
+  labs(fill = "Annual \n$/Spawner",
+       x = "",
+       y = "",
+       title = "Demographic Score in the Stillaguamish River",
+       subtitle = "by subbasin") +
+
   
   # north arrow
   ggspatial::annotation_north_arrow(height = unit(1.4, "cm"), 
                                     width = unit(1, "cm"), 
                                     pad_x = unit(.55, "cm"), 
-                                    pad_y = unit(10, "cm"),
+                                    pad_y = unit(8, "cm"),
                                     text_col = "white",
                                     which_north = "true") +
   # white box behind scale   
@@ -166,4 +187,6 @@ ggmap::ggmap(basemap) +
     legend.position = c(.89, .72),
     legend.box.background = element_rect(color = "black", fill = "white")
   )
+
+ggsave(here("final_prods", "figures", "demo_map.jpg"), plot=demo_plot)
 ```
