@@ -85,7 +85,7 @@ ggmap::ggmap(basemap) +
   labs(fill = "Annual \n$/Spawner",
        x = "",
        y = "",
-       title = paste("Stillaguamish River Basin ", title, "Costs"),
+       title = paste("Stillaguamish River Basin", title, "Costs"),
        subtitle = "annual cost per Chinook spawner") +
   
   
