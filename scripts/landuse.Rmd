@@ -60,7 +60,7 @@ land_use_subs <- st_intersection(land_use_stilly, subs_stl) %>%
   #joining attributes of noaa subbasin to parcel data 
   st_join(subs_stl, largest = TRUE) %>% 
   select(master_cat, sub_cat, noaa_subba = noaa_subba.x, subba_area = shape_area.x) %>% 
-  mutate(parcel_area_ha = st_area(.)/10000)
+  mutate(parcel_area_ha = units::drop_units(st_area(.)/10000))
 
 
 
@@ -124,7 +124,8 @@ summary_land_use <- summary_land_use %>%
   mutate(subbasin_name = str_replace_all(noaa_subba, "_", " "),
          subbasin_name = str_replace_all(subbasin_name, "Stillaguamish", ""),
          subbasin_name = str_replace_all(subbasin_name, "mainstem", "Mainstem")
-  ) 
+  ) %>% filter(noaa_subba!="mainstem_South_Fork_Stillaguamish_02") #remove this subbasin from the figure
+  
 
 #define custom colors
 # color themes 
@@ -221,11 +222,6 @@ hist_flood_stl<-hist_flood_stl %>% filter(noaa_subba %in% unique(flood_ben$subba
 # hist_flood_stl<-left_join(flood_ben, hist_flood_stl, by=c("subbasin"="noaa_subba"))
 hist_flood_stl<-sf_object <- st_as_sf(hist_flood_stl)
 
-##THIS IS THE SLOWDOWN
-#join marsh/pond floodplain habitat with he habitat adjacent to the river
-# floodplain_hab_stl <- st_union(hist_flood_stl, floodplain_hab_stl_river)
-
-# st_write(floodplain_hab_stl, here("data", "fp_shapefiles", "floodplain_shapefiles.shp"), append = FALSE)
 ```
 
 #overlap land use and floodplain shapefile
@@ -280,8 +276,8 @@ mapview(ag_land) +
 mapview(flood_ag_subba, zcol = "hab_unit")
 
 #making a summarized table with the values
-flood_ag_subba_sum<-flood_ag_subba %>% group_by(noaa_subba, hab_unit) %>% mutate(total_subba_cost=sum(cost), total_subba_area_acres=sum(area_acre)) %>% st_drop_geometry() %>% 
-  select(noaa_subba, total_subba_area_acres, total_subba_cost, hab_unit) %>% unique()
+flood_ag_subba_sum<-flood_ag_subba %>% group_by(noaa_subba, hab_unit) %>% mutate(total_subba_cost=sum(cost), total_subba_area_ha=sum(area_ha)) %>% st_drop_geometry() %>% 
+  select(noaa_subba, total_subba_area_ha, total_subba_cost, cost, hab_unit) %>% unique()
 
 # #by subbasin alone
 # flood_ag_subba_sum<-flood_ag_subba %>% group_by(noaa_subba) %>% mutate(total_subba_cost=sum(cost), total_subba_area_acres=sum(area_acre)) %>% st_drop_geometry() %>% 
@@ -361,6 +357,18 @@ ggsave("../final_prods/figures/ag_land_price_barchart.jpeg", plot = ag_land_pric
 ```
 
 
+##overall numbers of land use (entire Stillaguamish level) and overall numbers of land type in the subbasin overall
+```{r}
+#all acreage (not just overlapping with floodplain)
+stilly_land_use_all<-summary_land_use %>% group_by(master_cat) %>% 
+  mutate(land_use_area_stilly_ha=sum(parcel_area_ha)) %>% select(master_cat, land_use_area_stilly_ha) %>% unique()
+
+
+##just the ag land that overlaps with FP
+stilly_land_use_fp_overlap<-flood_ag_subba_sum %>% select(noaa_subba, total_subba_area_ha, total_subba_cost) %>% unique()
+sum(stilly_land_use_fp_overlap$total_subba_area_ha)
+sum(stilly_land_use_fp_overlap$total_subba_cost)
+```
 
 
 
