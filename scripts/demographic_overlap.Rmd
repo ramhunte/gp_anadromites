@@ -151,7 +151,7 @@ demo_plot<- ggplot()+    # subbasins with score info
   # scale_y_continuous(limits = c(47.9, 48.5), expand = c(0, 0)) 
   
   # labs
-  labs(fill = "Annual \n$/Spawner",
+  labs(fill = "Demographic \n Score",
        x = "",
        y = "",
        title = "Demographic Score in the Stillaguamish River",
