@@ -221,14 +221,19 @@ rp_cost_acre_summary <- rp_cost_final %>%
          upper_cost_acre_ppi = 
            ifelse(upper_cost_acre_ppi == 0, NA, upper_cost_acre_ppi)) %>%  
   st_drop_geometry() %>% 
-  group_by(noaa_subba) %>% 
-  summarise(hab_unit = "rp",
-           metric = "per_acre",
-           lower_avg = mean(lower_cost_acre_ppi, na.rm = TRUE),
-            upper_avge = mean(upper_cost_acre_ppi, na.rm = TRUE)) 
+  rename(Subbasin = noaa_subba) %>% 
+  group_by(Subbasin) %>% 
+  summarise(
+            Restoration = "rp",
+           Metric = "per_acre",
+           "Lower Average Cost" = paste("$", format(round(mean(lower_cost_acre_ppi, na.rm = TRUE)), big.mark = ",")),
+            "Upper Average Cost" = paste("$", format(round(mean(upper_cost_acre_ppi, na.rm = TRUE)), big.mark = ","))) 
 
-
-rp_cost_acre_summary
+ 
+rp_cost_acre_summary %>% 
+kableExtra::kable() %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+   kableExtra::save_kable(file = here("final_prods","tables","average_rp_costs.png"), zoom = 4)
 
 write_csv(rp_cost_acre_summary, here("final_prods", "tables", "average_rp_costs.csv"), append = FALSE)
 ```

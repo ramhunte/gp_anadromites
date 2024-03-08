@@ -336,7 +336,20 @@ stilly_subbasin_cost<-full_join(stilly_subbasin_cost, side_channel_inflation_sel
 avg_fp_costs <- rbind(pond_avg_costs, 
       marsh_avg_costs,
       sc_avg_costs) %>% 
-  mutate(metric = "per_acre")
+  rename("Subbasin" = noaa_subba) %>% 
+  transmute("Restoration" = hab_unit,
+            Metric = "per_acre",
+         "Lower Average Cost" = 
+           paste("$", format(round(lower_avg_cost), big.mark = ",")),
+         "Upper Average Cost" = 
+           paste("$", format(round(upper_avg_cost), big.mark = ","))) %>% 
+  arrange(Subbasin)
+
+
+avg_fp_costs %>%  
+kableExtra::kable() %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+   kableExtra::save_kable(file = here("final_prods","tables","average_fp_costs.png"), zoom = 4)
 
 write.csv(avg_fp_costs, "../final_prods/tables/average_fp_costs.csv")
 ```

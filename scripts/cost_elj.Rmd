@@ -221,9 +221,17 @@ average_elj <- elj_cost %>%
 
 # creating a summary table of elj avg estiamtes by basin
 avg_elj_cost_summary <- average_elj %>% 
-  group_by(noaa_subba, hab_unit, metric) %>% 
-  summarise(lower_avg_cost = mean(lower_cost_estimate),
-            upper_avg_cost = mean(upper_cost_estimate))
+  rename(Subbasin = noaa_subba,
+         Restoration = hab_unit,
+         Metric = metric) %>% 
+  group_by(Subbasin, Restoration, Metric) %>% 
+  summarise("Lower Average Cost" = paste("$", format(round(mean(lower_cost_estimate)), big.mark = ",")),
+            "Upper Average Cost" = paste("$", format(round(mean(upper_cost_estimate)), big.mark = ",")))
+
+avg_elj_cost_summary %>%  
+kableExtra::kable() %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+   kableExtra::save_kable(file = here("final_prods","tables","average_elj_costs.png"), zoom = 4)
 
 write_csv(avg_elj_cost_summary, here("final_prods", "tables", "average_elj_costs.csv"), append = FALSE)
            
