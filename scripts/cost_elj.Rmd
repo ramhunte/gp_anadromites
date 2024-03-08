@@ -203,19 +203,29 @@ elj_cost$avg_cost<-(elj_cost$final_lower_cost+elj_cost$final_upper_cost)/2
 # find avg cost 
 ```{r}
 average_elj <- elj_cost %>% 
-  select(noaa_subba, length, energy, relative_cost, lower_cost_estimate, upper_cost_estimate, final_lower_cost, final_upper_cost) %>% 
-  mutate(avg_per_mile =  ifelse(
+  select(noaa_subba, energy, relative_cost, lower_cost_estimate, upper_cost_estimate) %>% 
+  mutate(avg_cost_estimate = (lower_cost_estimate + upper_cost_estimate)/2,
+         metric =  ifelse(
         (relative_cost == "medium" & energy == "medium") |
         (relative_cost == "medium" & energy == "high") |
         (relative_cost == "high" & energy == "medium") |
         (relative_cost == "high" & energy == "low") |
         (relative_cost == "low" & energy == "high") |
         (relative_cost == "high" & energy == "high"),
-        # first, we have total cost per stream reach. We take the average of the low and high estimates and divide it by the lenght (m) and converted to miles to get cost per mile
-        (final_lower_cost + final_upper_cost/2)/(length * 0.000621371),
+        "per_structure",
         # low relative costs and energy streams are already in $/mile, so we just take the avg
-        lower_cost_estimate + upper_cost_estimate/2
-        ))
+        "per_mile"
+        ),
+        hab_unit = "elj"
+        ) 
+
+# creating a summary table of elj avg estiamtes by basin
+avg_elj_cost_summary <- average_elj %>% 
+  group_by(noaa_subba, hab_unit, metric) %>% 
+  summarise(lower_avg_cost = mean(lower_cost_estimate),
+            upper_avg_cost = mean(upper_cost_estimate))
+
+write_csv(avg_elj_cost_summary, here("final_prods", "tables", "average_elj_costs.csv"), append = FALSE)
            
            
 ```

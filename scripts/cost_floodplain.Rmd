@@ -335,7 +335,8 @@ stilly_subbasin_cost<-full_join(stilly_subbasin_cost, side_channel_inflation_sel
 ```{r}
 avg_fp_costs <- rbind(pond_avg_costs, 
       marsh_avg_costs,
-      sc_avg_costs)
+      sc_avg_costs) %>% 
+  mutate(metric = "per_acre")
 
 write.csv(avg_fp_costs, "../final_prods/tables/average_fp_costs.csv")
 ```

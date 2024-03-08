@@ -220,12 +220,17 @@ rp_cost_acre_summary <- rp_cost_final %>%
            ifelse(lower_cost_acre_ppi == 0, NA, lower_cost_acre_ppi),
          upper_cost_acre_ppi = 
            ifelse(upper_cost_acre_ppi == 0, NA, upper_cost_acre_ppi)) %>%  
-  st_drop_geometry() 
+  st_drop_geometry() %>% 
   group_by(noaa_subba) %>% 
-  summarise(lower_avg = mean(lower_cost_acre_ppi, na.rm = TRUE),
-            upper_avge = mean(upper_cost_acre_ppi, na.rm = TRUE))
+  summarise(hab_unit = "rp",
+           metric = "per_acre",
+           lower_avg = mean(lower_cost_acre_ppi, na.rm = TRUE),
+            upper_avge = mean(upper_cost_acre_ppi, na.rm = TRUE)) 
+
 
 rp_cost_acre_summary
+
+write_csv(rp_cost_acre_summary, here("final_prods", "tables", "average_rp_costs.csv"), append = FALSE)
 ```
 
 
@@ -263,7 +268,7 @@ subba_rp_cost <- subba_rp_cost %>%
 
 
 
-st_write(subba_rp_cost, here("data", "final_dfs", "rp_costs.gpkg"), append = FALSE)
+
 ```
 
   
