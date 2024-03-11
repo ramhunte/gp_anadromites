@@ -67,6 +67,11 @@ all_cost_benefit <- rbind(all_cost_benefit, rp) %>%
   ) %>% 
   filter(!is.na(total_avg_cost))
 
+key<-all_cost_benefit %>% filter(pop=="fall_chinook") %>% filter(perc_change>0) %>% 
+  st_drop_geometry() %>% select(noaa_subba) %>% unique()
+  
+#making a subbasins key
+write.csv(key, here("data", "chinook_ben_subba.csv"))
 ```
 
 

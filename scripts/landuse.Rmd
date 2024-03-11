@@ -47,7 +47,7 @@ land_use_stilly <- st_read(here("data", "land_use", "land_use_stilly.shp")) %>%
   clean_names() %>% select(master_cat, sub_cat, lu_code_id, shape_are, shape_len)
 
 #also read in the target subbasins (benefits to chinook)
-subbasins_key <- read_csv(here("data", "land_use", "chinook_ben_subbasins.csv")) %>% select(noaa_subba)
+subbasins_key <- read_csv(here("data", "chinook_ben_subba.csv")) %>% select(noaa_subba) 
 
 ```
 
