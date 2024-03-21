@@ -224,10 +224,13 @@ rp_cost_acre_summary <- rp_cost_final %>%
   rename(Subbasin = noaa_subba) %>% 
   group_by(Subbasin) %>% 
   summarise(
-            Restoration = "rp",
-           Metric = "per_acre",
+            Restoration = "RP",
+           Metric = "Per Acre",
            "Lower Average Cost" = paste("$", format(round(mean(lower_cost_acre_ppi, na.rm = TRUE)), big.mark = ",")),
-            "Upper Average Cost" = paste("$", format(round(mean(upper_cost_acre_ppi, na.rm = TRUE)), big.mark = ","))) 
+            "Upper Average Cost" = paste("$", format(round(mean(upper_cost_acre_ppi, na.rm = TRUE)), big.mark = ","))) %>% 
+  mutate(Subbasin = str_replace_all(Subbasin, "_", " "),
+         Subbasin = str_replace_all(Subbasin, "Stillaguamish", ""),
+         Subbasin = str_replace_all(Subbasin, "mainstem", "Mainstem"))
 
  
 rp_cost_acre_summary %>% 

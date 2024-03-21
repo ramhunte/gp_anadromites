@@ -223,17 +223,18 @@ side_channel_flow <- side_channel_flow %>%
   mutate(upper_cost=upper_cost* ppi) %>% 
   mutate(area_a=sc_area*0.000247105) %>% #meters squared to actres
   mutate(total_lower_cost=lower_cost*area_a) %>% 
-  mutate(total_upper_cost=upper_cost*area_a)
+  mutate(total_upper_cost=upper_cost*area_a) 
 ```
 
 # get side channel avg cost/acre
 ```{r}
 sc_avg_costs <- side_channel_flow %>% 
+  filter(!is.na(area_a)) %>%
   st_drop_geometry() %>% 
   group_by(noaa_subba) %>% 
-  summarise(lower_avg_cost = mean(total_lower_cost, na.rm = TRUE),
-            upper_avg_cost = mean(total_upper_cost, na.rm = TRUE)) %>% 
-  mutate(hab_unit="side_channel") %>% 
+  summarise(lower_avg_cost = mean(lower_cost, na.rm = TRUE),
+            upper_avg_cost = mean(upper_cost, na.rm = TRUE)) %>% 
+  mutate(hab_unit="Side Channel") %>% 
   na.omit()
 ```
 
@@ -251,7 +252,7 @@ side_channel_costs<- side_channel_flow %>%
             total_upper_cost = sum(total_upper_cost)) %>% 
   #joining with subs_stl to get the geometries of the subbasins
   right_join(subs_stl[,1] )%>% 
-  mutate(hab_unit="side_channel") %>% 
+  mutate(hab_unit="Side Channel") %>% 
   st_as_sf() 
 ```
 
@@ -281,8 +282,8 @@ marsh_cost_inflation <- marsh_cost %>%
 marsh_avg_costs <- marsh_cost_inflation %>% 
   st_drop_geometry() %>% 
   group_by(noaa_subba, hab_unit) %>% 
-  summarise(lower_avg_cost = sum(lower_cost)/sum(area_a),
-            upper_avg_cost = sum(upper_cost)/sum(area_a))
+  summarise(lower_avg_cost = mean(lower_cost),
+            upper_avg_cost = mean(upper_cost))
 
 ```
 
@@ -338,12 +339,15 @@ avg_fp_costs <- rbind(pond_avg_costs,
       sc_avg_costs) %>% 
   rename("Subbasin" = noaa_subba) %>% 
   transmute("Restoration" = hab_unit,
-            Metric = "per_acre",
+            Metric = "Per Acre",
          "Lower Average Cost" = 
            paste("$", format(round(lower_avg_cost), big.mark = ",")),
          "Upper Average Cost" = 
            paste("$", format(round(upper_avg_cost), big.mark = ","))) %>% 
-  arrange(Subbasin)
+  arrange(Subbasin) %>% 
+  mutate(Subbasin = str_replace_all(Subbasin, "_", " "),
+         Subbasin = str_replace_all(Subbasin, "Stillaguamish", ""),
+         Subbasin = str_replace_all(Subbasin, "mainstem", "Mainstem"))
 
 
 avg_fp_costs %>%  

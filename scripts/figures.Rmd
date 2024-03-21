@@ -344,6 +344,88 @@ final_ps_map <- ps_basin_map +
 
 ```
 
+# LABELED SUBS MAP 
+```{r}
+
+# centroid adjustment 
+subs_distinct <- all_cost_benefit %>% 
+distinct(subbasin_name, .keep_all = TRUE) %>% 
+  select(subbasin_name) 
+  
+  # subs_cents <- st_centroid(subs_distinct) %>% 
+  # st_transform(crs = 4326)
+
+
+# #centroid adjustment 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem North Fork  01"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem North Fork  01"] + c(0, 0.1) 
+#   
+# subs_cents$geom[subs_cents$subbasin_name == "Mainstem North Fork  02"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem North Fork  02"] + c(-0.01, 0) 
+# 
+# subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  01"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  01"] + c(-0.9, 0) 
+# 
+# subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  03"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  03"] + c(-0.05, -0.05) 
+# 
+# subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  04"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  04"] + c(-0.05, -0.05)
+# 
+# subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  05"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Mainstem South Fork  05"] + c(-0.05, -0.05) 
+# 
+# subs_cents$geom[subs_cents$subbasin_name == "Boulder River"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Boulder River"] + c(-.05, 0) 
+# 
+# subs_cents$geom[subs_cents$subbasin_name == "Squire Creek"] <- 
+#   subs_cents$geom[subs_cents$subbasin_name == "Squire Creek"] + c(0, -0.025) 
+
+# ggmap::ggmap(basemap) +
+subs_map <- ggplot() +
+  #basin
+  geom_sf(data = subs_4326, color = "black",  
+          fill = "grey",
+          # fill = ifelse(subs_4326$noaa_subba %in% 
+          #                 unique(all_cost_benefit$noaa_subba), "cyan3", "grey"),
+          alpha = .7, inherit.aes = FALSE) +
+  geom_sf(data = subs_distinct, aes(fill = subbasin_name)) +
+  
+  # geom_sf_label(data = subs_cents, aes(label = subbasin_name),
+  # size = 2, label.padding = unit(0.2, "lines"),
+  # inherit.aes = FALSE) +
+  
+  theme_minimal() +
+    # north arrow
+  ggspatial::annotation_north_arrow(height = unit(1.4, "cm"), 
+                                    width = unit(1, "cm"), 
+                                    pad_x = unit(.45, "cm"), 
+                                    pad_y = unit(1.1, "cm"),
+                                    text_col = "white",
+                                    which_north = "true") +
+    # white rectangle behind scale
+  annotation_custom(grob = grid::rectGrob(
+    x = unit(1.7, "cm"),
+    y = unit(.35, "cm"),
+    width = unit(3.3, "cm"), 
+    height = unit(.4, "cm"),
+    gp = grid::gpar(fill = "white")
+    # gp = grid::gpar(col = NA)
+  )) +
+  # scale 
+  ggspatial::annotation_scale(height = unit(0.2, "cm"),
+                              bar_cols = c("black", "white"),
+                              text_cex = .8) +
+
+labs(fill = "Subbasin")
+
+ggsave("../final_prods/figures/ps_maps/subs_map.jpeg", plot = subs_map, device = "jpeg", width = 8, height = 6, units = "in")
+```
+
+
+
+
+
 
 # DUMB BELL CHARTS
 
@@ -412,7 +494,7 @@ floodplain_table %>%
     kable() %>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed")) 
   
-  # top20 %>% 
+  # top20 %>%
   # save_kable(file = here("final_prods","tables","top20.png"), zoom = 4)
 
 ```

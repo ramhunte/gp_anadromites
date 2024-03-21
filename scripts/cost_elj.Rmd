@@ -212,11 +212,11 @@ average_elj <- elj_cost %>%
         (relative_cost == "high" & energy == "low") |
         (relative_cost == "low" & energy == "high") |
         (relative_cost == "high" & energy == "high"),
-        "per_structure",
+        "Per Structure",
         # low relative costs and energy streams are already in $/mile, so we just take the avg
-        "per_mile"
+        "Per Mile"
         ),
-        hab_unit = "elj"
+        hab_unit = "ELJ"
         ) 
 
 # creating a summary table of elj avg estiamtes by basin
@@ -226,7 +226,10 @@ avg_elj_cost_summary <- average_elj %>%
          Metric = metric) %>% 
   group_by(Subbasin, Restoration, Metric) %>% 
   summarise("Lower Average Cost" = paste("$", format(round(mean(lower_cost_estimate)), big.mark = ",")),
-            "Upper Average Cost" = paste("$", format(round(mean(upper_cost_estimate)), big.mark = ",")))
+            "Upper Average Cost" = paste("$", format(round(mean(upper_cost_estimate)), big.mark = ","))) %>% 
+  mutate(Subbasin = str_replace_all(Subbasin, "_", " "),
+         Subbasin = str_replace_all(Subbasin, "Stillaguamish", ""),
+         Subbasin = str_replace_all(Subbasin, "mainstem", "Mainstem"))
 
 avg_elj_cost_summary %>%  
 kableExtra::kable() %>%
