@@ -51,7 +51,6 @@ side_channel_length<-read_csv(here("data", "HARP", "side_channel_lengths.csv")) 
 stilly_bens <- read.csv(here("data", "HARP", "benefits", "ind_subbasin_rest_20s_2023-09-21 - ind_subbasin_rest_20s_2023-09-21.csv"))
 
 
-
                                  ################ Washington #################
 
 ## land use data Snohomish County 
