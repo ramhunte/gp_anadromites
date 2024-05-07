@@ -16,6 +16,14 @@ Give a brief summary of dataset contents, contextualized in experimental procedu
 
 **benefits** - a folder containing a CSV file with the estimated increases in Chinook, Steelhead, and Coho salmon from each of the 3 different restoration actions by subbasin. It highlights the current population and the modeled change in population following restoration of the subbasin to historical conditions as modeled by the HARP model.
 
+**roads** -
+
+**POC_WA** -
+
+**Poverty_WA** -
+
+**Unemployment_WA -**
+
 ## Description of the data and file structure
 
 This is a freeform section for you to describe how the data are structured and how a potential consumer might use them. Be as descriptive as necessary. Keep in mind that users of your data might be new to the field and unfamiliar with common terminology, metrics, etc.
@@ -92,9 +100,35 @@ Describe relationships between data files, missing data codes, other abbreviatio
 
 **POC_WA** - Key variables used were:
 
+`percent_people_of_color` percent people of color
+
 **Poverty_WA** - Key variables used were:
 
+`percent_living_in_poverty` percent fo population living in poverty
+
 **Unemployment_WA** - Key variables used were:
+
+`percent_unemployed` percent of population unemployed
+
+## File Strucutre
+
+All data is stored in subfolders underneath the `Data` folder in the repository. Relevant folders include:
+
+`elevation` which includes elevation data
+
+`HARP` which includes all of the `Flowline_STL`, `Floodplain_stl`, `Subbasins_STL`, and `benefits` data
+
+`roads` which includes all the public road data
+
+`land_use` which includes all land use data in Snohomish county
+
+`POC_WA` which includes all of the data pertaining to demographics
+
+`Poverty_WA` which contains data pertaining to poverty rates
+
+`Unemployment_WA` which contains unemployment data
+
+These data area primarily raw data folders pulled from the specified online sources. However, as annotated in the scripts, certain data frames were read in, modified, and re-written to minimize computation and time spent on the analyses. Other data folders may not have a specified purpose as they were used in unrelated analyses or just used in the exploration of the analyses.
 
 ## Sharing/Access information
 
@@ -118,11 +152,19 @@ Data and data description for the **benefits** data are publicly available at:
 
 Data and data description for the **roads** data are publicly available at:
 
+<https://geo.wa.gov/datasets/a12a43c5b10b498ca6612454616bc7fa/about>
+
 Data and data description for the **POC_WA** data are publicly available at:
+
+<https://geo.wa.gov/datasets/bb24b4accb974940ab4bf2784b9b4a6a_0/explore?location=47.181638%2C-120.811974%2C6.94>
 
 Data and data description for the **Poverty_WA** data are publicly available at:
 
+<https://geo.wa.gov/datasets/WADOH::population-living-in-poverty-current-version/about>
+
 Data and data description for the **Unemployment_WA** data are publicly available at:
+
+<https://geo.wa.gov/datasets/67c699681b4f49c0adb1b5cada9e1919_0/explore>
 
 ## Code/Software
 
@@ -137,7 +179,3 @@ All analyses were performed in R Studio using Version 2023.12.1+402. Annotated c
 **Notes on the Analysis:**
 
 Analyses and code are annotated throughout the scripts explaining the data wrangling, cleaning, and analyses process. The repository contains mainly RMD files with annotated code and some sourced R files as well for common functions and data sources used throughout the analyses. Some files were written in R and generated into specified subfolders. Raw data is stored in the `Data` folder, common functions and data read in throughout the analyses are written in the `common.R` file, and the `scripts` folder contains all of our working analyses divided into actions (floodplain (`cost_floodplain.Rmd`), engineered log jams (`cost_elj.Rmd`), and riparian planting (`cost_rp.Rmd`)) as well as demogrpahic analyis (`demographic_overlap.Rmd`), land use (`landuse.Rmd`). Our figures were constructed in the `figures.Rmd` file, and a common `functionsR` script was used to source common functions across the analyses in the scripts folder. `Benefit_data.Rmd` wrangles and generates HARP model benefits (increased number of Chinook) that are used throughout the analyses, and the `cost_data.Rmd` reads in and wrangles the costs associated with land use and agriculture. Note that the variables in the raw data files look different than in the individual analyses as names were modified in the `common.R` file.
-
-Data is stored in subfolders underneath the `Data` folder in the repository. Relevant folders include `elevation` which includes elevation data, `HARP` which includes all of the flowline, floodplain, subbasins, and benefits data, `land_use` which includes all land use data in Snohomish county, and..... [INSERT POC AND ROADS AND OTHER DATA HERE]
-
-These data area primarily raw data folders pulled from the specified online sources. However, as annotated in the scripts, certain data frames were read in, modified, and re-written to minimize computation and time spent on the analyses. Other data folders may not have a specified purpose as they were used in unrelated analyses or just used in the exploration of the analyses.
