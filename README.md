@@ -4,15 +4,15 @@
 
 Give a brief summary of dataset contents, contextualized in experimental procedures and results.
 
-**Stream line (STL)** - GDB containing tabular and spatial environmental data for stream reaches within the Stillaguamish River Basin. This data was used in our analysis to generate cost estimate model inputs pertaining to the terrain of the streams in a given subbasin (such as its slope and width). These parameters were used throughout the 3 habitat restoration action scenarios as they all required stream reach attributes as input for the cost estimates.
+**Stream line (STL)** - a folder containing a geopackage that has shapefiles for stream reaches within the Stillaguamish River Basin. This data was used in our analysis to generate cost estimate model inputs pertaining to the terrain of the streams in a given subbasin (such as its slope and width). These parameters were used throughout the 3 habitat restoration action scenarios as they all required stream reach attributes as input for the cost estimates.
 
-**Floodplain (STL)** - GDB containing information on polgyons of floodplain habitat in the Stillaguamish River Basin. Polygons were used in the analysis of quantifying the total floodplain habitat in each subbasin and the amount that needed to be restored. If a `hab_unit` was labeled as `curr`, then it is a current floodplain habitat. If labeled `hist` then it was historical. If labeled `both` then it used to be floodplain habitat and it still is. We used this to determine whether or not restoration was needed and how much. This data was not used in assessing engineered log jams or riparian planting actions.
+**Floodplain (STL)** - a folder containing a geopackage that has shapefiles of floodplain habitat in the Stillaguamish River Basin. Polygons were used in the analysis of quantifying the total floodplain habitat in each subbasin and the amount that needed to be restored. If a `hab_unit` was labeled as `curr`, then it is a current floodplain habitat. If labeled `hist` then it was historical. If labeled `both` then it used to be floodplain habitat and it still is. We used this to determine whether or not restoration was needed and how much. This data was not used in assessing engineered log jams or riparian planting actions.
 
-**NOAA subbasins (STL)** - GDB of all of the subbasins within the Stillaguamish River Basin. Polygons were used in all aspects of analysis to crop floodplain habitat, streams, elevation, land use polygons, and other physical characteristics of the basin to individual subbasins. All cost estimates were created at a subbasin level using this data set. It was also used to visualize our final results in map making. Overall, this data was used to segment our analysis into individual subbasins that we then used to compare to oneanother.
+**NOAA subbasins (STL)** - a folder containing a geopackage that has shapefilesof all of the subbasins within the Stillaguamish River Basin. Polygons were used in all aspects of analysis to crop floodplain habitat, streams, elevation, land use polygons, and other physical characteristics of the basin to individual subbasins. All cost estimates were created at a subbasin level using this data set. It was also used to visualize our final results in map making. Overall, this data was used to segment our analysis into individual subbasins that we then used to compare to oneanother.
 
-**Elevation** - A folder with DEM files of elevation raster data for the Stillaguamish River Basin. Raster data is shown at a 10m resolution across the basin. It was cropped to the basin and used in the riparian planting analyses to estimate the steepness of terrain and difficulty of accessing riparian vegetation. The raster data was cropped to each stream reach within each subbasin where there was proposed riparian planting restoration
+**Elevation** - A folder containing DEM files of elevation raster data for the Stillaguamish River Basin. Raster data is shown at a 10m resolution across the basin. It was cropped to the basin and used in the riparian planting analyses to estimate the steepness of terrain and difficulty of accessing riparian vegetation. The raster data was cropped to each stream reach within each subbasin where there was proposed riparian planting restoration
 
-**land_use** - A GDB with shape files on the land use of land parcels throughout Snohomish county. These parcels were clipped to the Stillaguamish River Basin and the polygons were intersected with those of each subbasin. We used this to estimate the total area and percent land uses throughout the basin and identify areas of existing agricultural land that intersect with historical floodplain habitat that could potentially be utilized for restoration
+**land_use** - a folder containing a geopackage that has shapefiles on the land use of land parcels throughout Snohomish county. These parcels were clipped to the Stillaguamish River Basin and the polygons were intersected with those of each subbasin. We used this to estimate the total area and percent land uses throughout the basin and identify areas of existing agricultural land that intersect with historical floodplain habitat that could potentially be utilized for restoration
 
 **benefits** - a folder containing a CSV file with the estimated increases in Chinook, Steelhead, and Coho salmon from each of the 3 different restoration actions by subbasin. It highlights the current population and the modeled change in population following restoration of the subbasin to historical conditions as modeled by the HARP model.
 
@@ -25,6 +25,8 @@ Give a brief summary of dataset contents, contextualized in experimental procedu
 **Unemployment_WA** - a folder containing a geopackage that has the total people and number of unemployed people by census tract.
 
 **Tribal_Jurisdiction** - a folder containing a geopackage that has shapefiles of Indian Trust Lands, Pending Trust Lands, and Fee Simple Lands owned by Tribal Members or Tribal Associations.
+
+**final_results -** a folder containing a geopackage that has has the final costs and benefits resulting from each proposed action for each applicable subbasin. Subbasins not included implies that there was no change in Chinook population from the resulting action.
 
 ## Description of the data and file structure
 
@@ -114,13 +116,41 @@ Describe relationships between data files, missing data codes, other abbreviatio
 
 `percent_unemployed` percent of population unemployed
 
+**final_results -** Key variables used were:
+
+`noa_sbb` subbasin wihtin the stillaguamish river basin
+
+`ttl_lw_` total lower cost estimate
+
+`ttl_pp_` total upper cost estimate
+
+`ttl_vg_` total average cost estimate
+
+`pop` salmon species being considered
+
+`n` modeled population following restoration
+
+`n_curr` modeled current population
+
+`prc_chn` percent change in population of salmon
+
+`n_diff` difference in population before and after intervention
+
+`cb_rati` cost effectiveness ratio
+
+`rstrtn_` proposed restoration action
+
+`sbbsn_n` clean subbasin name
+
+`geometry` polygons of the subbasins
+
 ## File Structure
 
 All data is stored in subfolders underneath the `Data` folder in the repository. Relevant folders include:
 
 `elevation` which includes elevation data
 
-`HARP` which includes all of the `Flowline_STL`, `Floodplain_stl`, `Subbasins_STL`, and `benefits` data
+`HARP` which includes all of the `Flowline_STL`, `Floodplain_STL`, `Subbasins_STL`, and `benefits` data
 
 `roads` which includes all the public road data
 
@@ -188,4 +218,4 @@ All analyses were performed in R Studio using Version 2023.12.1+402. Annotated c
 
 **Notes on the Analysis:**
 
-Analyses and code are annotated throughout the scripts explaining the data wrangling, cleaning, and analyses process. The repository contains mainly RMD files with annotated code and some sourced R files as well for common functions and data sources used throughout the analyses. Some files were written in R and generated into specified subfolders. Raw data is stored in the `Data` folder, common functions and data read in throughout the analyses are written in the `common.R` file, and the `scripts` folder contains all of our working analyses divided into actions (floodplain (`cost_floodplain.Rmd`), engineered log jams (`cost_elj.Rmd`), and riparian planting (`cost_rp.Rmd`)) as well as demogrpahic analyis (`demographic_overlap.Rmd`), land use (`landuse.Rmd`). Our figures were constructed in the `figures.Rmd` file, and a common `functionsR` script was used to source common functions across the analyses in the scripts folder. `Benefit_data.Rmd` wrangles and generates HARP model benefits (increased number of Chinook) that are used throughout the analyses, and the `cost_data.Rmd` reads in and wrangles the costs associated with land use and agriculture. Note that the variables in the raw data files look different than in the individual analyses as names were modified in the `common.R` file.
+Analyses and code are annotated throughout the scripts explaining the data wrangling, cleaning, and analyses process. The repository contains mainly RMD files with annotated code and some sourced R files as well for common functions and data sources used throughout the analyses. Some files were written in R and generated into specified subfolders. Raw data is stored in the `Data` folder, common functions and data read in throughout the analyses are written in the `common.R` file, and the `scripts` folder contains all of our working analyses divided into actions (floodplain (`cost_floodplain.Rmd`), engineered log jams (`cost_elj.Rmd`), and riparian planting (`cost_rp.Rmd`)) as well as demographic analysis (`demographic_overlap.Rmd`), land use (`landuse.Rmd`). Our figures were constructed in the `figures.Rmd` file, and a common `functionsR` script was used to source common functions across the analyses in the scripts folder. `benefit_data.Rmd` wrangles and generates HARP model benefits (increased number of Chinook) that are used throughout the analyses, and the `cost_data.Rmd` reads in and wrangles the costs associated with land use and agriculture. Note that the variables in the raw data files look different than in the individual analyses as names were modified in the `common.R` file.
