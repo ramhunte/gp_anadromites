@@ -16,13 +16,15 @@ Give a brief summary of dataset contents, contextualized in experimental procedu
 
 **benefits** - a folder containing a CSV file with the estimated increases in Chinook, Steelhead, and Coho salmon from each of the 3 different restoration actions by subbasin. It highlights the current population and the modeled change in population following restoration of the subbasin to historical conditions as modeled by the HARP model.
 
-**roads** -
+**roads** - a folder containing a geopackage that has shapefiles of all roads in Stillaguamish County including public roads, country roads, park roads and national forest roads.
 
-**POC_WA** -
+**POC_WA** - a folder containing a geopackage that has the total people and number of people of color by census tract.
 
-**Poverty_WA** -
+**Poverty_WA** - a folder containing a geopackage that has the total people and number of people living under the poverty line by census tract.
 
-**Unemployment_WA -**
+**Unemployment_WA** - a folder containing a geopackage that has the total people and number of unemployed people by census tract.
+
+**Tribal_Jurisdiction** - a folder containing a geopackage that has shapefiles of Indian Trust Lands, Pending Trust Lands, and Fee Simple Lands owned by Tribal Members or Tribal Associations.
 
 ## Description of the data and file structure
 
@@ -98,19 +100,21 @@ Describe relationships between data files, missing data codes, other abbreviatio
 
 **roads** - Key variables used were:
 
+`geometry` polygons of roads
+
 **POC_WA** - Key variables used were:
 
 `percent_people_of_color` percent people of color
 
 **Poverty_WA** - Key variables used were:
 
-`percent_living_in_poverty` percent fo population living in poverty
+`percent_living_in_poverty` percent of population living in poverty
 
 **Unemployment_WA** - Key variables used were:
 
 `percent_unemployed` percent of population unemployed
 
-## File Strucutre
+## File Structure
 
 All data is stored in subfolders underneath the `Data` folder in the repository. Relevant folders include:
 
@@ -127,6 +131,8 @@ All data is stored in subfolders underneath the `Data` folder in the repository.
 `Poverty_WA` which contains data pertaining to poverty rates
 
 `Unemployment_WA` which contains unemployment data
+
+`Tribal_Jurisdiction_Sno` which contains tribal land data for Snohomish County
 
 These data area primarily raw data folders pulled from the specified online sources. However, as annotated in the scripts, certain data frames were read in, modified, and re-written to minimize computation and time spent on the analyses. Other data folders may not have a specified purpose as they were used in unrelated analyses or just used in the exploration of the analyses.
 
@@ -148,7 +154,7 @@ Data and data description for the **land_use** data are publicly available at:
 
 <https://geo.wa.gov/datasets/a0ddbd4e0e2141b3841a6a42ff5aff46_0/explore?filters=eyJOQU1FIjpbIlNub2hvbWlzaCJdfQ%3D%3D&location=46.750570%2C-117.609917%2C6.00>
 
-Data and data description for the **benefits** data are publicly available at:
+Data and data description for the **benefits** data can be requested from: Tim Beechie, Supervisory Research Fish Biologist, Northwest Fisheries Science Center, NOAA [tim.beechie\@noaa.gov](mailto:tim.beechie@noaa.gov){.email}
 
 Data and data description for the **roads** data are publicly available at:
 
@@ -165,6 +171,10 @@ Data and data description for the **Poverty_WA** data are publicly available at:
 Data and data description for the **Unemployment_WA** data are publicly available at:
 
 <https://geo.wa.gov/datasets/67c699681b4f49c0adb1b5cada9e1919_0/explore>
+
+Data and data description for the **Tribal_Jurisdiction_Sno** data are publicly available at:
+
+<https://www.arcgis.com/home/item.html?id=3bcd4cdf822440e7a84e46b8f0b27fba&sublayer=0#overview>
 
 ## Code/Software
 
