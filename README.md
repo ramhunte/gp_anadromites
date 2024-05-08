@@ -1,8 +1,6 @@
 # Data Archival for Economic Cost Modeling of Chinook Habitat Restoration in the Stillaguamish River Basin
 
-<https://doi.org/10.5061/dryad.c59zw3rgr>
-
-Give a brief summary of dataset contents, contextualized in experimental procedures and results.
+Here is a brief summary of the main data sets we used and created in our study. This summary contextualizes how we used the data, but one should refer to the final report's "Methods" section for a full look into how the data was used. Analyses and annotated data manipulation are provided in the full GitHub repository scripts. All data are publically available with locations sourced below and located in the parent directory labeled `data`. Some data sets are included in the repository but not used for the analyses.
 
 **Stream line (STL)** - a folder containing a geopackage that has shapefiles for stream reaches within the Stillaguamish River Basin. This data was used in our analysis to generate cost estimate model inputs pertaining to the terrain of the streams in a given subbasin (such as its slope and width). These parameters were used throughout the 3 habitat restoration action scenarios as they all required stream reach attributes as input for the cost estimates.
 
@@ -10,13 +8,13 @@ Give a brief summary of dataset contents, contextualized in experimental procedu
 
 **NOAA subbasins (STL)** - a folder containing a geopackage that has shapefilesof all of the subbasins within the Stillaguamish River Basin. Polygons were used in all aspects of analysis to crop floodplain habitat, streams, elevation, land use polygons, and other physical characteristics of the basin to individual subbasins. All cost estimates were created at a subbasin level using this data set. It was also used to visualize our final results in map making. Overall, this data was used to segment our analysis into individual subbasins that we then used to compare to oneanother.
 
-**Elevation** - A folder containing DEM files of elevation raster data for the Stillaguamish River Basin. Raster data is shown at a 10m resolution across the basin. It was cropped to the basin and used in the riparian planting analyses to estimate the steepness of terrain and difficulty of accessing riparian vegetation. The raster data was cropped to each stream reach within each subbasin where there was proposed riparian planting restoration
+**Elevation** - A folder containing DEM files of elevation raster data for the Stillaguamish River Basin. Raster data is shown at a 10m resolution across the basin. It was cropped to the basin and used in the riparian planting analyses to estimate the steepness of terrain and difficulty of accessing riparian vegetation. The raster data was cropped to each stream reach within each subbasin where there was proposed riparian planting restoration.
 
-**land_use** - a folder containing a geopackage that has shapefiles on the land use of land parcels throughout Snohomish county. These parcels were clipped to the Stillaguamish River Basin and the polygons were intersected with those of each subbasin. We used this to estimate the total area and percent land uses throughout the basin and identify areas of existing agricultural land that intersect with historical floodplain habitat that could potentially be utilized for restoration
+**land_use** - a folder containing a geopackage that has shapefiles on the land use of land parcels throughout Snohomish county. These parcels were clipped to the Stillaguamish River Basin and the polygons were intersected with those of each subbasin. We used this to estimate the total area and percent land uses throughout the basin and identify areas of existing agricultural land that intersect with historical floodplain habitat that could potentially be utilized for restoration.
 
 **benefits** - a folder containing a CSV file with the estimated increases in Chinook, Steelhead, and Coho salmon from each of the 3 different restoration actions by subbasin. It highlights the current population and the modeled change in population following restoration of the subbasin to historical conditions as modeled by the HARP model.
 
-**roads** - a folder containing a geopackage that has shapefiles of all roads in Stillaguamish County including public roads, country roads, park roads and national forest roads.
+**roads** - a folder containing a geopackage that has shapefiles of all roads in Stillaguamish County including public roads, country roads, park roads and national forest roads. This data was used to measure distance of stream reaches to the nearest road in the engineered log jams and riparian planting analyses.
 
 **POC_WA** - a folder containing a geopackage that has the total people and number of people of color by census tract.
 
@@ -24,15 +22,11 @@ Give a brief summary of dataset contents, contextualized in experimental procedu
 
 **Unemployment_WA** - a folder containing a geopackage that has the total people and number of unemployed people by census tract.
 
-**Tribal_Jurisdiction** - a folder containing a geopackage that has shapefiles of Indian Trust Lands, Pending Trust Lands, and Fee Simple Lands owned by Tribal Members or Tribal Associations.
+**Tribal_Jurisdiction_Sno** - a folder containing a geopackage that has shapefiles of Indian Trust Lands, Pending Trust Lands, and Fee Simple Lands owned by Tribal Members or Tribal Associations.
 
 **final_results -** a folder containing a geopackage that has has the final costs and benefits resulting from each proposed action for each applicable subbasin. Subbasins not included implies that there was no change in Chinook population from the resulting action.
 
-## Description of the data and file structure
-
-This is a freeform section for you to describe how the data are structured and how a potential consumer might use them. Be as descriptive as necessary. Keep in mind that users of your data might be new to the field and unfamiliar with common terminology, metrics, etc.
-
-Describe relationships between data files, missing data codes, other abbreviations used. Be as descriptive as possible.
+## Key Variables by Data Set 
 
 **Streamline (STL)** - Key variables used were:
 
@@ -116,7 +110,7 @@ Describe relationships between data files, missing data codes, other abbreviatio
 
 `percent_unemployed` percent of population unemployed
 
-**final_results -** Key variables used were:
+**all_cost_benefit -** Key variables used were:
 
 `noa_sbb` subbasin wihtin the stillaguamish river basin
 
@@ -164,6 +158,8 @@ All data is stored in subfolders underneath the `Data` folder in the repository.
 
 `Tribal_Jurisdiction_Sno` which contains tribal land data for Snohomish County
 
+`final_results` contains the `all_cost_benefit` data and our final results
+
 These data area primarily raw data folders pulled from the specified online sources. However, as annotated in the scripts, certain data frames were read in, modified, and re-written to minimize computation and time spent on the analyses. Other data folders may not have a specified purpose as they were used in unrelated analyses or just used in the exploration of the analyses.
 
 ## Sharing/Access information
@@ -206,11 +202,9 @@ Data and data description for the **Tribal_Jurisdiction_Sno** data are publicly 
 
 <https://www.arcgis.com/home/item.html?id=3bcd4cdf822440e7a84e46b8f0b27fba&sublayer=0#overview>
 
+Data and data description for the **final_results** data were created in this analysis and stored in this repository
+
 ## Code/Software
-
-This is an optional, freeform section for describing any code in your submission and the software used to run it.
-
-Describe any scripts, code, or notebooks (e.g., R, Python, Mathematica, MatLab) as well as the software versions (including loaded packages) that you used to run those files. If your repository contains more than one file whose relationship to other scripts is not obvious, provide information about the workflow that you used to run those scripts and notebooks.
 
 All analyses were performed in R Studio using Version 2023.12.1+402. Annotated code, scripts, final products, and data are provided in the the following GitHub repository:
 
